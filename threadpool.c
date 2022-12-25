@@ -68,5 +68,9 @@ void destroy_threadpool(thread_pool thread_pool_destroy){
     pthread_cond_wait(thread_pool_destroy.q_not_empty = 1,thread_pool_destroy.qlock);
     thread_pool_destroy.shutdown = 1;
     pthread_cond_signal(thread_pool_destroy.qlock);
+    for (int i = 0; i < thread_pool_destroy.number_of_threads; i++)
+    {
+         pthread_join(thread_pool_destroy.threads[i],NULL);
+    }
     
 }
