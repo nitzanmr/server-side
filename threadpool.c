@@ -7,7 +7,7 @@ struct {
     pthread_t* threads;
     work_t qhead;
     work_t qtail;
-    pthread_mutex_t qlock;/*mutex lock for critical portion*/
+    pthread_mutex_t* qlock;/*mutex lock for critical portion*/
     int q_not_empty;/*flags*/
     int shutdown;
     int dont_accept;
@@ -30,12 +30,37 @@ void init_threadpool(int max_number_of_threads,thread_pool new_threadpool){
     new_threadpool.qhead = NULL;
     new_threadpool.qtail = NULL;
 }   
+void do_work(thread_pool new_threadpool){
+    pthread_cond_wait(new_threadpool.qsize!=0,new_threadpool.qlock);
+    while (new_threadpool.shutdown !=1)
+    {
+        if(new_threadpool.dont_accept==0){
+            pthread_create(new_threadpool.threads[new_threadpool.number_of_threads],NULL,new_threadpool.qhead->routine,new_threadpool.qhead->args);
+            new_threadpool.number_of_threads++;
+            new_threadpool.qhead = new_threadpool.qhead->next;
+            new_threadpool.qsize--;
+        }
+        pthread_mutex_unlock(new_threadpool.qlock);
+    }
+    
+   
+}
+void dispatch(thread_pool new_threadpool,int (*routine)(void*),void* args){
+    /*makes a new work_t and adds it to the work_t linklist in the threadpool given*/
+    work_t new_work_t = {routine,args,NULL};
+    if(new_threadpool.qhead==NULL){
+        new_threadpool.qhead = new_work_t;
+        new_threadpool.qtail = new_work_t;
+    }
+    else{
+        new_threadpool.qtail->next = new_work_t;
+        new_threadpool.qtail = new_work_t;
+    }
+}
+
 void create_threadpool(int max_number_of_threads,thread_pool new_threadpool){
     /*creates the threadpool and asign its purpuse to it.*/
     init_threadpool(max_number_of_threads,new_threadpool);
-    for (int i = 0; i <max_number_of_threads ;i++){
-        pthread_create(new_threadpool.threads[i],NULL,new_threadpool.qhead->routine,new_threadpool.qhead->args);
-        
-    }
+    do_work(new_threadpool);
     
 }
