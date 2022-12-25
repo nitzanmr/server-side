@@ -40,7 +40,6 @@ void do_work(thread_pool new_threadpool){
             new_threadpool.qhead = new_threadpool.qhead->next;
             new_threadpool.qsize--;
         }
-        pthread_mutex_unlock(new_threadpool.qlock);
     }
     
    
@@ -62,5 +61,12 @@ void create_threadpool(int max_number_of_threads,thread_pool new_threadpool){
     /*creates the threadpool and asign its purpuse to it.*/
     init_threadpool(max_number_of_threads,new_threadpool);
     do_work(new_threadpool);
+    
+}
+void destroy_threadpool(thread_pool thread_pool_destroy){
+    thread_pool_destroy.dont_accept =1;
+    pthread_cond_wait(thread_pool_destroy.q_not_empty = 1,thread_pool_destroy.qlock);
+    thread_pool_destroy.shutdown = 1;
+    pthread_cond_signal(thread_pool_destroy.qlock);
     
 }
