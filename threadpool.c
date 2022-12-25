@@ -3,16 +3,23 @@
 #include "malloc.h"
 #define MAXT_IN_POOL 200
 
-void init_threadpool(int max_number_of_threads,threadpool new_threadpool){
+void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     /*this function initialize the threadpool to it defult values*/
-    new_threadpool.num_threads = 0;
-    new_threadpool.qsize = 0;
-    new_threadpool.threads = NULL;
-    new_threadpool.dont_accept=0;
-    new_threadpool.shutdown = 0;
-    new_threadpool.q_not_empty = 0;
-    new_threadpool.qhead = NULL;
-    new_threadpool.qtail = NULL;
+    new_threadpool->num_threads = 0;
+    new_threadpool->qsize = 0;
+    new_threadpool->threads = NULL;
+    new_threadpool->dont_accept=0;
+    new_threadpool->shutdown = 0;
+    pthread_cond_init(&new_threadpool->q_not_empty,NULL);
+    pthread_cond_init(&new_threadpool->q_empty,NULL);
+    new_threadpool->qhead = NULL;
+    new_threadpool->qtail = NULL;
+    for(int i =0;i<max_number_of_threads;i++){
+        if(pthread_create(new_threadpool->threads[i],NULL,do_work,new_threadpool)){
+            perror("create failed");
+            exit(-1);
+        }
+    }
 }
 /**
  * threadpool.h
@@ -46,8 +53,8 @@ typedef struct _threadpool_st {
 	pthread_mutex_t qlock;		//lock on the queue list
 	pthread_cond_t q_not_empty;	//non empty and empty condidtion vairiables
 	pthread_cond_t q_empty;
-      int shutdown;            //1 if the pool is in distruction process     
-      int dont_accept;       //1 if destroy function has begun
+    int shutdown;            //1 if the pool is in distruction process     
+    int dont_accept;       //1 if destroy function has begun
 } threadpool;
 
 
@@ -90,6 +97,7 @@ threadpool* create_threadpool(int num_threads_in_pool){
  */
 void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
     work_t new_work_t = {dispatch_to_here,arg,NULL};
+    pthread_mutex_lock(&from_me->qlock);
     if(from_me->qhead==NULL){
         from_me->qhead = &new_work_t;
         from_me->qtail = &new_work_t;
@@ -98,6 +106,7 @@ void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
         from_me->qtail->next = &new_work_t;
         from_me->qtail = &new_work_t;
     }
+    pthread_mutex_unlock(&from_me->qlock);
 };
 
 /**
@@ -111,16 +120,23 @@ void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
  *
  */
 void* do_work(void* p){
-    pthread_cond_wait(((threadpool*)p)->qsize!=0,&((threadpool*)p)->qlock);
+    pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
     while (((threadpool*)p)->shutdown !=1)
     {
         if(((threadpool*)p)->dont_accept==0){
-            pthread_create(((threadpool*)p)->threads[((threadpool*)p)->num_threads],NULL,((threadpool*)p)->qhead->routine,((threadpool*)p)->qhead->args);
             ((threadpool*)p)->num_threads++;
+            ((threadpool*)p)->qhead->routine(((threadpool*)p)->qhead->arg);
             ((threadpool*)p)->qhead = ((threadpool*)p)->qhead->next;
             ((threadpool*)p)->qsize--;
+            if(((threadpool*)p)->qsize==0){
+                pthread_cond_signal(&((threadpool*)p)->q_empty);
+            }
+            else
+            pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
+
         }
     }
+    pthread_exit(NULL);
 };
 
 
@@ -132,8 +148,8 @@ void* do_work(void* p){
 void destroy_threadpool(threadpool* destroyme){
     destroyme->dont_accept =1;
     pthread_cond_wait(&destroyme->q_not_empty,&destroyme->qlock);
-    singal(destroyme->shutdown);
-    pthread_cond_signal(&destroyme->qlock);
+    destroyme->shutdown =1;
+    pthread_cond_broadcast(&destroyme->q_not_empty);
     for (int i = 0; i < destroyme->num_threads; i++)
     {
          pthread_join(destroyme->threads[i],NULL);
