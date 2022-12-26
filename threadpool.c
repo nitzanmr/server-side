@@ -93,7 +93,6 @@ threadpool* create_threadpool(int num_threads_in_pool){
  * 2. lock the mutex
  * 3. add the work_t element to the queue
  * 4. unlock mutex
- *
  */
 void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
     work_t new_work_t = {dispatch_to_here,arg,NULL};
@@ -108,6 +107,7 @@ void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
             from_me->qtail = &new_work_t;
         }
         pthread_mutex_unlock(&from_me->qlock);
+        pthread_cond_signal(&from_me->q_not_empty);
     }
     
 };
@@ -137,6 +137,9 @@ void* do_work(void* p){
         }
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
         temp_work->routine(temp_work->arg);
+        if(((threadpool*)p)->shutdown == 1){
+            break;
+        }
         pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
     }
     pthread_exit(NULL);
