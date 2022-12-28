@@ -108,6 +108,7 @@ void* do_work(void* p){
         
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
         temp_work->routine(temp_work->arg);
+        free(temp_work);
         if(((threadpool*)p)->shutdown == 1){
             break;
         }
@@ -115,7 +116,6 @@ void* do_work(void* p){
         if(((threadpool*)p)->qsize==0)
             pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
     }
-    printf("the pthread number: %d, exiting",temp_work->arg);
     pthread_exit(NULL);
 };
 
