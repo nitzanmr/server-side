@@ -1,4 +1,3 @@
-#include <pthread.h>
 #include <stdio.h>
 #include "malloc.h"
 #include "stdlib.h"
@@ -20,6 +19,7 @@ void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
             perror("create failed");
             exit(1);
         }
+        printf("pthread number:%d created\n",i);
     }
 }
 /**
@@ -52,6 +52,7 @@ threadpool* create_threadpool(int num_threads_in_pool){
  */
 void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
     work_t new_work_t = {dispatch_to_here,arg,NULL};
+    dispatch_to_here;
     if(from_me->dont_accept==0){
         pthread_mutex_lock(&from_me->qlock);
         if(from_me->qhead==NULL){
@@ -62,10 +63,12 @@ void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
             from_me->qtail->next = &new_work_t;
             from_me->qtail = &new_work_t;
         }
+
         pthread_mutex_unlock(&from_me->qlock);
         pthread_cond_signal(&from_me->q_not_empty);
     }
-    
+    printf("after lock end of dispatch\n");
+
 };
 
 /**
@@ -79,10 +82,12 @@ void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
  *
  */
 void* do_work(void* p){
+    pthread_mutex_lock(&((threadpool*)p)->qlock);
     pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
     work_t* temp_work;
     while (((threadpool*)p)->shutdown !=1)
     {
+        printf("entered the while\n");
         pthread_mutex_lock(&((threadpool*)p)->qlock);
         ((threadpool*)p)->num_threads++;
         temp_work = ((threadpool*)p)->qhead;
@@ -92,10 +97,12 @@ void* do_work(void* p){
             pthread_cond_signal(&((threadpool*)p)->q_empty);
         }
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
+        printf("\nmade to the routine\n");
         temp_work->routine(temp_work->arg);
         if(((threadpool*)p)->shutdown == 1){
             break;
         }
+        pthread_mutex_lock(&((threadpool*)p)->qlock);
         pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
     }
     pthread_exit(NULL);

@@ -1,4 +1,4 @@
-#include <pthread.h>
+#include "pthread.h"
 
 /**
  * threadpool.h
@@ -56,7 +56,7 @@ typedef int (*dispatch_fn)(void *);
  * 3. initialized mutex and conditional variables
  * 4. create the threads, the thread init function is do_work and its argument is the initialized threadpool. 
  */
-threadpool* create_threadpool(int );
+threadpool* create_threadpool(int num_threads_in_pool);
 
 
 /**
@@ -70,7 +70,7 @@ threadpool* create_threadpool(int );
  * 4. unlock mutex
  *
  */
-void dispatch(threadpool* , dispatch_fn , void *);
+void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg);
 
 /**
  * The work function of the thread
@@ -82,7 +82,7 @@ void dispatch(threadpool* , dispatch_fn , void *);
  * 5. call the thread routine
  *
  */
-void* do_work(void*);
+void* do_work(void* p);
 
 
 /**
@@ -90,5 +90,5 @@ void* do_work(void*);
  * all threads in it to commit suicide, and then
  * frees all the memory associated with the threadpool.
  */
-void destroy_threadpool(threadpool*);
+void destroy_threadpool(threadpool* destroyme);
 
