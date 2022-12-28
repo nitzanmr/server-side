@@ -7,11 +7,12 @@ void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     /*this function initialize the threadpool to it defult values*/
     new_threadpool->num_threads = 0;
     new_threadpool->qsize = 0;
-    new_threadpool->threads = NULL;
+    new_threadpool->threads = (pthread_t*)malloc(max_number_of_threads*sizeof(pthread_t));
     new_threadpool->dont_accept=0;
     new_threadpool->shutdown = 0;
     pthread_cond_init(&new_threadpool->q_not_empty,NULL);
     pthread_cond_init(&new_threadpool->q_empty,NULL);
+    pthread_mutex_init(&new_threadpool->qlock,NULL);
     new_threadpool->qhead = NULL;
     new_threadpool->qtail = NULL;
     for(int i =0;i<max_number_of_threads;i++){
