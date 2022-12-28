@@ -1,8 +1,8 @@
 #include <pthread.h>
 #include <stdio.h>
 #include "malloc.h"
-#define MAXT_IN_POOL 200
-
+#include "stdlib.h"
+#include "threadpool.h"
 void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     /*this function initialize the threadpool to it defult values*/
     new_threadpool->num_threads = 0;
@@ -16,57 +16,12 @@ void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     new_threadpool->qhead = NULL;
     new_threadpool->qtail = NULL;
     for(int i =0;i<max_number_of_threads;i++){
-        if(pthread_create(new_threadpool->threads[i],NULL,do_work,new_threadpool)){
+        if(pthread_create(&(new_threadpool->threads[i]),NULL,do_work,new_threadpool)){
             perror("create failed");
-            exit(-1);
+            exit(1);
         }
     }
 }
-/**
- * threadpool.h
- *
- * This file declares the functionality associated with
- * your implementation of a threadpool.
- */
-
-// maximum number of threads allowed in a pool
-
-
-/**
- * the pool holds a queue of this structure
- */
-typedef struct work_st{
-      int (*routine) (void*);  //the threads process function
-      void * arg;  //argument to the function
-      struct work_st* next;  
-} work_t;
-
-
-/**
- * The actual pool
- */
-typedef struct _threadpool_st {
- 	int num_threads;	//number of active threads
-	int qsize;	        //number in the queue
-	pthread_t *threads;	//pointer to threads
-	work_t* qhead;		//queue head pointer
-	work_t* qtail;		//queue tail pointer
-	pthread_mutex_t qlock;		//lock on the queue list
-	pthread_cond_t q_not_empty;	//non empty and empty condidtion vairiables
-	pthread_cond_t q_empty;
-    int shutdown;            //1 if the pool is in distruction process     
-    int dont_accept;       //1 if destroy function has begun
-} threadpool;
-
-
-// "dispatch_fn" declares a typed function pointer.  A
-// variable of type "dispatch_fn" points to a function
-// with the following signature:
-// 
-//     int dispatch_function(void *arg);
-
-typedef int (*dispatch_fn)(void *);
-
 /**
  * create_threadpool creates a fixed-sized thread
  * pool.  If the function succeeds, it returns a (non-NULL)
@@ -80,8 +35,8 @@ typedef int (*dispatch_fn)(void *);
 threadpool* create_threadpool(int num_threads_in_pool){
     threadpool* new_threadpool = (threadpool*)malloc(sizeof(threadpool));
     init_threadpool(num_threads_in_pool,new_threadpool);
-    do_work(new_threadpool);
-
+    /*need to address what happens if the return is null from init*/
+    return new_threadpool;
 };
 
 
