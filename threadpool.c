@@ -52,7 +52,7 @@ threadpool* create_threadpool(int num_threads_in_pool){
  */
 void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
     work_t new_work_t = {dispatch_to_here,arg,NULL};
-    dispatch_to_here;
+    // dispatch_to_here(arg);
     if(from_me->dont_accept==0){
         pthread_mutex_lock(&from_me->qlock);
         if(from_me->qhead==NULL){
@@ -67,8 +67,6 @@ void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
         pthread_mutex_unlock(&from_me->qlock);
         pthread_cond_signal(&from_me->q_not_empty);
     }
-    printf("after lock end of dispatch\n");
-
 };
 
 /**
@@ -87,8 +85,6 @@ void* do_work(void* p){
     work_t* temp_work;
     while (((threadpool*)p)->shutdown !=1)
     {
-        printf("entered the while\n");
-        pthread_mutex_lock(&((threadpool*)p)->qlock);
         ((threadpool*)p)->num_threads++;
         temp_work = ((threadpool*)p)->qhead;
         ((threadpool*)p)->qhead = ((threadpool*)p)->qhead->next;
@@ -97,7 +93,6 @@ void* do_work(void* p){
             pthread_cond_signal(&((threadpool*)p)->q_empty);
         }
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
-        printf("\nmade to the routine\n");
         temp_work->routine(temp_work->arg);
         if(((threadpool*)p)->shutdown == 1){
             break;
