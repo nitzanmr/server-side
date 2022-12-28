@@ -12,7 +12,7 @@ int main(){
     }
     for (int i = 0; i < size_pool; i++)
     {
-        dispatch(new_threadpool,(dispatch_fn)job1,&i);
+        dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
     }
     destroy_threadpool(new_threadpool);
 }

@@ -51,19 +51,31 @@ threadpool* create_threadpool(int num_threads_in_pool){
  * 4. unlock mutex
  */
 void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
-    work_t new_work_t = {dispatch_to_here,arg,NULL};
+    work_t* new_work_t = (work_t*)malloc(sizeof(work_t));
+    new_work_t->arg =arg;
+    new_work_t->routine = dispatch_to_here;
+    new_work_t->next = NULL;
     // dispatch_to_here(arg);
+    // new_work_t.routine(new_work_t.arg);
+    // (&new_work_t)->routine((&new_work_t)->arg);
     if(from_me->dont_accept==0){
         pthread_mutex_lock(&from_me->qlock);
         if(from_me->qhead==NULL){
-            from_me->qhead = &new_work_t;
-            from_me->qtail = &new_work_t;
+            from_me->qhead = new_work_t;
+            from_me->qtail = new_work_t;
         }
         else{
-            from_me->qtail->next = &new_work_t;
-            from_me->qtail = &new_work_t;
+            if(from_me->qhead==from_me->qtail){
+                from_me->qhead->next = new_work_t;
+                from_me->qtail = new_work_t;
+            }
+            else{
+                from_me->qtail->next = new_work_t;
+                from_me->qtail = new_work_t;
+        
+            }
         }
-
+        from_me->qsize++;
         pthread_mutex_unlock(&from_me->qlock);
         pthread_cond_signal(&from_me->q_not_empty);
     }
@@ -89,17 +101,21 @@ void* do_work(void* p){
         temp_work = ((threadpool*)p)->qhead;
         ((threadpool*)p)->qhead = ((threadpool*)p)->qhead->next;
         ((threadpool*)p)->qsize--;
+        printf("the queue size is: %d\n",((threadpool*)p)->qsize);
         if(((threadpool*)p)->qsize==0&& ((threadpool*)p)->dont_accept == 1){
             pthread_cond_signal(&((threadpool*)p)->q_empty);
         }
+        
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
         temp_work->routine(temp_work->arg);
         if(((threadpool*)p)->shutdown == 1){
             break;
         }
         pthread_mutex_lock(&((threadpool*)p)->qlock);
-        pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
+        if(((threadpool*)p)->qsize==0)
+            pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
     }
+    printf("the pthread number: %d, exiting",temp_work->arg);
     pthread_exit(NULL);
 };
 
@@ -111,11 +127,13 @@ void* do_work(void* p){
  */
 void destroy_threadpool(threadpool* destroyme){
     destroyme->dont_accept =1;
-    pthread_cond_wait(&destroyme->q_not_empty,&destroyme->qlock);
+    pthread_mutex_lock(&destroyme->qlock);
+    pthread_cond_wait(&destroyme->q_empty,&destroyme->qlock);
     destroyme->shutdown =1;
-    pthread_cond_broadcast(&destroyme->q_not_empty);
+    // pthread_cond_broadcast(&destroyme->q_not_empty);
     for (int i = 0; i < destroyme->num_threads; i++)
     {
+        pthread_cond_signal(&destroyme->q_not_empty);
          pthread_join(destroyme->threads[i],NULL);
     }
 };
