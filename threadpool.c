@@ -92,31 +92,40 @@ void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg){
  *
  */
 void* do_work(void* p){
-    pthread_mutex_lock(&((threadpool*)p)->qlock);
-    pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
+    
     work_t* temp_work;
     while (((threadpool*)p)->shutdown !=1)
     {
+        pthread_mutex_lock(&((threadpool*)p)->qlock);
+        if(((threadpool*)p)->qsize==0){
+            if(((threadpool*)p)->qsize==0&& ((threadpool*)p)->dont_accept == 1&&((threadpool*)p)->num_threads==0){
+                pthread_cond_signal(&((threadpool*)p)->q_empty);
+                printf("%d",((threadpool*)p)->shutdown);
+            }
+            // pthread_cond_signal(&((threadpool*)p)->q_empty);
+            pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
+
+        }
+        if(((threadpool*)p)->shutdown==1){
+            pthread_mutex_unlock(&((threadpool*)p)->qlock);
+            // pthread_cond_signal(&)
+            printf("\npthread exits\n");
+            pthread_exit(NULL);
+        }
         ((threadpool*)p)->num_threads++;
         temp_work = ((threadpool*)p)->qhead;
         ((threadpool*)p)->qhead = ((threadpool*)p)->qhead->next;
         ((threadpool*)p)->qsize--;
         printf("the queue size is: %d\n",((threadpool*)p)->qsize);
-        if(((threadpool*)p)->qsize==0&& ((threadpool*)p)->dont_accept == 1){
-            pthread_cond_signal(&((threadpool*)p)->q_empty);
-        }
+       
         
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
         temp_work->routine(temp_work->arg);
         free(temp_work);
-        if(((threadpool*)p)->shutdown == 1){
-            break;
-        }
-        pthread_mutex_lock(&((threadpool*)p)->qlock);
-        if(((threadpool*)p)->qsize==0)
-            pthread_cond_wait(&((threadpool*)p)->q_not_empty,&((threadpool*)p)->qlock);
+        ((threadpool*)p)->num_threads--;
+        
     }
-    pthread_exit(NULL);
+    
 };
 
 
@@ -126,15 +135,17 @@ void* do_work(void* p){
  * frees all the memory associated with the threadpool.
  */
 void destroy_threadpool(threadpool* destroyme){
-    destroyme->dont_accept =1;
+    destroyme->dont_accept = 1;
     pthread_mutex_lock(&destroyme->qlock);
     pthread_cond_wait(&destroyme->q_empty,&destroyme->qlock);
-    destroyme->shutdown =1;
+    pthread_mutex_unlock(&destroyme->qlock);
+    destroyme->shutdown = 1;
     // pthread_cond_broadcast(&destroyme->q_not_empty);
-    for (int i = 0; i < destroyme->num_threads; i++)
+    for (int i = 0; i < sizeof(destroyme->threads)/sizeof(pthread_t); i++)
     {
         pthread_cond_signal(&destroyme->q_not_empty);
-         pthread_join(destroyme->threads[i],NULL);
+        printf("pthread joined\n");
+        pthread_join(destroyme->threads[i],NULL);
     }
 };
 
