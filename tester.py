@@ -8,12 +8,21 @@ C_FILES = "main.c threadpool.c "
 H_FILES = "threadpool.h"   
 
 def numthreads_bigger_than_tasks():
-    status = subprocess.run(f"./{EXECUTABLE} 5 20",shell=True)
+    status = subprocess.run(f"./{EXECUTABLE} 3 6",shell=True)
     if status.returncode  != 0:
         print("[-]FAILED! test tasks bigger then number of threads")
         return False
 
     print("[+] Passed test tasks bigger then number of threads")
+    return True
+
+def equal():
+    status = subprocess.run(f"./{EXECUTABLE} 5 5",shell=True)
+    if status.returncode  != 0:
+        print("[-]FAILED! test tasks equal/smaller then number of threads")
+        return False
+
+    print("[+] Passed test tasks equal/smaller then number of threads")
     return True
 
 def setup():
@@ -50,5 +59,12 @@ if __name__ == "__main__":
     if compilation_status == "Error":
         exit(0)
     t_numthreads_bigger_than_tasks = numthreads_bigger_than_tasks()
+    t_equal = equal()
+    t = PrettyTable(['Test', 'Result'])
+    t.align['Test'] = 'l'
+    t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
+    t.add_row(['Tasks <= Threads', t_equal])
+    print(t)
+
 
 

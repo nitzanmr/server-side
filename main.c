@@ -17,10 +17,8 @@ int main(int argc,char* argv[]){
     }
     if(atoi(argv[1]) >= atoi(argv[2])){
         if(check_threadpool(atoi(argv[1]),atoi(argv[2]))){
-            printf("\n FAILED! test of number of tasks smaller then number of threads\n");
         };
         test = PASSED_TEST;
-        printf("\n passed test of number of tasks smaller then number of threads\n");
         return test;
     }
 
