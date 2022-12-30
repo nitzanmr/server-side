@@ -125,7 +125,10 @@ void* do_work(void* p){
         ((threadpool*)p)->num_threads--;
         
     }
-    
+    // pthread_mutex_unlock(&((threadpool*)p)->qlock);
+    // pthread_cond_signal(&)
+    printf("\npthread exits\n");
+    pthread_exit(NULL);
 };
 
 
@@ -138,8 +141,9 @@ void destroy_threadpool(threadpool* destroyme){
     destroyme->dont_accept = 1;
     pthread_mutex_lock(&destroyme->qlock);
     pthread_cond_wait(&destroyme->q_empty,&destroyme->qlock);
-    pthread_mutex_unlock(&destroyme->qlock);
     destroyme->shutdown = 1;
+    pthread_mutex_unlock(&destroyme->qlock);
+
     // pthread_cond_broadcast(&destroyme->q_not_empty);
     for (int i = 0; i < sizeof(destroyme->threads)/sizeof(pthread_t); i++)
     {
