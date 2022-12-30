@@ -4,10 +4,17 @@
 #include "stdlib.h"
 int job1(void*);
 int job2(void*);
+int check_threadpool(int,int);
 #define PASSED_TEST 0
 #define FAILED_TEST 1
 int main(int argc,char* argv[]){
     int test = FAILED_TEST;
+    if(atoi(argv[1])==0){
+         if(check_threadpool(atoi(argv[1]),atoi(argv[2]))){
+            return PASSED_TEST;
+        };
+        return test;
+    }
     if(atoi(argv[1]) < atoi(argv[2])){
         if(check_threadpool(atoi(argv[1]),atoi(argv[2]))){
             return 1;
@@ -21,8 +28,6 @@ int main(int argc,char* argv[]){
         test = PASSED_TEST;
         return test;
     }
-
-
 }
 int job1(void* number_of_thread){
     printf("\ntask number: %d\n",number_of_thread);
@@ -37,7 +42,7 @@ int check_threadpool(int size_pool,int number_of_tasks){
     threadpool* new_threadpool = create_threadpool(size_pool);
     if(new_threadpool==NULL){
         perror("create error");
-        return(1);
+        return 1;
     }
     for (int i = 0; i < number_of_tasks; i++)
     {

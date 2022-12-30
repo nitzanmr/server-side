@@ -19,10 +19,27 @@ def numthreads_bigger_than_tasks():
 def equal():
     status = subprocess.run(f"./{EXECUTABLE} 5 5",shell=True)
     if status.returncode  != 0:
-        print("[-]FAILED! test tasks equal/smaller then number of threads")
+        print("[-]FAILED! Test tasks equal/smaller then number of threads")
         return False
 
-    print("[+] Passed test tasks equal/smaller then number of threads")
+    print("[+] Passed Test tasks equal/smaller then number of threads")
+    return True
+
+def zero_threads():
+    status = subprocess.run(f"./{EXECUTABLE} 0 5",shell=True)
+    if status.returncode  != 0:
+        print("[-]FAILED! Zero Threads test")
+        return False
+
+    print("[+] Passed  Zero Threads test")
+    return True
+def zero_tasks():
+    status = subprocess.run(f"./{EXECUTABLE} 5 0",shell=True)
+    if status.returncode  != 0:
+        print("[-]FAILED! zero Tasks test")
+        return False
+
+    print("[+] Passed Zero Tasks test")
     return True
 
 def setup():
@@ -60,10 +77,14 @@ if __name__ == "__main__":
         exit(0)
     t_numthreads_bigger_than_tasks = numthreads_bigger_than_tasks()
     t_equal = equal()
+    t_zero_threads = zero_threads()
+    t_zero_tasks = zero_tasks()
     t = PrettyTable(['Test', 'Result'])
     t.align['Test'] = 'l'
     t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
     t.add_row(['Tasks <= Threads', t_equal])
+    t.add_row(['Threads = 0', t_zero_threads])
+    t.add_row(['Tasks = 0',t_zero_tasks])
     print(t)
 
 

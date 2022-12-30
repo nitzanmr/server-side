@@ -5,6 +5,7 @@
 int number_of_threads_asked = 0;
 void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     /*this function initialize the threadpool to it defult values*/
+   
     number_of_threads_asked = max_number_of_threads;
     new_threadpool->num_threads = 0;
     new_threadpool->qsize = 0;
@@ -35,6 +36,10 @@ void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
  * 4. create the threads, the thread init function is do_work and its argument is the initialized threadpool. 
  */
 threadpool* create_threadpool(int num_threads_in_pool){
+     if(num_threads_in_pool <= 0 || num_threads_in_pool > MAXT_IN_POOL){
+        perror("too many or too few threads wanted");
+        return NULL;
+    }
     threadpool* new_threadpool = (threadpool*)malloc(sizeof(threadpool));
     init_threadpool(num_threads_in_pool,new_threadpool);
     /*need to address what happens if the return is null from init*/
