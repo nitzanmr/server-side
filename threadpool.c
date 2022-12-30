@@ -151,6 +151,7 @@ void destroy_threadpool(threadpool* destroyme){
         printf("pthread joined\n");
         pthread_join(destroyme->threads[i],NULL);
     }
+    return;
 };
 
 
