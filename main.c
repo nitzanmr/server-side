@@ -8,13 +8,11 @@ int job2(void*);
 #define FAILED_TEST 1
 int main(int argc,char* argv[]){
     int test = FAILED_TEST;
-    if(atoi(argv[1]) <atoi(argv[2])){
+    if(atoi(argv[1]) < atoi(argv[2])){
         if(check_threadpool(atoi(argv[1]),atoi(argv[2]))){
-            printf("\n FAILED! test of number of tasks bigger then number of threads\n");
-
+            return 1;
         };
         test = PASSED_TEST;
-        printf("\npassed test of number of tasks bigger then number of threads\n");
         return test;
     }
     if(atoi(argv[1]) >= atoi(argv[2])){
@@ -25,7 +23,7 @@ int main(int argc,char* argv[]){
         printf("\n passed test of number of tasks smaller then number of threads\n");
         return test;
     }
-    
+
 
 }
 int job1(void* number_of_thread){
