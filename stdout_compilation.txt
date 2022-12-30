@@ -4,19 +4,19 @@ main.c:12:12: warning: implicit declaration of function ‘check_threadpool’; 
       |            ^~~~~~~~~~~~~~~~
       |            create_threadpool
 main.c: In function ‘job1’:
-main.c:28:32: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   28 |     printf("\npthread number: %d\n",number_of_thread);
-      |                               ~^    ~~~~~~~~~~~~~~~~
-      |                                |    |
-      |                                int  void *
-      |                               %p
+main.c:28:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   28 |     printf("\ntask number: %d\n",number_of_thread);
+      |                            ~^    ~~~~~~~~~~~~~~~~
+      |                             |    |
+      |                             int  void *
+      |                            %p
 main.c: In function ‘job2’:
-main.c:32:32: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   32 |     printf("\npthread number: %d\n ",number_of_thread);
-      |                               ~^     ~~~~~~~~~~~~~~~~
-      |                                |     |
-      |                                int   void *
-      |                               %p
+main.c:32:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   32 |     printf("\ntask number: %d\n ",number_of_thread);
+      |                            ~^     ~~~~~~~~~~~~~~~~
+      |                             |     |
+      |                             int   void *
+      |                            %p
 main.c: In function ‘check_threadpool’:
 main.c:45:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
    45 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
@@ -24,7 +24,3 @@ main.c:45:55: warning: cast to pointer from integer of different size [-Wint-to-
 main.c:48:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
    48 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
       |                                                       ^
-threadpool.c: In function ‘destroy_threadpool’:
-threadpool.c:148:51: warning: division ‘sizeof (pthread_t * {aka long unsigned int *}) / sizeof (pthread_t {aka long unsigned int})’ does not compute the number of array elements [-Wsizeof-pointer-div]
-  148 |     for (int i = 0; i < sizeof(destroyme->threads)/sizeof(pthread_t); i++)
-      |                                                   ^

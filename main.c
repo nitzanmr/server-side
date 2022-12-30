@@ -25,11 +25,11 @@ int main(int argc,char* argv[]){
 
 }
 int job1(void* number_of_thread){
-    printf("\npthread number: %d\n",number_of_thread);
+    printf("\ntask number: %d\n",number_of_thread);
     return 0;
 }
 int job2(void* number_of_thread){
-    printf("\npthread number: %d\n ",number_of_thread);
+    printf("\ntask number: %d\n ",number_of_thread);
     return 0;
 }
 
