@@ -65,13 +65,18 @@ int split(){
     check = "GET /google.com HTTP/1.1";
     char** correct_split = {"GET","/google.com","HTTP/1.1"};
     char* split_by = " ";
-    printf("\n%s\n",split_by);
     char** split_res = split_str(&check,split_by);
     for (int i = 0; i < 3; i++)
     {
-        if(correct_split[i]!=split_res[i])
+        if(!strcmp(correct_split[i],split_res[i])){
+            free(check);
+            free(split_res);
             return FAILED_TEST;
+
+        }
     }
+    free(check);
+    free(split_res);
     return PASSED_TEST;
 }
 
