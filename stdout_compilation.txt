@@ -1,21 +1,25 @@
+main.c: In function ‘main’:
+main.c:23:9: warning: unused variable ‘test’ [-Wunused-variable]
+   23 |     int test = FAILED_TEST;
+      |         ^~~~
 main.c: In function ‘job1’:
-main.c:33:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   33 |     printf("\ntask number: %d\n",number_of_thread);
+main.c:63:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   63 |     printf("\ntask number: %d\n",number_of_thread);
       |                            ~^    ~~~~~~~~~~~~~~~~
       |                             |    |
       |                             int  void *
       |                            %p
 main.c: In function ‘job2’:
-main.c:37:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   37 |     printf("\ntask number: %d\n ",number_of_thread);
+main.c:67:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   67 |     printf("\ntask number: %d\n ",number_of_thread);
       |                            ~^     ~~~~~~~~~~~~~~~~
       |                             |     |
       |                             int   void *
       |                            %p
 main.c: In function ‘check_threadpool’:
-main.c:50:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-   50 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
+main.c:80:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   80 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
       |                                                       ^
-main.c:53:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-   53 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
+main.c:83:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   83 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
       |                                                       ^

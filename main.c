@@ -2,33 +2,63 @@
 #include <stdio.h>
 #include "malloc.h"
 #include "stdlib.h"
+// #include "server.c"
 int job1(void*);
 int job2(void*);
 int check_threadpool(int,int);
+int equal();
+int zero_threads();
+int zero_tasks();
+int threads_larger();
+int tasks_larger();
 #define PASSED_TEST 0
 #define FAILED_TEST 1
+#define EQUAL 0
+#define ZEROTH 1
+#define THREAD 2
+#define TASKS 3
+#define ZEROTA 4
 int main(int argc,char* argv[]){
+    /*argv = [number_threads,number_tasks]*/
     int test = FAILED_TEST;
-    if(atoi(argv[1])==0){
-         if(check_threadpool(atoi(argv[1]),atoi(argv[2]))){
+    if(atoi(argv[1])==EQUAL)equal();
+    if(atoi(argv[1])==ZEROTH)zero_threads();
+    if(atoi(argv[1])==THREAD)threads_larger();
+    if(atoi(argv[1])==TASKS)tasks_larger();
+    if(atoi(argv[1])==ZEROTA)zero_tasks();
+
+}
+int equal(){
+    if(check_threadpool(5,5)){
+            return FAILED_TEST;
+        };
+    return PASSED_TEST;
+}
+int zero_threads(){
+     if(check_threadpool(0,5)){
             return PASSED_TEST;
         };
-        return test;
-    }
-    if(atoi(argv[1]) < atoi(argv[2])){
-        if(check_threadpool(atoi(argv[1]),atoi(argv[2]))){
-            return 1;
-        };
-        test = PASSED_TEST;
-        return test;
-    }
-    if(atoi(argv[1]) >= atoi(argv[2])){
-        if(check_threadpool(atoi(argv[1]),atoi(argv[2]))){
-        };
-        test = PASSED_TEST;
-        return test;
-    }
+    return FAILED_TEST;
 }
+int zero_tasks(){
+    if(check_threadpool(5,0)){
+            return PASSED_TEST;
+        };
+    return FAILED_TEST;
+}
+int threads_larger(){
+    if(check_threadpool(6,5)){
+            return FAILED_TEST;
+        };
+    return PASSED_TEST;
+}
+int tasks_larger(){
+    if(check_threadpool(3,6)){
+        return FAILED_TEST;
+        };
+    return PASSED_TEST;
+}
+
 int job1(void* number_of_thread){
     printf("\ntask number: %d\n",number_of_thread);
     return 0;

@@ -8,7 +8,7 @@ C_FILES = "main.c threadpool.c "
 H_FILES = "threadpool.h"   
 
 def numthreads_bigger_than_tasks():
-    status = subprocess.run(f"./{EXECUTABLE} 3 6",shell=True)
+    status = subprocess.run(f"./{EXECUTABLE} 2",shell=True)
     if status.returncode  != 0:
         print("[-]FAILED! test tasks bigger then number of threads")
         return False
@@ -17,7 +17,7 @@ def numthreads_bigger_than_tasks():
     return True
 
 def equal():
-    status = subprocess.run(f"./{EXECUTABLE} 5 5",shell=True)
+    status = subprocess.run(f"./{EXECUTABLE} 0",shell=True)
     if status.returncode  != 0:
         print("[-]FAILED! Test tasks equal/smaller then number of threads")
         return False
@@ -26,7 +26,7 @@ def equal():
     return True
 
 def zero_threads():
-    status = subprocess.run(f"./{EXECUTABLE} 0 5",shell=True)
+    status = subprocess.run(f"./{EXECUTABLE} 1",shell=True)
     if status.returncode  != 0:
         print("[-]FAILED! Zero Threads test")
         return False
@@ -34,7 +34,7 @@ def zero_threads():
     print("[+] Passed  Zero Threads test")
     return True
 def zero_tasks():
-    status = subprocess.run(f"./{EXECUTABLE} 5 0",shell=True)
+    status = subprocess.run(f"./{EXECUTABLE} 4",shell=True)
     if status.returncode  != 0:
         print("[-]FAILED! zero Tasks test")
         return False

@@ -1,3 +1,4 @@
+
 #include "string.h"
 #include "stdlib.h"
 #include <stdio.h>
@@ -11,9 +12,7 @@ char* error_message(int error_num){
         return("400 bad request");
     }
 }
-int file_exist(char* path){
-    
-}
+
 char** split_str(void*request,char* split_by){
     char* split_request[] = strtok(request,split_by);
     if(split_request== NULL){
