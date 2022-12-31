@@ -1,10 +1,11 @@
 #include "string.h"
 #include "stdlib.h"
+#include <stdio.h>
 #include "threadpool.h"
 #include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-
+#include <dirent.h>
 char* error_message(int error_num){
     if(error_num == 400){
         return("400 bad request");
@@ -23,7 +24,7 @@ char** split_str(void*request,char* split_by){
 int accept_client(void* request){
     char** split_request = split_str(request," ");
     struct stat file_stats;
-
+   
     if(strstr(split_request[0],"GET")==NULL){
         /*checks if the first value contains any other option than GET becuase we only support GET*/
         perror(error_message(501));
@@ -35,7 +36,24 @@ int accept_client(void* request){
         return 1;
     };
     if(S_ISDIR(file_stats.st_mode)){
-        perror(error_message(302));
+        if(split_request[1][strlen(split_request[1])]=='/'){
+            perror(error_message(302));
+        }
+        else{
+            char* new_name = (char*)malloc(strlen(split_request[1]) + strlen("index.html"));
+            sprintf(new_name,"%s%s",split_request[1],"index.html");
+            if(fopen(new_name,"r") < 0){
+                DIR *d;
+                struct dirent *dir;
+                d = opendir(split_request[1]);
+                if (d) {
+                    while ((dir = readdir(d)) != NULL) {
+                        printf("%s\n", dir->d_name);
+                    }
+                    closedir(d);
+                }
+            };
+        }
 
     }
     if((file_stats.st_mode & S_IROTH)){
@@ -57,12 +75,9 @@ int server(int argc, char* argv[]){
         exit(1);
     }
     while(counter_of_request<argv[2]){
-        accept_client();
+        // accept_client();
         counter_of_request++;
     }
-    destroy_threadpool(new_threadpool);
-    
-    if(fopen(argv[1]))
-    
+    destroy_threadpool(new_threadpool);    
 
 }
