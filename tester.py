@@ -41,7 +41,14 @@ def zero_tasks():
 
     print("[+] Passed Zero Tasks test")
     return True
+def split():
+    status = subprocess.run(f"./{EXECUTABLE} 5",shell=True)
+    if status.returncode  != 0:
+        print("[-]FAILED! split test")
+        return False
 
+    print("[+] Passed split test")
+    return True
 def setup():
     if os.path.isfile(EXECUTABLE):
         os.remove(EXECUTABLE)
@@ -79,12 +86,15 @@ if __name__ == "__main__":
     t_equal = equal()
     t_zero_threads = zero_threads()
     t_zero_tasks = zero_tasks()
+    t_split = split()
     t = PrettyTable(['Test', 'Result'])
     t.align['Test'] = 'l'
     t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
     t.add_row(['Tasks <= Threads', t_equal])
     t.add_row(['Threads = 0', t_zero_threads])
     t.add_row(['Tasks = 0',t_zero_tasks])
+    t.add_row(['Split ',t_split])
+
     print(t)
 
 

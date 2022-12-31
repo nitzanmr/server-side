@@ -1,4 +1,4 @@
-#include "threadpool.h"
+#include "server.c"
 #include <stdio.h>
 #include "malloc.h"
 #include "stdlib.h"
@@ -11,6 +11,7 @@ int zero_threads();
 int zero_tasks();
 int threads_larger();
 int tasks_larger();
+int split();
 #define PASSED_TEST 0
 #define FAILED_TEST 1
 #define EQUAL 0
@@ -18,6 +19,7 @@ int tasks_larger();
 #define THREAD 2
 #define TASKS 3
 #define ZEROTA 4
+#define SPLIT 5
 int main(int argc,char* argv[]){
     /*argv = [number_threads,number_tasks]*/
     int test = FAILED_TEST;
@@ -26,7 +28,7 @@ int main(int argc,char* argv[]){
     if(atoi(argv[1])==THREAD)threads_larger();
     if(atoi(argv[1])==TASKS)tasks_larger();
     if(atoi(argv[1])==ZEROTA)zero_tasks();
-
+    if(atoi(argv[1])==SPLIT)split();
 }
 int equal(){
     if(check_threadpool(5,5)){
@@ -56,6 +58,20 @@ int tasks_larger(){
     if(check_threadpool(3,6)){
         return FAILED_TEST;
         };
+    return PASSED_TEST;
+}
+int split(){
+    char* check = (char*)malloc(strlen("GET /google.com HTTP/1.1")+1);
+    check = "GET /google.com HTTP/1.1";
+    char** correct_split = {"GET","/google.com","HTTP/1.1"};
+    char* split_by = " ";
+    printf("\n%s\n",split_by);
+    char** split_res = split_str(&check,split_by);
+    for (int i = 0; i < 3; i++)
+    {
+        if(correct_split[i]!=split_res[i])
+            return FAILED_TEST;
+    }
     return PASSED_TEST;
 }
 

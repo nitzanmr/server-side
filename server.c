@@ -13,15 +13,32 @@ char* error_message(int error_num){
     }
 }
 
-char** split_str(void*request,char* split_by){
-    char* split_request[] = strtok(request,split_by);
-    if(split_request== NULL){
-        perror("error in spliting the path\n");
+char** split_str(char* request,char* split_by){
+    char** split_request = (char**)malloc(strlen(request));
+    char* request_content = request;
+    // printf("\n%s\n",*request);
+    int counter = 0;
+    // char* token = strtok(request," ");
+    // printf("\n%s\n",token);
+    int i = 0;
+    int counter_inside_word = 0;
+    while(i < strlen(request)){
+        if(request[i]==split_by){
+            counter++;
+            counter_inside_word = 0;
+        }
+        else{
+            split_request[counter_inside_word] = request[i];
+            counter_inside_word++;
+        }
+        i++;
+
     }
     return split_request;
 }
 int accept_client(void* request){
-    char** split_request = split_str(request," ");
+    char* split_by= " ";
+    char** split_request = split_str(request,split_by);
     struct stat file_stats;
    
     if(strstr(split_request[0],"GET")==NULL){
@@ -53,30 +70,30 @@ int accept_client(void* request){
                 }
             };
         }
-
     }
     if((file_stats.st_mode & S_IROTH)){
         perror(error_message(403));
         return 1;
     }
+    return 0;
 };
 int server(int argc, char* argv[]){
     /*argv == [port,pool_size,max number of requests]*/
-    int counter_of_request = 0;
-    if(argc !=3){
-        /*check the number of values inserted to the server function if it is less then needed print bad request*/
-        perror(error_message(400));
-        return 1;
-    }
-    threadpool* new_threadpool = create_threadpool(argv[1]);
-    if(new_threadpool==NULL){
-        perror("threadpool didnt create it self");
-        exit(1);
-    }
-    while(counter_of_request<argv[2]){
-        // accept_client();
-        counter_of_request++;
-    }
-    destroy_threadpool(new_threadpool);    
+    // int counter_of_request = 0;
+    // if(argc !=3){
+    //     /*check the number of values inserted to the server function if it is less then needed print bad request*/
+    //     perror(error_message(400));
+    //     return 1;
+    // }
+    // threadpool* new_threadpool = create_threadpool(argv[1]);
+    // if(new_threadpool==NULL){
+    //     perror("threadpool didnt create it self");
+    //     exit(1);
+    // }
+    // while(counter_of_request<argv[2]){
+    //     // accept_client();
+    //     counter_of_request++;
+    // }
+    // destroy_threadpool(new_threadpool);    
 
 }
