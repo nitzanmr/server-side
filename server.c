@@ -14,7 +14,7 @@ char* error_message(int error_num){
 }
 
 char** split_str(char* request,char* split_by){
-    char** split_request;
+    char** split_request = (char**)malloc(strlen(request));
     char* request_content = request;
     // printf("\n%s\n",*request);
     int counter = 0;
