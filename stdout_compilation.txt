@@ -1,43 +1,58 @@
 In file included from main.c:1:
 server.c: In function ‘split_str’:
-server.c:21:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
-   21 |     int start_of_word = 0;
+server.c:25:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
+   25 |     int start_of_word = 0;
       |         ^~~~~~~~~~~~~
 server.c: In function ‘accept_client’:
-server.c:42:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-   42 |     char* split_by= " ";
+server.c:46:11: warning: unused variable ‘split_by’ [-Wunused-variable]
+   46 |     char* split_by= " ";
+      |           ^~~~~~~~
+server.c: In function ‘server’:
+server.c:105:56: warning: passing argument 1 of ‘create_threadpool’ makes integer from pointer without a cast [-Wint-conversion]
+  105 |     threadpool* new_threadpool = create_threadpool(argv[1]);
+      |                                                    ~~~~^~~
+      |                                                        |
+      |                                                        char *
+In file included from server.c:5,
+                 from main.c:1:
+threadpool.h:59:13: note: expected ‘int’ but argument is of type ‘char *’
+   59 | threadpool* create_threadpool(int num_threads_in_pool);
+      |             ^~~~~~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:110:29: warning: comparison between pointer and integer
+  110 |     while(counter_of_request<argv[2]){
+      |                             ^
+server.c: In function ‘bad_request_m’:
+server.c:131:11: warning: unused variable ‘gmt_date’ [-Wunused-variable]
+  131 |     char* gmt_date;
       |           ^~~~~~~~
 main.c: In function ‘main’:
-main.c:25:9: warning: unused variable ‘test’ [-Wunused-variable]
-   25 |     int test = FAILED_TEST;
+main.c:27:9: warning: unused variable ‘test’ [-Wunused-variable]
+   27 |     int test = FAILED_TEST;
       |         ^~~~
 main.c: In function ‘job1’:
-main.c:82:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   82 |     printf("\ntask number: %d\n",number_of_thread);
+main.c:93:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   93 |     printf("\ntask number: %d\n",number_of_thread);
       |                            ~^    ~~~~~~~~~~~~~~~~
       |                             |    |
       |                             int  void *
       |                            %p
 main.c: In function ‘job2’:
-main.c:86:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   86 |     printf("\ntask number: %d\n ",number_of_thread);
+main.c:97:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   97 |     printf("\ntask number: %d\n ",number_of_thread);
       |                            ~^     ~~~~~~~~~~~~~~~~
       |                             |     |
       |                             int   void *
       |                            %p
 main.c: In function ‘check_threadpool’:
-main.c:99:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-   99 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
+main.c:110:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  110 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
       |                                                       ^
-main.c:102:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  102 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
+main.c:113:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  113 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
       |                                                       ^
 In file included from main.c:1:
-server.c: In function ‘error_message’:
-server.c:14:1: warning: control reaches end of non-void function [-Wreturn-type]
-   14 | }
-      | ^
 server.c: In function ‘server’:
-server.c:102:1: warning: control reaches end of non-void function [-Wreturn-type]
-  102 | }
+server.c:116:1: warning: control reaches end of non-void function [-Wreturn-type]
+  116 | }
       | ^

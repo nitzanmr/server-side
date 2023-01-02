@@ -89,6 +89,14 @@ def split():
 
     print("[+] Passed split test")
     return True
+def bad_request():
+    status = subprocess.run(f"./{EXECUTABLE} 6",shell=True)
+    if status.returncode  != 0:
+        print("[-]FAILED! split test")
+        return False
+
+    print("[+] Passed split test")
+    return True
 def setup():
     if os.path.isfile(EXECUTABLE):
         os.remove(EXECUTABLE)
@@ -128,6 +136,7 @@ if __name__ == "__main__":
     t_zero_threads = zero_threads()
     t_zero_tasks = zero_tasks()
     t_split = split()
+    t_bad_request = bad_request()
     t = PrettyTable(['Test', 'Result'])
     t.align['Test'] = 'l'
     t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
@@ -135,6 +144,7 @@ if __name__ == "__main__":
     t.add_row(['Threads = 0', t_zero_threads])
     t.add_row(['Tasks = 0',t_zero_tasks])
     t.add_row(['Split ',t_split])
+    t.add_row(['Bad Request',t_bad_request])
     # t.add_row(['valgrind ',t_valgrind])
     print(t)
 

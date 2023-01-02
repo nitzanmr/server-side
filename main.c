@@ -12,6 +12,7 @@ int zero_tasks();
 int threads_larger();
 int tasks_larger();
 int split();
+int bad_request();
 #define PASSED_TEST 0
 #define FAILED_TEST 1
 #define EQUAL 0
@@ -20,6 +21,7 @@ int split();
 #define TASKS 3
 #define ZEROTA 4
 #define SPLIT 5
+#define BADR 6 //bad request
 int main(int argc,char* argv[]){
     /*argv = [number_threads,number_tasks]*/
     int test = FAILED_TEST;
@@ -29,6 +31,8 @@ int main(int argc,char* argv[]){
     if(atoi(argv[1])==TASKS)tasks_larger();
     if(atoi(argv[1])==ZEROTA)zero_tasks();
     if(atoi(argv[1])==SPLIT)split();
+    if(atoi(argv[1])==BADR)bad_request();
+
 }
 int equal(){
     if(check_threadpool(5,5)){
@@ -77,7 +81,14 @@ int split(){
     // free(split_res);
     return PASSED_TEST;
 }
+int bad_request(){
+    char* args[] ={"GET","/path"} ;
+    if(server(2,args)>0){
+        return PASSED_TEST;
+    }
+    return FAILED_TEST;
 
+}
 int job1(void* number_of_thread){
     printf("\ntask number: %d\n",number_of_thread);
     return 0;
