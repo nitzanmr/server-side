@@ -61,22 +61,20 @@ int tasks_larger(){
     return PASSED_TEST;
 }
 int split(){
-    char* check = (char*)malloc(strlen("GET /google.com HTTP/1.1")+1);
-    check = "GET /google.com HTTP/1.1";
-    char** correct_split = {"GET","/google.com","HTTP/1.1"};
+    char check[] = "GET /google.com HTTP/1.1";
+    char* correct_split[] = {"GET","/google.com","HTTP/1.1"};
     char* split_by = " ";
-    char** split_res = split_str(&check,split_by);
+    char* split_res[3];
+    split_str(check,split_by,split_res);
+    printf("\n after asgining\n");
     for (int i = 0; i < 3; i++)
     {
         if(!strcmp(correct_split[i],split_res[i])){
-            free(check);
-            free(split_res);
             return FAILED_TEST;
-
         }
     }
-    free(check);
-    free(split_res);
+    // free(check);
+    // free(split_res);
     return PASSED_TEST;
 }
 

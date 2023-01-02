@@ -13,34 +13,35 @@ char* error_message(int error_num){
     }
 }
 
-char** split_str(char* request,char* split_by){
-    char** split_request = (char**)malloc(strlen(request));
-    char* request_content = request;
+void split_str(char* request,char* split_by,char** split_request){
     // printf("\n%s\n",*request);
     int counter = 0;
     // char* token = strtok(request," ");
     // printf("\n%s\n",token);
+    int start_of_word = 0;
     int i = 0;
-    int counter_inside_word = 0;
-    while(i < strlen(request)){
-        if(request[i]==split_by){
+    split_request[0] = request;
+    printf("\n%s\n",split_request[counter]);
+    while(request[i]!='\0'){
+        if(request[i]==*split_by){
+            printf("\ni is:%d request[%d] is: /%c/\n",i,i,request[i]);
+            request[i] = '\0';
+            printf("\n%s\n",request);
             counter++;
-            counter_inside_word = 0;
-        }
-        else{
-            split_request[counter_inside_word] = request[i];
-            counter_inside_word++;
+            split_request[counter] = request+i+1;
         }
         i++;
-
     }
-    
-
-    return NULL;
+    request[i] = '\0';
+    for(int j = 0;j<3;j++){
+        printf("\nthe split[%d] is:%s\n",j,split_request[j]);
+    }
+    printf("\n made it to the end\n");
 }
 int accept_client(void* request){
     char* split_by= " ";
-    char** split_request = split_str(request,split_by);
+    char* split_request[3];
+    split_str((char*)request," ",split_request);
     struct stat file_stats;
    
     if(strstr(split_request[0],"GET")==NULL){

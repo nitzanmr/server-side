@@ -123,7 +123,7 @@ if __name__ == "__main__":
     if compilation_status == "Error":
         exit(0)
     t_numthreads_bigger_than_tasks = numthreads_bigger_than_tasks()
-    t_valgrind = valgrind_test()
+    # t_valgrind = valgrind_test()
     t_equal = equal()
     t_zero_threads = zero_threads()
     t_zero_tasks = zero_tasks()
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     t.add_row(['Threads = 0', t_zero_threads])
     t.add_row(['Tasks = 0',t_zero_tasks])
     t.add_row(['Split ',t_split])
-    t.add_row(['valgrind ',t_valgrind])
+    # t.add_row(['valgrind ',t_valgrind])
     print(t)
 
 

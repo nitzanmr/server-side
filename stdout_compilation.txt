@@ -1,60 +1,36 @@
 In file included from main.c:1:
 server.c: In function ‘split_str’:
-server.c:26:22: warning: comparison between pointer and integer
-   26 |         if(request[i]==split_by){
-      |                      ^~
-server.c:31:48: warning: assignment to ‘char *’ from ‘char’ makes pointer from integer without a cast [-Wint-conversion]
-   31 |             split_request[counter_inside_word] = request[i];
-      |                                                ^
-server.c:18:11: warning: unused variable ‘request_content’ [-Wunused-variable]
-   18 |     char* request_content = request;
-      |           ^~~~~~~~~~~~~~~
+server.c:21:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
+   21 |     int start_of_word = 0;
+      |         ^~~~~~~~~~~~~
+server.c: In function ‘accept_client’:
+server.c:42:11: warning: unused variable ‘split_by’ [-Wunused-variable]
+   42 |     char* split_by= " ";
+      |           ^~~~~~~~
 main.c: In function ‘main’:
 main.c:25:9: warning: unused variable ‘test’ [-Wunused-variable]
    25 |     int test = FAILED_TEST;
       |         ^~~~
-main.c: In function ‘split’:
-main.c:66:29: warning: initialization of ‘char **’ from incompatible pointer type ‘char *’ [-Wincompatible-pointer-types]
-   66 |     char** correct_split = {"GET","/google.com","HTTP/1.1"};
-      |                             ^~~~~
-main.c:66:29: note: (near initialization for ‘correct_split’)
-main.c:66:35: warning: excess elements in scalar initializer
-   66 |     char** correct_split = {"GET","/google.com","HTTP/1.1"};
-      |                                   ^~~~~~~~~~~~~
-main.c:66:35: note: (near initialization for ‘correct_split’)
-main.c:66:49: warning: excess elements in scalar initializer
-   66 |     char** correct_split = {"GET","/google.com","HTTP/1.1"};
-      |                                                 ^~~~~~~~~~
-main.c:66:49: note: (near initialization for ‘correct_split’)
-main.c:68:34: warning: passing argument 1 of ‘split_str’ from incompatible pointer type [-Wincompatible-pointer-types]
-   68 |     char** split_res = split_str(&check,split_by);
-      |                                  ^~~~~~
-      |                                  |
-      |                                  char **
-In file included from main.c:1:
-server.c:16:24: note: expected ‘char *’ but argument is of type ‘char **’
-   16 | char** split_str(char* request,char* split_by){
-      |                  ~~~~~~^~~~~~~
 main.c: In function ‘job1’:
-main.c:84:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   84 |     printf("\ntask number: %d\n",number_of_thread);
+main.c:82:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   82 |     printf("\ntask number: %d\n",number_of_thread);
       |                            ~^    ~~~~~~~~~~~~~~~~
       |                             |    |
       |                             int  void *
       |                            %p
 main.c: In function ‘job2’:
-main.c:88:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   88 |     printf("\ntask number: %d\n ",number_of_thread);
+main.c:86:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+   86 |     printf("\ntask number: %d\n ",number_of_thread);
       |                            ~^     ~~~~~~~~~~~~~~~~
       |                             |     |
       |                             int   void *
       |                            %p
 main.c: In function ‘check_threadpool’:
-main.c:101:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  101 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
+main.c:99:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   99 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
       |                                                       ^
-main.c:104:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  104 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
+main.c:102:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  102 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
       |                                                       ^
 In file included from main.c:1:
 server.c: In function ‘error_message’:
@@ -62,10 +38,6 @@ server.c:14:1: warning: control reaches end of non-void function [-Wreturn-type]
    14 | }
       | ^
 server.c: In function ‘server’:
-server.c:101:1: warning: control reaches end of non-void function [-Wreturn-type]
-  101 | }
+server.c:102:1: warning: control reaches end of non-void function [-Wreturn-type]
+  102 | }
       | ^
-main.c: In function ‘split_str’:
-server.c:31:26: warning: ‘split_request’ may be used uninitialized in this function [-Wmaybe-uninitialized]
-   31 |             split_request[counter_inside_word] = request[i];
-      |                          ^
