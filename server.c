@@ -77,7 +77,7 @@ int accept_client(void* request){
     if(strstr(split_request[0],"GET")==NULL){
         /*checks if the first value contains any other option than GET becuase we only support GET*/
         char error[500];
-        error_message(501,error);
+        error_message(501,error,NULL);
         perror(error);
         return 1;
     }
@@ -157,7 +157,7 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
     char* gmt_date;
     char location[50];
     if(path!=NULL){
-         sprintf(location,"Location: %s",path);
+         sprintf(location,"Location: %s\r\n",path);
     }
     else{
         location[0] = "\0";

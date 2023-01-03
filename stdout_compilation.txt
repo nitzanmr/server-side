@@ -4,38 +4,6 @@ server.c:51:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
    51 |     int start_of_word = 0;
       |         ^~~~~~~~~~~~~
 server.c: In function ‘accept_client’:
-server.c:80:9: error: too few arguments to function ‘error_message’
-   80 |         error_message(501,error);
-      |         ^~~~~~~~~~~~~
-In file included from main.c:1:
-server.c:13:6: note: declared here
-   13 | void error_message(int error_num,char* buf,char* path){
-      |      ^~~~~~~~~~~~~
-In file included from main.c:1:
-server.c:87:9: error: too few arguments to function ‘error_message’
-   87 |         error_message(404,error);
-      |         ^~~~~~~~~~~~~
-In file included from main.c:1:
-server.c:13:6: note: declared here
-   13 | void error_message(int error_num,char* buf,char* path){
-      |      ^~~~~~~~~~~~~
-In file included from main.c:1:
-server.c:94:13: error: too few arguments to function ‘error_message’
-   94 |             error_message(302,error);
-      |             ^~~~~~~~~~~~~
-In file included from main.c:1:
-server.c:13:6: note: declared here
-   13 | void error_message(int error_num,char* buf,char* path){
-      |      ^~~~~~~~~~~~~
-In file included from main.c:1:
-server.c:115:9: error: too few arguments to function ‘error_message’
-  115 |         error_message(403,error);
-      |         ^~~~~~~~~~~~~
-In file included from main.c:1:
-server.c:13:6: note: declared here
-   13 | void error_message(int error_num,char* buf,char* path){
-      |      ^~~~~~~~~~~~~
-In file included from main.c:1:
 server.c:72:11: warning: unused variable ‘split_by’ [-Wunused-variable]
    72 |     char* split_by= " ";
       |           ^~~~~~~~
