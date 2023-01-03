@@ -9,6 +9,11 @@
 #include <dirent.h>
 #include <time.h>
 #include <stdint.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#define SA struct sockaddr 
 void build_header_m(char*, char*,int,char* path);
 void error_message(int error_num,char* buf,char* path){
     if(error_num == 400){
@@ -73,12 +78,7 @@ int accept_client(void* request){
     char* split_request[3];
     split_str((char*)request," ",split_request);
     struct stat file_stats;
-   if(stat(split_request[1],&file_stats) < 0){
-        char error[500];
-        error_message(404,error,NULL);
-        perror(error);
-        return 1;
-    };
+   
     if(split_request[0] != NULL && split_request[1] != NULL && split_request[2] != NULL){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
         char error[500];
@@ -93,7 +93,12 @@ int accept_client(void* request){
         perror(error);
         return 1;
     }
-   
+   if(stat(split_request[1],&file_stats) < 0){
+        char error[500];
+        error_message(404,error,NULL);
+        perror(error);
+        return 1;
+    };
     
     if(S_ISDIR(file_stats.st_mode)){
         if(split_request[1][strlen(split_request[1])]=='/'){
@@ -123,11 +128,71 @@ int accept_client(void* request){
         perror(error);
         return 1;
     }
+    /*add a return file value*/
     return 0;
 };
+int create_server(int port){
+    int sockfd, connfd, len;
+    struct sockaddr_in servaddr, cli;
+   
+    // socket create and verification
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd == -1) {
+        printf("socket creation failed...\n");
+        exit(0);
+    }
+    else
+        printf("Socket successfully created..\n");
+    bzero(&servaddr, sizeof(servaddr));
+   
+    // assign IP, PORT
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servaddr.sin_port = htons(port);
+   
+    // Binding newly created socket to given IP and verification
+    if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) {
+        printf("socket bind failed...\n");
+        exit(0);
+    }
+    else
+        printf("Socket successfully binded..\n");
+   
+    // Now server is ready to listen and verification
+    if ((listen(sockfd, 5)) != 0) {
+        printf("Listen failed...\n");
+        exit(0);
+    }
+    else
+        printf("Server listening..\n");
+    len = sizeof(cli);
+   
+    // Accept the data packet from client and verification
+    connfd = accept(sockfd, (SA*)&cli, &len);
+    if (connfd < 0) {
+        printf("server accept failed...\n");
+        exit(0);
+    }
+    else
+        printf("server accept the client...\n");
+   
+    // Function for chatting between client and server
+
+    //write a function that sends the read from the client to the accept_client_func 
+    //then send the returned value to the client.
+    func(connfd);
+   
+    // After chatting close the socket
+    close(sockfd);
+}
+
 int server(int argc, char* argv[]){
     /*argv == [port,pool_size,max number of requests]*/
     int counter_of_request = 0;
+    if(argc<3){
+        perror("too little arguments entered to the server\n");
+        return 1;
+    }
     threadpool* new_threadpool = create_threadpool(argv[1]);
     if(new_threadpool==NULL){
         perror("threadpool didnt create it self");
@@ -138,7 +203,7 @@ int server(int argc, char* argv[]){
         counter_of_request++;
     }
     destroy_threadpool(new_threadpool);    
-
+    return 0;
 }
 void build_header_m(char* error_message ,char* error_spciefed,int content_length,char* path){
     /* format: this is only the format for 400.
@@ -154,22 +219,24 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
     Bad Request.
     </BODY></HTML> */
 
-    char* gmt_date;
-   
+    #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
+    time_t now;
+    char timebuf[128];
+    now = time(NULL);
+    strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
     //  sprintf(gmt_date, asctime(gmtime(epoch)));
-      time_t epoch = 0;
-      time(&epoch);
+   
     // printf("%jd seconds since the epoch began\n", (intmax_t)epoch);
     // printf("%s", asctime(gmtime(&epoch)));
     //  printf("\nsigsegv here\n");
     if(path!=NULL){
         char location[50];
         sprintf(location,"Location: %s\r\n",path);
-        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,asctime(gmtime(&epoch)),location,content_length);
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,location,content_length);
 
     }
     else{
-        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,asctime(gmtime(&epoch)),content_length);
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,content_length);
 
     }
 
