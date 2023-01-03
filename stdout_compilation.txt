@@ -23,9 +23,6 @@ server.c:136:29: warning: comparison between pointer and integer
   136 |     while(counter_of_request<argv[2]){
       |                             ^
 server.c: In function ‘build_header_m’:
-server.c:163:21: warning: assignment to ‘char’ from ‘char *’ makes integer from pointer without a cast [-Wint-conversion]
-  163 |         location[0] = "\0";
-      |                     ^
 server.c:157:11: warning: unused variable ‘gmt_date’ [-Wunused-variable]
   157 |     char* gmt_date;
       |           ^~~~~~~~

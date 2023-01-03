@@ -73,7 +73,19 @@ int accept_client(void* request){
     char* split_request[3];
     split_str((char*)request," ",split_request);
     struct stat file_stats;
-   
+   if(stat(split_request[1],&file_stats) < 0){
+        char error[500];
+        error_message(404,error,NULL);
+        perror(error);
+        return 1;
+    };
+    if(split_request[0] != NULL && split_request[1] != NULL && split_request[2] != NULL){
+        /*check the number of values inserted to the server function if it is less then needed print bad request*/
+        char error[500];
+        error_message(400,error,NULL);
+        perror(error);
+        return 1;
+    }
     if(strstr(split_request[0],"GET")==NULL){
         /*checks if the first value contains any other option than GET becuase we only support GET*/
         char error[500];
@@ -82,16 +94,11 @@ int accept_client(void* request){
         return 1;
     }
    
-    if(stat(split_request[1],&file_stats) < 0){
-        char error[500];
-        error_message(404,error,NULL);
-        perror(error);
-        return 1;
-    };
+    
     if(S_ISDIR(file_stats.st_mode)){
         if(split_request[1][strlen(split_request[1])]=='/'){
              char error[500];
-            error_message(302,error,split_request[1]);
+            error_message(302,error,NULL);
             perror(error);
         }
         else{
@@ -121,13 +128,6 @@ int accept_client(void* request){
 int server(int argc, char* argv[]){
     /*argv == [port,pool_size,max number of requests]*/
     int counter_of_request = 0;
-    if(argc !=3){
-        /*check the number of values inserted to the server function if it is less then needed print bad request*/
-        char error[500];
-        error_message(400,error,argv[1]);
-        perror(error);
-        return 1;
-    }
     threadpool* new_threadpool = create_threadpool(argv[1]);
     if(new_threadpool==NULL){
         perror("threadpool didnt create it self");
@@ -155,21 +155,23 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
     </BODY></HTML> */
 
     char* gmt_date;
-    char location[50];
-    if(path!=NULL){
-         sprintf(location,"Location: %s\r\n",path);
-    }
-    else{
-        location[0] = "\0";
-    }
+   
     //  sprintf(gmt_date, asctime(gmtime(epoch)));
       time_t epoch = 0;
       time(&epoch);
     // printf("%jd seconds since the epoch began\n", (intmax_t)epoch);
     // printf("%s", asctime(gmtime(&epoch)));
     //  printf("\nsigsegv here\n");
+    if(path!=NULL){
+        char location[50];
+        sprintf(location,"Location: %s\r\n",path);
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,asctime(gmtime(&epoch)),location,content_length);
 
+    }
+    else{
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,asctime(gmtime(&epoch)),content_length);
 
-    sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\r\n%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,asctime(gmtime(&epoch)),location,content_length);
+    }
+
     printf("\n%s\n",error_message);
 }
