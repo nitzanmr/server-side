@@ -1,15 +1,47 @@
 In file included from main.c:1:
 server.c: In function ‘split_str’:
-server.c:25:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
-   25 |     int start_of_word = 0;
+server.c:51:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
+   51 |     int start_of_word = 0;
       |         ^~~~~~~~~~~~~
 server.c: In function ‘accept_client’:
-server.c:46:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-   46 |     char* split_by= " ";
+server.c:80:9: error: too few arguments to function ‘error_message’
+   80 |         error_message(501,error);
+      |         ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:13:6: note: declared here
+   13 | void error_message(int error_num,char* buf,char* path){
+      |      ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:87:9: error: too few arguments to function ‘error_message’
+   87 |         error_message(404,error);
+      |         ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:13:6: note: declared here
+   13 | void error_message(int error_num,char* buf,char* path){
+      |      ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:94:13: error: too few arguments to function ‘error_message’
+   94 |             error_message(302,error);
+      |             ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:13:6: note: declared here
+   13 | void error_message(int error_num,char* buf,char* path){
+      |      ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:115:9: error: too few arguments to function ‘error_message’
+  115 |         error_message(403,error);
+      |         ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:13:6: note: declared here
+   13 | void error_message(int error_num,char* buf,char* path){
+      |      ^~~~~~~~~~~~~
+In file included from main.c:1:
+server.c:72:11: warning: unused variable ‘split_by’ [-Wunused-variable]
+   72 |     char* split_by= " ";
       |           ^~~~~~~~
 server.c: In function ‘server’:
-server.c:105:56: warning: passing argument 1 of ‘create_threadpool’ makes integer from pointer without a cast [-Wint-conversion]
-  105 |     threadpool* new_threadpool = create_threadpool(argv[1]);
+server.c:131:56: warning: passing argument 1 of ‘create_threadpool’ makes integer from pointer without a cast [-Wint-conversion]
+  131 |     threadpool* new_threadpool = create_threadpool(argv[1]);
       |                                                    ~~~~^~~
       |                                                        |
       |                                                        char *
@@ -19,12 +51,15 @@ threadpool.h:59:13: note: expected ‘int’ but argument is of type ‘char *�
    59 | threadpool* create_threadpool(int num_threads_in_pool);
       |             ^~~~~~~~~~~~~~~~~
 In file included from main.c:1:
-server.c:110:29: warning: comparison between pointer and integer
-  110 |     while(counter_of_request<argv[2]){
+server.c:136:29: warning: comparison between pointer and integer
+  136 |     while(counter_of_request<argv[2]){
       |                             ^
-server.c: In function ‘bad_request_m’:
-server.c:131:11: warning: unused variable ‘gmt_date’ [-Wunused-variable]
-  131 |     char* gmt_date;
+server.c: In function ‘build_header_m’:
+server.c:163:21: warning: assignment to ‘char’ from ‘char *’ makes integer from pointer without a cast [-Wint-conversion]
+  163 |         location[0] = "\0";
+      |                     ^
+server.c:157:11: warning: unused variable ‘gmt_date’ [-Wunused-variable]
+  157 |     char* gmt_date;
       |           ^~~~~~~~
 main.c: In function ‘main’:
 main.c:27:9: warning: unused variable ‘test’ [-Wunused-variable]
@@ -53,6 +88,6 @@ main.c:113:55: warning: cast to pointer from integer of different size [-Wint-to
       |                                                       ^
 In file included from main.c:1:
 server.c: In function ‘server’:
-server.c:116:1: warning: control reaches end of non-void function [-Wreturn-type]
-  116 | }
+server.c:142:1: warning: control reaches end of non-void function [-Wreturn-type]
+  142 | }
       | ^

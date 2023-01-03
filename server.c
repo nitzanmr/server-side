@@ -9,10 +9,36 @@
 #include <dirent.h>
 #include <time.h>
 #include <stdint.h>
-void bad_request_m(char*);
-void error_message(int error_num,char* buf){
+void build_header_m(char*, char*,int,char* path);
+void error_message(int error_num,char* buf,char* path){
     if(error_num == 400){
-        bad_request_m(buf);
+        build_header_m(buf,"400 bad request",strlen("<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>\r\n<BODY><H4>400 Bad request</H4>\r\nBad Request.\r\n</BODY></HTML>\0"),path);
+        sprintf(buf,"<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>\r\n<BODY><H4>400 Bad request</H4>\r\nBad Request.\r\n</BODY></HTML>");
+        return;
+    }
+    if(error_num ==501){
+        build_header_m(buf,"501 Not supported",strlen("<HTML><HEAD><TITLE>501 Not supported</TITLE></HEAD>\r\n<BODY><H4>501 Not supported</H4>\r\nMethod is not supported.\r\n</BODY></HTML>\0"),path);
+        sprintf(buf,"<HTML><HEAD><TITLE>501 Not supported</TITLE></HEAD>\r\n<BODY><H4>501 Not supported</H4>\r\nMethod is not supported.\r\n</BODY></HTML>");
+        return;
+    }
+    if(error_num == 500){
+        build_header_m(buf,"500 Internal Server Error",strlen("<HTML><HEAD><TITLE>500 Internal Server Error</TITLE></HEAD>\r\n<BODY><H4>500 Internal Server Error</H4>\r\nSome server side error.\r\n</BODY></HTML>\0"),path);
+        sprintf(buf,"<HTML><HEAD><TITLE>500 Internal Server Error</TITLE></HEAD>\r\n<BODY><H4>500 Internal Server Error</H4>\r\nSome server side error.\r\n</BODY></HTML>");
+        return;
+    }
+    if(error_num == 404){
+        build_header_m(buf,"404 Not Found",strlen("<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>\r\n<BODY><H4>404 Not Found</H4>\r\nFile not found.\r\n</BODY></HTML>\0"),path);
+        sprintf(buf,"<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>\r\n<BODY><H4>404 Not Found</H4>\r\nFile not found.\r\n</BODY></HTML>");
+        return;
+    }
+    if(error_num == 403){
+        build_header_m(buf,"403 Forbidden",strlen("<HTML><HEAD><TITLE>403 Forbidden</TITLE></HEAD>\r\n<BODY><H4>403 Forbidden</H4>\r\nAccess denied.\r\n</BODY></HTML>\0"),path);
+        sprintf(buf,"<HTML><HEAD><TITLE>403 Forbidden</TITLE></HEAD>\r\n<BODY><H4>403 Forbidden</H4>\r\nAccess denied.\r\n</BODY></HTML>");
+        return;
+    }
+    if(error_num == 302){
+        build_header_m(buf,"302 Found",strlen("<HTML><HEAD><TITLE>302 Found</TITLE></HEAD>\r\n<BODY><H4>302 Found</H4>\r\nDirectories must end with a slash.\r\n</BODY></HTML>\0"),path);
+        sprintf(buf,"<HTML><HEAD><TITLE>302 Found</TITLE></HEAD>\r\n<BODY><H4>302 Found</H4>\r\nDirectories must end with a slash.\r\n</BODY></HTML>");
         return;
     }
 }
@@ -58,14 +84,14 @@ int accept_client(void* request){
    
     if(stat(split_request[1],&file_stats) < 0){
         char error[500];
-        error_message(404,error);
+        error_message(404,error,NULL);
         perror(error);
         return 1;
     };
     if(S_ISDIR(file_stats.st_mode)){
         if(split_request[1][strlen(split_request[1])]=='/'){
              char error[500];
-            error_message(302,error);
+            error_message(302,error,split_request[1]);
             perror(error);
         }
         else{
@@ -86,7 +112,7 @@ int accept_client(void* request){
     }
     if((file_stats.st_mode & S_IROTH)){
         char error[500];
-        error_message(403,error);
+        error_message(403,error,NULL);
         perror(error);
         return 1;
     }
@@ -98,7 +124,7 @@ int server(int argc, char* argv[]){
     if(argc !=3){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
         char error[500];
-        error_message(400,error);
+        error_message(400,error,argv[1]);
         perror(error);
         return 1;
     }
@@ -114,8 +140,8 @@ int server(int argc, char* argv[]){
     destroy_threadpool(new_threadpool);    
 
 }
-void bad_request_m(char* error_message){
-    /* format:
+void build_header_m(char* error_message ,char* error_spciefed,int content_length,char* path){
+    /* format: this is only the format for 400.
     HTTP/1.1 400 Bad Request
     Server: webserver/1.0
     Date: Fri, 05 Nov 2010 13:50:33 GMT
@@ -129,6 +155,13 @@ void bad_request_m(char* error_message){
     </BODY></HTML> */
 
     char* gmt_date;
+    char location[50];
+    if(path!=NULL){
+         sprintf(location,"Location: %s",path);
+    }
+    else{
+        location[0] = "\0";
+    }
     //  sprintf(gmt_date, asctime(gmtime(epoch)));
       time_t epoch = 0;
       time(&epoch);
@@ -137,7 +170,6 @@ void bad_request_m(char* error_message){
     //  printf("\nsigsegv here\n");
 
 
-    sprintf(error_message,"HTTP/1.1 400 Bad Request\r\nServer: webserver/1.0\r\nDate: %s\r\nContent-Type: text/html\r\nContent-Length: 113\r\nConnection: closed\r\n\r\n<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>\r\n<BODY><H4>400 Bad request</H4>\r\nBad Request.\r\n</BODY></HTML>", asctime(gmtime(&epoch)));
-    // sprintf(error_message,"<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>\r\n<BODY><H4>400 Bad request</H4>\r\nBad Request.\r\n </BODY></HTML> ");
+    sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\r\n%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,asctime(gmtime(&epoch)),location,content_length);
     printf("\n%s\n",error_message);
 }
