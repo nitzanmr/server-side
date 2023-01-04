@@ -73,39 +73,34 @@ void split_str(char* request,char* split_by,char** split_request){
     }
     printf("\n made it to the end\n");
 }
-int accept_client(void* request){
+int accept_client(void* request,char* buf,int fd){
     char* split_by= " ";
     char* split_request[3];
     split_str((char*)request," ",split_request);
     struct stat file_stats;
-   
+
     if(split_request[0] != NULL && split_request[1] != NULL && split_request[2] != NULL){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
-        char error[500];
-        error_message(400,error,NULL);
-        perror(error);
+        error_message(400,buf,NULL);
+        write(fd,buf,strlen(buf));
         return 1;
     }
     if(strstr(split_request[0],"GET")==NULL){
         /*checks if the first value contains any other option than GET becuase we only support GET*/
-        char error[500];
-        error_message(501,error,NULL);
-        perror(error);
+        error_message(501,buf,NULL);
+        write(fd,buf,strlen(buf)); 
         return 1;
     }
    if(stat(split_request[1],&file_stats) < 0){
-        char error[500];
-        error_message(404,error,NULL);
-        perror(error);
+        error_message(404,buf,NULL);
+        write(fd,buf,strlen(buf));
         return 1;
     };
     
     if(S_ISDIR(file_stats.st_mode)){
         if(split_request[1][strlen(split_request[1])]=='/'){
-             char error[500];
-            error_message(302,error,NULL);
-            perror(error);
-        }
+            error_message(302,buf,NULL);
+            write(fd,buf,strlen(buf));        }
         else{
             char* new_name = (char*)malloc(strlen(split_request[1]) + strlen("index.html"));
             sprintf(new_name,"%s%s",split_request[1],"index.html");
@@ -123,17 +118,30 @@ int accept_client(void* request){
         }
     }
     if((file_stats.st_mode & S_IROTH)){
-        char error[500];
-        error_message(403,error,NULL);
-        perror(error);
+        error_message(403,buf,NULL);
+        write(fd,buf,strlen(buf));
         return 1;
     }
     /*add a return file value*/
+    else{
+        error_message(200,buf,NULL);
+        
+    }
     return 0;
 };
 int client_read(int fd){
     char* buf[512];
-    while()
+    char* returned_buf[512];
+    int valread;
+    int counter = 0;
+    while(valread = read(fd,buf,1)){
+        if(buf[counter]=='\n'){
+            buf[counter-1] = '\0';
+            break;
+        }
+        counter++;
+    }
+    accept_client(buf,returned_buf,fd);
 }
 int create_server(int port,int number_of_request){
     int sockfd, connfd, len;
