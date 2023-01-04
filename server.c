@@ -47,7 +47,20 @@ void error_message(int error_num,char* buf,char* path){
         return;
     }
 }
-
+char *get_mime_type(char *name) {
+    char *ext = strrchr(name, '.');
+    if (!ext) return NULL;
+    if (strcmp(ext, ".html") == 0 || strcmp(ext, ".htm") == 0) return "text/html";
+    if (strcmp(ext, ".jpg") == 0 || strcmp(ext, ".jpeg") == 0) return "image/jpeg";
+    if (strcmp(ext, ".gif") == 0) return "image/gif";
+    if (strcmp(ext, ".png") == 0) return "image/png";
+    if (strcmp(ext, ".css") == 0) return "text/css";
+    if (strcmp(ext, ".au") == 0) return "audio/basic";
+    if (strcmp(ext, ".wav") == 0) return "audio/wav";
+    if (strcmp(ext, ".avi") == 0) return "video/x-msvideo";
+    if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
+    return NULL;
+}
 void split_str(char* request,char* split_by,char** split_request){
     // printf("\n%s\n",*request);
     int counter = 0;
@@ -72,6 +85,35 @@ void split_str(char* request,char* split_by,char** split_request){
         printf("\nthe split[%d] is:%s\n",j,split_request[j]);
     }
     printf("\n made it to the end\n");
+}
+int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
+    FILE* ptr;
+    ptr = open(path,"r");
+    int read_val = 0;
+    int write_val = 0;
+    if (NULL == ptr) {
+        printf("file can't be opened \n");
+        return 1;
+    }
+    
+    while(1){
+            read_val=read(ptr,buf,512);
+            
+            if(read_val== -1){
+                perror("read fiile error");
+                return 1;
+            }
+
+            write_val = write(fd_socket,buf,512);
+            if(write_val == -1){
+                perror("write to server failed\n");
+                return 1;
+            }
+            if(read_val == 0){
+                return 0;
+            }
+    }
+
 }
 int accept_client(void* request,char* buf,int fd){
     char* split_by= " ";
@@ -124,8 +166,20 @@ int accept_client(void* request,char* buf,int fd){
     }
     /*add a return file value*/
     else{
-        error_message(200,buf,NULL);
-        
+        #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
+        struct stat stats;
+        if(stat(split_request[1],&stats)==1){
+            perror("stat 200 failed");
+            return 1;
+        }
+        time_t now;
+        char timebuf[128];
+        now = time(NULL);
+        strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
+        char* type = get_mime_type(split_request[1]);
+        sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,stats.st_mtime);
+        write(fd,buf,strlen(buf));
+        read_and_write_file(fd,split_request[1],stats.st_size,buf);
     }
     return 0;
 };
