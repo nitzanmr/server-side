@@ -131,10 +131,14 @@ int accept_client(void* request){
     /*add a return file value*/
     return 0;
 };
-int create_server(int port){
+int client_read(int fd){
+    char* buf[512];
+    while()
+}
+int create_server(int port,int number_of_request){
     int sockfd, connfd, len;
     struct sockaddr_in servaddr, cli;
-   
+    int counter_of_request = 0;
     // socket create and verification
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
@@ -168,19 +172,21 @@ int create_server(int port){
     len = sizeof(cli);
    
     // Accept the data packet from client and verification
-    connfd = accept(sockfd, (SA*)&cli, &len);
-    if (connfd < 0) {
-        printf("server accept failed...\n");
-        exit(0);
-    }
-    else
-        printf("server accept the client...\n");
-   
-    // Function for chatting between client and server
+    while(counter_of_request < number_of_request){    
+        connfd = accept(sockfd, (SA*)&cli, &len);
+        if (connfd < 0) {
+            printf("server accept failed...\n");
+            exit(0);
+        }
+        else
+            printf("server accept the client...\n");
+        // Function for chatting between client and server
 
-    //write a function that sends the read from the client to the accept_client_func 
-    //then send the returned value to the client.
-    func(connfd);
+        //write a function that sends the read from the client to the accept_client_func 
+        //then send the returned value to the client.
+        client_read(connfd);
+        counter_of_request++;
+    }
    
     // After chatting close the socket
     close(sockfd);
@@ -198,10 +204,7 @@ int server(int argc, char* argv[]){
         perror("threadpool didnt create it self");
         exit(1);
     }
-    while(counter_of_request<argv[2]){
-        // accept_client();
-        counter_of_request++;
-    }
+    create_server(argv[0],argv[2]);
     destroy_threadpool(new_threadpool);    
     return 0;
 }
