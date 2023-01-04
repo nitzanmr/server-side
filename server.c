@@ -197,7 +197,7 @@ int client_read(int fd){
     }
     accept_client(buf,returned_buf,fd);
 }
-int create_server(int port,int number_of_request){
+int create_server(int port,int number_of_request,threadpool* new_threadpool){
     int sockfd, connfd, len;
     struct sockaddr_in servaddr, cli;
     int counter_of_request = 0;
@@ -246,7 +246,7 @@ int create_server(int port,int number_of_request){
 
         //write a function that sends the read from the client to the accept_client_func 
         //then send the returned value to the client.
-        client_read(connfd);
+        dispatch(new_threadpool,(dispatch_fn)client_read,connfd);
         counter_of_request++;
     }
    
