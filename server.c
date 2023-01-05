@@ -121,7 +121,7 @@ int accept_client(void* request,char* buf,int fd){
     split_str((char*)request," ",split_request);
     struct stat file_stats;
     printf("made it here\n");
-    if(split_request[0] != NULL && split_request[1] != NULL && split_request[2] != NULL){
+    if(split_request[0] == NULL || split_request[1] == NULL || split_request[2] == NULL){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
         error_message(400,buf,NULL);
         write(fd,buf,strlen(buf));
