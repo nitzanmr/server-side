@@ -1,105 +1,87 @@
-In file included from main.c:1:
-server.c: In function ‘get_mime_type’:
-server.c:61:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-   61 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
-      |     ^~
-server.c:61:85: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
-   61 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
-      |                                                                                     ^~
-server.c: In function ‘split_str’:
-server.c:69:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
-   69 |     int start_of_word = 0;
-      |         ^~~~~~~~~~~~~
-server.c: In function ‘read_and_write_file’:
-server.c:91:11: warning: implicit declaration of function ‘open’; did you mean ‘popen’? [-Wimplicit-function-declaration]
-   91 |     ptr = open(path,"r");
-      |           ^~~~
-      |           popen
-server.c:91:9: warning: assignment to ‘FILE *’ {aka ‘struct _IO_FILE *’} from ‘int’ makes pointer from integer without a cast [-Wint-conversion]
-   91 |     ptr = open(path,"r");
-      |         ^
-server.c:100:27: warning: passing argument 1 of ‘read’ makes integer from pointer without a cast [-Wint-conversion]
-  100 |             read_val=read(ptr,buf,512);
-      |                           ^~~
-      |                           |
-      |                           FILE * {aka struct _IO_FILE *}
-In file included from server.c:15,
-                 from main.c:1:
-/usr/include/unistd.h:360:26: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
-  360 | extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
-      |                      ~~~~^~~~
-In file included from main.c:1:
-server.c: In function ‘accept_client’:
-server.c:183:107: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
-  183 |         sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,timebuf_mtime);
-      |                                                                                                          ~^                                                                        ~~~~~~~~~~~~~~~
-      |                                                                                                           |                                                                                     |
-      |                                                                                                           int                                                                                   __off_t {aka long int}
-      |                                                                                                          %ld
-server.c:119:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-  119 |     char* split_by= " ";
-      |           ^~~~~~~~
-server.c: In function ‘client_read’:
-server.c:195:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-  195 |     while(valread = read((int)fd,buf,1)){
-      |                          ^
-server.c:195:11: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
-  195 |     while(valread = read((int)fd,buf,1)){
-      |           ^~~~~~~
-server.c:202:36: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-  202 |     accept_client(buf,returned_buf,(int)fd);
-      |                                    ^
-server.c: In function ‘create_server’:
-server.c:244:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  244 |         connfd = accept(sockfd, (SA*)&cli, &len);
-      |                                            ^~~~
-      |                                            |
-      |                                            int *
-In file included from /usr/include/netinet/in.h:23,
-                 from /usr/include/netdb.h:27,
-                 from server.c:12,
-                 from main.c:1:
-/usr/include/x86_64-linux-gnu/sys/socket.h:233:28: note: expected ‘socklen_t * restrict’ {aka ‘unsigned int * restrict’} but argument is of type ‘int *’
-  233 |      socklen_t *__restrict __addr_len);
-      |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
-In file included from main.c:1:
-server.c:255:58: warning: passing argument 3 of ‘dispatch’ makes pointer from integer without a cast [-Wint-conversion]
-  255 |         dispatch(new_threadpool,(dispatch_fn)client_read,connfd);
-      |                                                          ^~~~~~
-      |                                                          |
-      |                                                          int
-In file included from server.c:5,
-                 from main.c:1:
-threadpool.h:73:72: note: expected ‘void *’ but argument is of type ‘int’
-   73 | void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg);
-      |                                                                  ~~~~~~^~~
-In file included from main.c:1:
-server.c: In function ‘server’:
-server.c:266:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  266 |     int counter_of_request = 0;
-      |         ^~~~~~~~~~~~~~~~~~
-main.c: In function ‘main’:
-main.c:30:9: warning: unused variable ‘test’ [-Wunused-variable]
-   30 |     int test = FAILED_TEST;
-      |         ^~~~
-main.c: In function ‘job1’:
-main.c:107:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-  107 |     printf("\ntask number: %d\n",number_of_thread);
-      |                            ~^    ~~~~~~~~~~~~~~~~
-      |                             |    |
-      |                             int  void *
-      |                            %p
-main.c: In function ‘job2’:
-main.c:111:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-  111 |     printf("\ntask number: %d\n ",number_of_thread);
-      |                            ~^     ~~~~~~~~~~~~~~~~
-      |                             |     |
-      |                             int   void *
-      |                            %p
-main.c: In function ‘check_threadpool’:
-main.c:124:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  124 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
-      |                                                       ^
-main.c:127:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  127 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
-      |                                                       ^
+client.c: In function ‘client_init’:
+client.c:18:13: warning: statement with no effect [-Wunused-value]
+   18 |   new_client->parameters_of_r;
+      |   ~~~~~~~~~~^~~~~~~~~~~~~~~~~
+client.c:22:13: warning: statement with no effect [-Wunused-value]
+   22 |   new_client->text;
+      |   ~~~~~~~~~~^~~~~~
+client.c: In function ‘http_parsing’:
+client.c:58:36: warning: comparison between pointer and integer
+   58 |         for (int j = 0; kkkk[k][j] != NULL; j++){
+      |                                    ^~
+client.c:64:78: warning: assignment to ‘char’ from ‘char *’ makes integer from pointer without a cast [-Wint-conversion]
+   64 |       new_client->parameters_of_r[size_of_parameters+(number_of_parameters)] = "\0";
+      |                                                                              ^
+client.c:82:36: warning: comparison between pointer and integer
+   82 |         for (int j = 0; kkkk[i][j] != NULL; j++) {
+      |                                    ^~
+client.c:93:50: warning: comparison between pointer and integer
+   93 |               while(kkkk[i][j] != '/'&&kkkk[i][j]!=NULL){
+      |                                                  ^~
+client.c:130:21: warning: comparison with string literal results in unspecified behavior [-Waddress]
+  130 |   if(new_client->url=="\0"||new_client->url==NULL){
+      |                     ^~
+client.c: In function ‘make_http_request’:
+client.c:147:51: warning: statement with no effect [-Wunused-value]
+  147 |   if(new_client->parameters_of_r!=NULL)size_of_buf+2;
+      |                                        ~~~~~~~~~~~^~
+client.c:191:13: warning: passing argument 1 of ‘sprintf’ from incompatible pointer type [-Wincompatible-pointer-types]
+  191 |     sprintf(text_length,"%d",new_client->text_length);
+      |             ^~~~~~~~~~~
+      |             |
+      |             char **
+In file included from client.c:5:
+/usr/include/stdio.h:334:38: note: expected ‘char * restrict’ but argument is of type ‘char **’
+  334 | extern int sprintf (char *__restrict __s,
+      |                     ~~~~~~~~~~~~~~~~~^~~
+client.c:196:19: warning: passing argument 2 of ‘strcat’ from incompatible pointer type [-Wincompatible-pointer-types]
+  196 |     strcat(buffer,text_length);
+      |                   ^~~~~~~~~~~
+      |                   |
+      |                   char **
+In file included from client.c:3:
+/usr/include/string.h:130:14: note: expected ‘const char * restrict’ but argument is of type ‘char **’
+  130 | extern char *strcat (char *__restrict __dest, const char *__restrict __src)
+      |              ^~~~~~
+client.c:197:25: warning: passing argument 1 of ‘strlen’ from incompatible pointer type [-Wincompatible-pointer-types]
+  197 |     size_of_buf+=strlen(text_length);
+      |                         ^~~~~~~~~~~
+      |                         |
+      |                         char **
+In file included from client.c:3:
+/usr/include/string.h:385:35: note: expected ‘const char *’ but argument is of type ‘char **’
+  385 | extern size_t strlen (const char *__s)
+      |                       ~~~~~~~~~~~~^~~
+client.c:200:5: warning: implicit declaration of function ‘write’; did you mean ‘fwrite’? [-Wimplicit-function-declaration]
+  200 |     write(fd,buffer,size_of_buf);
+      |     ^~~~~
+      |     fwrite
+client.c:203:12: warning: too many arguments for format [-Wformat-extra-args]
+  203 |     printf("HTTP request =\n%s",buffer, strlen(buffer));
+      |            ^~~~~~~~~~~~~~~~~~~~
+client.c:205:22: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘size_t’ {aka ‘long unsigned int’} [-Wformat=]
+  205 |     printf("\nLEN = %d\n",strlen(buffer)+strlen(new_client->text));
+      |                     ~^    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                      |                  |
+      |                      int                size_t {aka long unsigned int}
+      |                     %ld
+client.c:188:9: warning: unused variable ‘text_length_integer’ [-Wunused-variable]
+  188 |     int text_length_integer = new_client->text_length;
+      |         ^~~~~~~~~~~~~~~~~~~
+client.c:210:40: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘size_t’ {aka ‘long unsigned int’} [-Wformat=]
+  210 |     printf("HTTP request =\n%s\nLEN = %d\n",buffer, strlen(buffer));
+      |                                       ~^            ~~~~~~~~~~~~~~
+      |                                        |            |
+      |                                        int          size_t {aka long unsigned int}
+      |                                       %ld
+client.c:214:23: warning: implicit declaration of function ‘read’; did you mean ‘fread’? [-Wimplicit-function-declaration]
+  214 |   while ((read_byts = read(fd,buffer_to_read,sizeof(buffer_to_read)))!=0)
+      |                       ^~~~
+      |                       fread
+client.c:140:7: warning: unused variable ‘nbytes’ [-Wunused-variable]
+  140 |   int nbytes;
+      |       ^~~~~~
+client.c: In function ‘http_parsing’:
+client.c:42:9: warning: ‘error_messeage’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+   42 |         sprintf(error_messeage,"kkkk[%d] is NULL",i);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

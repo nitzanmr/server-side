@@ -120,7 +120,7 @@ int accept_client(void* request,char* buf,int fd){
     char* split_request[3];
     split_str((char*)request," ",split_request);
     struct stat file_stats;
-
+    printf("made it here\n");
     if(split_request[0] != NULL && split_request[1] != NULL && split_request[2] != NULL){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
         error_message(400,buf,NULL);
@@ -159,7 +159,7 @@ int accept_client(void* request,char* buf,int fd){
             };
         }
     }
-    if((file_stats.st_mode & S_IROTH)){
+    if((!file_stats.st_mode & S_IROTH)){
         error_message(403,buf,NULL);
         write(fd,buf,strlen(buf));
         return 1;
@@ -192,13 +192,16 @@ int client_read(void* fd){
     char returned_buf[512];
     int valread;
     int counter = 0;
-    while(valread = read((int)fd,buf,1)){
-        if(buf[counter]=='\n'){
-            buf[counter-1] = '\0';
+    while(1){
+        valread = read((int)fd,buf,1);
+        if(buf[counter]=='\r'){
+            buf[counter] = '\0';
             break;
         }
         counter++;
     }
+    printf("\nput on the eof\n");
+
     accept_client(buf,returned_buf,(int)fd);
     printf("finshed the client\n");
     return 0;
@@ -240,7 +243,7 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     len = sizeof(cli);
    
     // Accept the data packet from client and verification
-    while(counter_of_request < number_of_request){    
+    // while(counter_of_request < number_of_request){    
         connfd = accept(sockfd, (SA*)&cli, &len);
         if (connfd < 0) {
             printf("server accept failed...\n");
@@ -252,9 +255,9 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
 
         //write a function that sends the read from the client to the accept_client_func 
         //then send the returned value to the client.
-        dispatch(new_threadpool,(dispatch_fn)client_read,connfd);
+        dispatch(new_threadpool,(dispatch_fn)client_read,(void*)connfd);
         counter_of_request++;
-    }
+    // }
    
     // After chatting close the socket
     close(sockfd);

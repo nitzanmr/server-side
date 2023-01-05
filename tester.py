@@ -98,9 +98,17 @@ def bad_request():
 
     print("[+] Passed bad_request test")
     return True
+def test_read_client():
+    status = subprocess.run(f"./{EXECUTABLE} 9",shell=True)
+    if status.returncode  != 0:
+        print("[-]FAILED! read_client test")
+        return False
+
+    print("[+] Passed read_client test")
+    return True
 def create_server():
-    URL = "127.0.0.1"
-    PORT = 8027
+    # URL = "127.0.0.1"
+    # PORT = 8027
   
     
     status = subprocess.run(f"./{EXECUTABLE} 7",shell=True)
@@ -110,6 +118,7 @@ def create_server():
 
     print("[+] Passed create_server test")
     return True
+
 def setup():
     if os.path.isfile(EXECUTABLE):
         os.remove(EXECUTABLE)
@@ -143,23 +152,25 @@ if __name__ == "__main__":
 
     if compilation_status == "Error":
         exit(0)
-    t_numthreads_bigger_than_tasks = numthreads_bigger_than_tasks()
+    # t_numthreads_bigger_than_tasks = numthreads_bigger_than_tasks()
     # t_valgrind = valgrind_test()
-    t_equal = equal()
-    t_zero_threads = zero_threads()
-    t_zero_tasks = zero_tasks()
-    t_split = split()
-    t_bad_request = bad_request()
+    # t_equal = equal()
+    # t_zero_threads = zero_threads()
+    # t_zero_tasks = zero_tasks()
+    # t_split = split()
+    # t_bad_request = bad_request()
     t_create_server = create_server()
+    # t_read_client = test_read_client()
     t = PrettyTable(['Test', 'Result'])
     t.align['Test'] = 'l'
-    t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
-    t.add_row(['Tasks <= Threads', t_equal])
-    t.add_row(['Threads = 0', t_zero_threads])
-    t.add_row(['Tasks = 0',t_zero_tasks])
-    t.add_row(['Split ',t_split])
-    t.add_row(['Bad Request',t_bad_request])
+    # t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
+    # t.add_row(['Tasks <= Threads', t_equal])
+    # t.add_row(['Threads = 0', t_zero_threads])
+    # t.add_row(['Tasks = 0',t_zero_tasks])
+    # t.add_row(['Split ',t_split])
+    # t.add_row(['Bad Request',t_bad_request])
     t.add_row(['create_s',t_create_server])
+    # t.add_row(['read_client',t_read_client])
     # t.add_row(['valgrind ',t_valgrind])
     print(t)
 

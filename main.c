@@ -25,6 +25,7 @@ int create_s();
 #define BADR 6 //bad request
 #define CREATES 7 // create server
 #define ACCEPT 8 
+#define CLIENTR 9
 int main(int argc,char* argv[]){
     /*argv = [number_threads,number_tasks]*/
     int test = FAILED_TEST;
@@ -37,6 +38,7 @@ int main(int argc,char* argv[]){
     if(atoi(argv[1])==BADR)bad_request();
     if(atoi(argv[1]) == CREATES)create_s();
     // if(atoi(argv[1])==ACCEPT)accept();
+    if(atoi(argv[1])==CLIENTR)client_read2();
 }
 int equal(){
     if(check_threadpool(5,5)){
@@ -101,10 +103,20 @@ int create_s(){
 // int accept(){
 //     char request[] = "8080 /check_file HTTP/1.0";
 //     char returned_value[512];
-//     accept_client()
+//     accept_client(request,returned_value,)
 // }
-int client_read(){
-    
+int client_read2(){
+    int fd;
+    char buf[] = "GET / HTTP/1.0";
+    struct sockaddr_in new_socket;
+    fd = socket(AF_INET,SOCK_STREAM,0);
+    new_socket.sin_addr.s_addr = INADDR_ANY;
+    new_socket.sin_port = htonl(8080);
+    new_socket.sin_family = AF_INET;
+    connect(fd,(SA*)&new_socket,sizeof(new_socket));
+    write(fd,buf,strlen(buf));
+
+    return 0;
 }
 int job1(void* number_of_thread){
     printf("\ntask number: %d\n",number_of_thread);
