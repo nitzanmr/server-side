@@ -30,11 +30,11 @@ In file included from server.c:15,
       |                      ~~~~^~~~
 In file included from main.c:1:
 server.c: In function ‘accept_client’:
-server.c:162:9: warning: suggest parentheses around operand of ‘!’ or change ‘&’ to ‘&&’ or ‘!’ to ‘~’ [-Wparentheses]
-  162 |     if((!file_stats.st_mode & S_IROTH)){
+server.c:175:9: warning: suggest parentheses around operand of ‘!’ or change ‘&’ to ‘&&’ or ‘!’ to ‘~’ [-Wparentheses]
+  175 |     if((!file_stats.st_mode & S_IROTH)){
       |         ^~~~~~~~~~~~~~~~~~~
-server.c:183:107: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
-  183 |         sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,timebuf_mtime);
+server.c:196:107: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
+  196 |         sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,timebuf_mtime);
       |                                                                                                          ~^                                                                        ~~~~~~~~~~~~~~~
       |                                                                                                           |                                                                                     |
       |                                                                                                           int                                                                                   __off_t {aka long int}
@@ -43,8 +43,8 @@ server.c:119:11: warning: unused variable ‘split_by’ [-Wunused-variable]
   119 |     char* split_by= " ";
       |           ^~~~~~~~
 server.c: In function ‘create_server’:
-server.c:252:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  252 |         connfd = accept(sockfd, (SA*)&cli, &len);
+server.c:265:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  265 |         connfd = accept(sockfd, (SA*)&cli, &len);
       |                                            ^~~~
       |                                            |
       |                                            int *
@@ -57,8 +57,8 @@ In file included from /usr/include/netinet/in.h:23,
       |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
 In file included from main.c:1:
 server.c: In function ‘server’:
-server.c:275:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  275 |     int counter_of_request = 0;
+server.c:288:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  288 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
 main.c: In function ‘main’:
 main.c:41:31: warning: implicit declaration of function ‘client_read2’; did you mean ‘client_read’? [-Wimplicit-function-declaration]

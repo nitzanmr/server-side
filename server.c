@@ -118,8 +118,12 @@ int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
 int accept_client(void* request,char* buf,int fd){
     char* split_by= " ";
     char* split_request[3];
+    #define PATH_MAX        4096
     split_str((char*)request," ",split_request);
     struct stat file_stats;
+    char absulute_path[PATH_MAX];
+    char* point_absulte = realpath(split_request[1],absulute_path);
+    printf("\n%s\n",absulute_path);
     printf("made it here\n");
     if(split_request[0] == NULL || split_request[1] == NULL || split_request[2] == NULL){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
@@ -133,16 +137,25 @@ int accept_client(void* request,char* buf,int fd){
         write(fd,buf,strlen(buf)); 
         return 1;
     }
-   if(stat(split_request[1],&file_stats) < 0){
-        error_message(404,buf,NULL);
-        write(fd,buf,strlen(buf));
-        return 1;
+   if(stat(point_absulte,&file_stats) < 0){
+        if(errno==EACCES){
+            error_message(403,buf,NULL);
+            write(fd,buf,strlen(buf));
+            return 1;
+       }
+        if(errno==ENOENT){
+            error_message(404,buf,NULL);
+            write(fd,buf,strlen(buf));
+            return 1;
+        }
+       
     };
     
     if(S_ISDIR(file_stats.st_mode)){
-        if(split_request[1][strlen(split_request[1])]=='/'){
+        if(split_request[1][strlen(split_request[1])]!='/'){
             error_message(302,buf,NULL);
-            write(fd,buf,strlen(buf));        }
+            write(fd,buf,strlen(buf));        
+            }
         else{
             char* new_name = (char*)malloc(strlen(split_request[1]) + strlen("index.html"));
             sprintf(new_name,"%s%s",split_request[1],"index.html");
