@@ -187,22 +187,27 @@ int accept_client(void* request,char* buf,int fd){
     }
     return 0;
 };
-int client_read(void* fd){
+int client_read(void* arg){
+    int* fd = (int*)arg;
     char buf[512];
     char returned_buf[512];
-    int valread;
+    int valread = 0;
     int counter = 0;
     while(1){
-        valread = read((int)fd,buf,1);
-        if(buf[counter]=='\r'){
-            buf[counter] = '\0';
+        valread = read(*fd,buf+counter,1);
+        // printf("%c",)
+        printf("valread is: %d\n",valread);
+        if(buf[counter]=='\n'){
+            buf[counter-1] = '\0';
             break;
         }
+        printf("counter is: %d\n",counter);
+        printf("read[%d]: %c\n",counter,buf[counter]);
         counter++;
     }
     printf("\nput on the eof\n");
 
-    accept_client(buf,returned_buf,(int)fd);
+    accept_client(buf,returned_buf,*fd);
     printf("finshed the client\n");
     return 0;
 }
@@ -255,7 +260,8 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
 
         //write a function that sends the read from the client to the accept_client_func 
         //then send the returned value to the client.
-        dispatch(new_threadpool,(dispatch_fn)client_read,(void*)connfd);
+        client_read((void*)&connfd);
+        // dispatch(new_threadpool,(dispatch_fn)client_read,(void*)connfd);
         counter_of_request++;
     // }
    
