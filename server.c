@@ -248,7 +248,7 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     len = sizeof(cli);
    
     // Accept the data packet from client and verification
-    // while(counter_of_request < number_of_request){    
+    while(counter_of_request < number_of_request){    
         connfd = accept(sockfd, (SA*)&cli, &len);
         if (connfd < 0) {
             printf("server accept failed...\n");
@@ -261,9 +261,9 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
         //write a function that sends the read from the client to the accept_client_func 
         //then send the returned value to the client.
         client_read((void*)&connfd);
-        // dispatch(new_threadpool,(dispatch_fn)client_read,(void*)connfd);
+        dispatch(new_threadpool,(dispatch_fn)client_read,(void*)&connfd);
         counter_of_request++;
-    // }
+    }
    
     // After chatting close the socket
     close(sockfd);

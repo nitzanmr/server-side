@@ -2,7 +2,7 @@ import requests
 import json
 import subprocess
 import os
-
+import urllib3
 EXECUTABLE = "ex2"
 C_FILES = "client.c "
 
@@ -14,9 +14,12 @@ def send_client_http():
 
     # print("[+] Passed split test")
     # return True
-    from http.client import HTTPConnection
-    HTTPConnection._http_vsn_str = 'HTTP/1.0'
-    x = requests.get("http://localhost:8080/")
+    # http = urllib3.PoolManager()
+    # url = 'http://localhost:8080/check_file'
+    # resp = http.request('GET', url)
+    # from http.client import HTTPConnection
+    # HTTPConnection._http_vsn_str = 'HTTP/1.0'
+    x = requests.get("http://127.0.0.1:8070")
     print(x.json)
     
     # status = subprocess.run(f"./{EXECUTABLE} 9",shell=True)
