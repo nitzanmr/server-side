@@ -1,54 +1,105 @@
 In file included from main.c:1:
+server.c: In function ‘get_mime_type’:
+server.c:61:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   61 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
+      |     ^~
+server.c:61:85: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   61 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
+      |                                                                                     ^~
 server.c: In function ‘split_str’:
-server.c:51:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
-   51 |     int start_of_word = 0;
+server.c:69:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
+   69 |     int start_of_word = 0;
       |         ^~~~~~~~~~~~~
+server.c: In function ‘read_and_write_file’:
+server.c:91:11: warning: implicit declaration of function ‘open’; did you mean ‘popen’? [-Wimplicit-function-declaration]
+   91 |     ptr = open(path,"r");
+      |           ^~~~
+      |           popen
+server.c:91:9: warning: assignment to ‘FILE *’ {aka ‘struct _IO_FILE *’} from ‘int’ makes pointer from integer without a cast [-Wint-conversion]
+   91 |     ptr = open(path,"r");
+      |         ^
+server.c:100:27: warning: passing argument 1 of ‘read’ makes integer from pointer without a cast [-Wint-conversion]
+  100 |             read_val=read(ptr,buf,512);
+      |                           ^~~
+      |                           |
+      |                           FILE * {aka struct _IO_FILE *}
+In file included from server.c:15,
+                 from main.c:1:
+/usr/include/unistd.h:360:26: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+  360 | extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
+      |                      ~~~~^~~~
+In file included from main.c:1:
 server.c: In function ‘accept_client’:
-server.c:72:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-   72 |     char* split_by= " ";
+server.c:183:107: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
+  183 |         sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,timebuf_mtime);
+      |                                                                                                          ~^                                                                        ~~~~~~~~~~~~~~~
+      |                                                                                                           |                                                                                     |
+      |                                                                                                           int                                                                                   __off_t {aka long int}
+      |                                                                                                          %ld
+server.c:119:11: warning: unused variable ‘split_by’ [-Wunused-variable]
+  119 |     char* split_by= " ";
       |           ^~~~~~~~
-server.c: In function ‘server’:
-server.c:138:56: warning: passing argument 1 of ‘create_threadpool’ makes integer from pointer without a cast [-Wint-conversion]
-  138 |     threadpool* new_threadpool = create_threadpool(argv[1]);
-      |                                                    ~~~~^~~
-      |                                                        |
-      |                                                        char *
+server.c: In function ‘client_read’:
+server.c:195:26: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  195 |     while(valread = read((int)fd,buf,1)){
+      |                          ^
+server.c:195:11: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+  195 |     while(valread = read((int)fd,buf,1)){
+      |           ^~~~~~~
+server.c:202:36: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+  202 |     accept_client(buf,returned_buf,(int)fd);
+      |                                    ^
+server.c: In function ‘create_server’:
+server.c:244:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  244 |         connfd = accept(sockfd, (SA*)&cli, &len);
+      |                                            ^~~~
+      |                                            |
+      |                                            int *
+In file included from /usr/include/netinet/in.h:23,
+                 from /usr/include/netdb.h:27,
+                 from server.c:12,
+                 from main.c:1:
+/usr/include/x86_64-linux-gnu/sys/socket.h:233:28: note: expected ‘socklen_t * restrict’ {aka ‘unsigned int * restrict’} but argument is of type ‘int *’
+  233 |      socklen_t *__restrict __addr_len);
+      |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+In file included from main.c:1:
+server.c:255:58: warning: passing argument 3 of ‘dispatch’ makes pointer from integer without a cast [-Wint-conversion]
+  255 |         dispatch(new_threadpool,(dispatch_fn)client_read,connfd);
+      |                                                          ^~~~~~
+      |                                                          |
+      |                                                          int
 In file included from server.c:5,
                  from main.c:1:
-threadpool.h:59:13: note: expected ‘int’ but argument is of type ‘char *’
-   59 | threadpool* create_threadpool(int num_threads_in_pool);
-      |             ^~~~~~~~~~~~~~~~~
+threadpool.h:73:72: note: expected ‘void *’ but argument is of type ‘int’
+   73 | void dispatch(threadpool* from_me, dispatch_fn dispatch_to_here, void *arg);
+      |                                                                  ~~~~~~^~~
 In file included from main.c:1:
-server.c:143:29: warning: comparison between pointer and integer
-  143 |     while(counter_of_request<argv[2]){
-      |                             ^
+server.c: In function ‘server’:
+server.c:266:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  266 |     int counter_of_request = 0;
+      |         ^~~~~~~~~~~~~~~~~~
 main.c: In function ‘main’:
-main.c:27:9: warning: unused variable ‘test’ [-Wunused-variable]
-   27 |     int test = FAILED_TEST;
+main.c:30:9: warning: unused variable ‘test’ [-Wunused-variable]
+   30 |     int test = FAILED_TEST;
       |         ^~~~
 main.c: In function ‘job1’:
-main.c:93:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   93 |     printf("\ntask number: %d\n",number_of_thread);
+main.c:107:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+  107 |     printf("\ntask number: %d\n",number_of_thread);
       |                            ~^    ~~~~~~~~~~~~~~~~
       |                             |    |
       |                             int  void *
       |                            %p
 main.c: In function ‘job2’:
-main.c:97:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-   97 |     printf("\ntask number: %d\n ",number_of_thread);
+main.c:111:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+  111 |     printf("\ntask number: %d\n ",number_of_thread);
       |                            ~^     ~~~~~~~~~~~~~~~~
       |                             |     |
       |                             int   void *
       |                            %p
 main.c: In function ‘check_threadpool’:
-main.c:110:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  110 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
+main.c:124:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  124 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
       |                                                       ^
-main.c:113:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  113 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
+main.c:127:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  127 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
       |                                                       ^
-In file included from main.c:1:
-server.c: In function ‘server’:
-server.c:149:1: warning: control reaches end of non-void function [-Wreturn-type]
-  149 | }
-      | ^

@@ -126,11 +126,13 @@ void* do_work(void* p){
         temp_work = ((threadpool*)p)->qhead;
         ((threadpool*)p)->qhead = ((threadpool*)p)->qhead->next;
         ((threadpool*)p)->qsize--;
-        printf("the queue size is: %d\n",((threadpool*)p)->qsize);
        
         
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
+        printf("the queue size is: %d\n",((threadpool*)p)->qsize);
+
         temp_work->routine(temp_work->arg);
+        printf("after the routine\n");
         free(temp_work);
         ((threadpool*)p)->num_threads--;
         

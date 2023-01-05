@@ -2,7 +2,8 @@ import os
 import subprocess
 from subprocess import call
 from prettytable import PrettyTable
-
+import requests
+import json
 EXECUTABLE = "ex3"
 C_FILES = "main.c threadpool.c "
 H_FILES = "threadpool.h"   
@@ -92,10 +93,22 @@ def split():
 def bad_request():
     status = subprocess.run(f"./{EXECUTABLE} 6",shell=True)
     if status.returncode  != 0:
-        print("[-]FAILED! split test")
+        print("[-]FAILED! bad_request test")
         return False
 
-    print("[+] Passed split test")
+    print("[+] Passed bad_request test")
+    return True
+def create_server():
+    URL = "127.0.0.1"
+    PORT = 8027
+  
+    
+    status = subprocess.run(f"./{EXECUTABLE} 7",shell=True)
+    if status.returncode  != 0:
+        print("[-]FAILED! create_server test")
+        return False
+
+    print("[+] Passed create_server test")
     return True
 def setup():
     if os.path.isfile(EXECUTABLE):
@@ -137,6 +150,7 @@ if __name__ == "__main__":
     t_zero_tasks = zero_tasks()
     t_split = split()
     t_bad_request = bad_request()
+    t_create_server = create_server()
     t = PrettyTable(['Test', 'Result'])
     t.align['Test'] = 'l'
     t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
@@ -145,6 +159,7 @@ if __name__ == "__main__":
     t.add_row(['Tasks = 0',t_zero_tasks])
     t.add_row(['Split ',t_split])
     t.add_row(['Bad Request',t_bad_request])
+    t.add_row(['create_s',t_create_server])
     # t.add_row(['valgrind ',t_valgrind])
     print(t)
 

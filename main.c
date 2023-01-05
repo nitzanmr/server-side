@@ -13,6 +13,7 @@ int threads_larger();
 int tasks_larger();
 int split();
 int bad_request();
+int create_s();
 #define PASSED_TEST 0
 #define FAILED_TEST 1
 #define EQUAL 0
@@ -22,6 +23,8 @@ int bad_request();
 #define ZEROTA 4
 #define SPLIT 5
 #define BADR 6 //bad request
+#define CREATES 7 // create server
+#define ACCEPT 8 
 int main(int argc,char* argv[]){
     /*argv = [number_threads,number_tasks]*/
     int test = FAILED_TEST;
@@ -32,7 +35,8 @@ int main(int argc,char* argv[]){
     if(atoi(argv[1])==ZEROTA)zero_tasks();
     if(atoi(argv[1])==SPLIT)split();
     if(atoi(argv[1])==BADR)bad_request();
-
+    if(atoi(argv[1]) == CREATES)create_s();
+    // if(atoi(argv[1])==ACCEPT)accept();
 }
 int equal(){
     if(check_threadpool(5,5)){
@@ -88,6 +92,19 @@ int bad_request(){
     }
     return FAILED_TEST;
 
+}
+int create_s(){
+    char* args[] = {"8080","3","3"};
+    if(server(3,args)==0)return 0;
+    else return 1;
+}
+// int accept(){
+//     char request[] = "8080 /check_file HTTP/1.0";
+//     char returned_value[512];
+//     accept_client()
+// }
+int client_read(){
+    
 }
 int job1(void* number_of_thread){
     printf("\ntask number: %d\n",number_of_thread);

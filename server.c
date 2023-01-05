@@ -166,6 +166,7 @@ int accept_client(void* request,char* buf,int fd){
     }
     /*add a return file value*/
     else{
+        printf("entered the get file part\n");
         #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
         struct stat stats;
         if(stat(split_request[1],&stats)==1){
@@ -174,28 +175,33 @@ int accept_client(void* request,char* buf,int fd){
         }
         time_t now;
         char timebuf[128];
+        char timebuf_mtime[128];
         now = time(NULL);
+        strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&stats.st_mtime));
         strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
         char* type = get_mime_type(split_request[1]);
-        sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,stats.st_mtime);
+        sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,timebuf_mtime);
         write(fd,buf,strlen(buf));
+        printf("after write to the client\n");
         read_and_write_file(fd,split_request[1],stats.st_size,buf);
     }
     return 0;
 };
-int client_read(int fd){
-    char* buf[512];
-    char* returned_buf[512];
+int client_read(void* fd){
+    char buf[512];
+    char returned_buf[512];
     int valread;
     int counter = 0;
-    while(valread = read(fd,buf,1)){
+    while(valread = read((int)fd,buf,1)){
         if(buf[counter]=='\n'){
             buf[counter-1] = '\0';
             break;
         }
         counter++;
     }
-    accept_client(buf,returned_buf,fd);
+    accept_client(buf,returned_buf,(int)fd);
+    printf("finshed the client\n");
+    return 0;
 }
 int create_server(int port,int number_of_request,threadpool* new_threadpool){
     int sockfd, connfd, len;
@@ -252,6 +258,7 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
    
     // After chatting close the socket
     close(sockfd);
+    return 0;
 }
 
 int server(int argc, char* argv[]){
@@ -261,12 +268,12 @@ int server(int argc, char* argv[]){
         perror("too little arguments entered to the server\n");
         return 1;
     }
-    threadpool* new_threadpool = create_threadpool(argv[1]);
+    threadpool* new_threadpool = create_threadpool(atoi(argv[1]));
     if(new_threadpool==NULL){
         perror("threadpool didnt create it self");
         exit(1);
     }
-    create_server(argv[0],argv[2]);
+    create_server(atoi(argv[0]),atoi(argv[2]),new_threadpool);
     destroy_threadpool(new_threadpool);    
     return 0;
 }
