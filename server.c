@@ -122,7 +122,8 @@ int accept_client(void* request,char* buf,int fd){
     split_str((char*)request," ",split_request);
     struct stat file_stats;
     char absulute_path[PATH_MAX];
-    char* point_absulte = realpath(split_request[1],absulute_path);
+    getcwd(absulute_path,PATH_MAX);
+    strcat(absulute_path,split_request[1]);
     printf("\n%s\n",absulute_path);
     printf("made it here\n");
     if(split_request[0] == NULL || split_request[1] == NULL || split_request[2] == NULL){
@@ -137,7 +138,7 @@ int accept_client(void* request,char* buf,int fd){
         write(fd,buf,strlen(buf)); 
         return 1;
     }
-   if(stat(point_absulte,&file_stats) < 0){
+   if(stat(absulute_path,&file_stats) < 0){
         if(errno==EACCES){
             error_message(403,buf,NULL);
             write(fd,buf,strlen(buf));
@@ -172,7 +173,7 @@ int accept_client(void* request,char* buf,int fd){
             };
         }
     }
-    if((!file_stats.st_mode & S_IROTH)){
+    if((!(file_stats.st_mode & S_IROTH))){
         error_message(403,buf,NULL);
         write(fd,buf,strlen(buf));
         return 1;
