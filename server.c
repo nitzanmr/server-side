@@ -88,31 +88,57 @@ void split_str(char* request,char* split_by,char** split_request){
 }
 int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
     FILE* ptr;
-    ptr = open(path,"r");
+    ptr = fopen(path,"r");
     int read_val = 0;
     int write_val = 0;
     if (NULL == ptr) {
         printf("file can't be opened \n");
         return 1;
     }
-    
-    while(1){
-            read_val=read(ptr,buf,512);
-            
-            if(read_val== -1){
-                perror("read fiile error");
-                return 1;
-            }
-
+    char ch;
+    int counter = 0;
+    do {
+        ch = fgetc(ptr);
+        printf("%c", ch);
+        buf[counter] = ch;
+        counter++;
+        if(counter==512){
             write_val = write(fd_socket,buf,512);
             if(write_val == -1){
                 perror("write to server failed\n");
                 return 1;
             }
-            if(read_val == 0){
-                return 0;
-            }
+            bzero(buf,512);
+            counter = 0;
+        }
+        // Checking if character is not EOF.
+        // If it is EOF stop reading.
+    } while (ch != EOF);
+    write_val = write(fd_socket,buf,counter);
+    if(write_val == -1){
+        perror("write to server failed\n");
+        return 1;
     }
+    fclose(ptr);
+    return 0 ;
+    // while(fgetc(ptr)!=EOF){
+    //         bzero(buf,512);
+    //         read_val=read(ptr,buf,512);
+            
+    //         if(read_val== -1){
+    //             perror("read file error");
+    //             return 1;
+    //         }
+
+    //         write_val = write(fd_socket,buf,512);
+    //         if(write_val == -1){
+    //             perror("write to server failed\n");
+    //             return 1;
+    //         }
+    //         if(read_val == 0){
+    //             return 0;
+    //         }
+    // }
 
 }
 int accept_client(void* request,char* buf,int fd){
@@ -155,22 +181,29 @@ int accept_client(void* request,char* buf,int fd){
     if(S_ISDIR(file_stats.st_mode)){
         if(split_request[1][strlen(split_request[1])]!='/'){
             error_message(302,buf,NULL);
-            write(fd,buf,strlen(buf));        
+            write(fd,buf,strlen(buf));
+            return 1;        
             }
         else{
             char* new_name = (char*)malloc(strlen(split_request[1]) + strlen("index.html"));
-            sprintf(new_name,"%s%s",split_request[1],"index.html");
-            if(fopen(new_name,"r") < 0){
+            sprintf(new_name,"%s%s",absulute_path,"index.html");
+            if((fopen(new_name,"r")) == NULL){
                 DIR *d;
                 struct dirent *dir;
-                d = opendir(split_request[1]);
+                d = opendir(absulute_path);
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
                         printf("%s\n", dir->d_name);
                     }
                     closedir(d);
                 }
-            };
+            }
+            else{
+                stat(new_name,&file_stats);
+                read_and_write_file(fd,new_name,file_stats.st_size,buf);
+                return 0;
+            }
+           
         }
     }
     if((!(file_stats.st_mode & S_IROTH))){
@@ -183,7 +216,7 @@ int accept_client(void* request,char* buf,int fd){
         printf("entered the get file part\n");
         #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
         struct stat stats;
-        if(stat(split_request[1],&stats)==1){
+        if(stat(absulute_path,&stats)==1){
             perror("stat 200 failed");
             return 1;
         }
@@ -193,11 +226,11 @@ int accept_client(void* request,char* buf,int fd){
         now = time(NULL);
         strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&stats.st_mtime));
         strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
-        char* type = get_mime_type(split_request[1]);
-        sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,timebuf_mtime);
+        char* type = get_mime_type(absulute_path);
+        sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,stats.st_size,timebuf_mtime);
         write(fd,buf,strlen(buf));
         printf("after write to the client\n");
-        read_and_write_file(fd,split_request[1],stats.st_size,buf);
+        read_and_write_file(fd,absulute_path,file_stats.st_size,buf);
     }
     return 0;
 };
@@ -223,6 +256,7 @@ int client_read(void* arg){
 
     accept_client(buf,returned_buf,*fd);
     printf("finshed the client\n");
+    close(fd);
     return 0;
 }
 int create_server(int port,int number_of_request,threadpool* new_threadpool){
@@ -327,11 +361,11 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
     if(path!=NULL){
         char location[50];
         sprintf(location,"Location: %s\r\n",path);
-        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,location,content_length);
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\n%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,location,content_length);
 
     }
     else{
-        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,content_length);
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,content_length);
 
     }
 

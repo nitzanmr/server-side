@@ -11,37 +11,34 @@ server.c:69:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
    69 |     int start_of_word = 0;
       |         ^~~~~~~~~~~~~
 server.c: In function ‘read_and_write_file’:
-server.c:91:11: warning: implicit declaration of function ‘open’; did you mean ‘popen’? [-Wimplicit-function-declaration]
-   91 |     ptr = open(path,"r");
-      |           ^~~~
-      |           popen
-server.c:91:9: warning: assignment to ‘FILE *’ {aka ‘struct _IO_FILE *’} from ‘int’ makes pointer from integer without a cast [-Wint-conversion]
-   91 |     ptr = open(path,"r");
-      |         ^
-server.c:100:27: warning: passing argument 1 of ‘read’ makes integer from pointer without a cast [-Wint-conversion]
-  100 |             read_val=read(ptr,buf,512);
-      |                           ^~~
-      |                           |
-      |                           FILE * {aka struct _IO_FILE *}
+server.c:92:9: warning: unused variable ‘read_val’ [-Wunused-variable]
+   92 |     int read_val = 0;
+      |         ^~~~~~~~
+server.c: In function ‘accept_client’:
+server.c:230:109: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
+  230 |         sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,stats.st_size,timebuf_mtime);
+      |                                                                                                            ~^                                                                          ~~~~~~~~~~~~~
+      |                                                                                                             |                                                                               |
+      |                                                                                                             int                                                                             __off_t {aka long int}
+      |                                                                                                            %ld
+server.c:145:11: warning: unused variable ‘split_by’ [-Wunused-variable]
+  145 |     char* split_by= " ";
+      |           ^~~~~~~~
+server.c: In function ‘client_read’:
+server.c:259:11: warning: passing argument 1 of ‘close’ makes integer from pointer without a cast [-Wint-conversion]
+  259 |     close(fd);
+      |           ^~
+      |           |
+      |           int *
 In file included from server.c:15,
                  from main.c:1:
-/usr/include/unistd.h:360:26: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
-  360 | extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
-      |                      ~~~~^~~~
+/usr/include/unistd.h:353:23: note: expected ‘int’ but argument is of type ‘int *’
+  353 | extern int close (int __fd);
+      |                   ~~~~^~~~
 In file included from main.c:1:
-server.c: In function ‘accept_client’:
-server.c:197:107: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
-  197 |         sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %sContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %sConnection: closed\r\n\r\n", "200 OK",type,timebuf,stats.st_size*8,timebuf_mtime);
-      |                                                                                                          ~^                                                                        ~~~~~~~~~~~~~~~
-      |                                                                                                           |                                                                                     |
-      |                                                                                                           int                                                                                   __off_t {aka long int}
-      |                                                                                                          %ld
-server.c:119:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-  119 |     char* split_by= " ";
-      |           ^~~~~~~~
 server.c: In function ‘create_server’:
-server.c:266:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  266 |         connfd = accept(sockfd, (SA*)&cli, &len);
+server.c:300:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  300 |         connfd = accept(sockfd, (SA*)&cli, &len);
       |                                            ^~~~
       |                                            |
       |                                            int *
@@ -54,8 +51,8 @@ In file included from /usr/include/netinet/in.h:23,
       |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
 In file included from main.c:1:
 server.c: In function ‘server’:
-server.c:289:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  289 |     int counter_of_request = 0;
+server.c:323:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  323 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
 main.c: In function ‘main’:
 main.c:41:31: warning: implicit declaration of function ‘client_read2’; did you mean ‘client_read’? [-Wimplicit-function-declaration]
