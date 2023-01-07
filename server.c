@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#define _OPEN_SYS_ITOA_EXT
 #define SA struct sockaddr 
 void build_header_m(char*, char*,int,char* path);
 void error_message(int error_num,char* buf,char* path){
@@ -141,6 +142,98 @@ int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
     // }
 
 }
+int return_wrote_size(char* path){
+    #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
+
+    struct stat file_stats;
+    stat(path,&file_stats);
+    time_t now;
+    char timebuf[128];
+    char timebuf_mtime[128];
+    now = time(NULL);
+    char in_buf[512];
+    int size_of_in_buf = 0;
+    strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
+    char* char_a_size = itoa(file_stats.st_size)
+    if(S_ISREG(file_stats.st_mode)){
+        size_of_in_buf += strlen("<tr>\r\n<td><A HREF=><></A></td><td><></td>\r\n<td><></td>\r\n</tr>");
+
+        size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(itoa(file_stats.st_size));
+        printf("sigsegev after\n");
+
+    }
+    else{
+        size_of_in_buf+= strlen("<tr>\r\n<td><A HREF=><></A></td><td><></td>\r\n</tr>");
+        size_of_in_buf = strlen(path)+strlen(path)+strlen(timebuf_mtime);
+    }
+
+    return size_of_in_buf;
+}
+int make_folder_file(char* path,char* buf,int fd){
+    /*gets the absulute path and makes the entry for it*/
+    /*
+        <tr>
+        <td><A HREF="<entity-name>"><entity-name (file or sub-directory)></A></td><td><modification time></td>
+        <td><if entity is a file, add file size, otherwise, leave empty></td>
+        </tr>
+    */
+    #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
+
+    struct stat file_stats;
+    int size_of_in_buf = 0;
+    int counter_in_buf = 0;
+    int counter_buf = 0;
+    char in_buf[512];
+    stat(path,&file_stats);
+    time_t now;
+    char timebuf[128];
+    char timebuf_mtime[128];
+    now = time(NULL);
+    strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
+    if(S_ISREG(file_stats.st_mode)){
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n<td><%dif entity is a file, add file size, otherwise, leave empty></td>\r\n</tr>",path,path,timebuf_mtime,file_stats.st_size);
+        size_of_in_buf = strlen(in_buf);
+    }
+    else{
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n</tr>",path,path,timebuf_mtime);
+        size_of_in_buf = strlen(in_buf);
+    }
+    while(size_of_in_buf!=counter_in_buf){
+        if(strlen(buf)==512){
+            write(fd,buf,512);
+            bzero(buf,512);
+            counter_buf = 0;
+        }
+        else{
+            buf[counter_buf] = in_buf[counter_in_buf];
+            counter_buf++;
+            counter_in_buf++;
+        }
+    }
+    write(fd,buf,counter_buf);
+    return counter_in_buf;
+}
+
+int create_ok(char* buf,char* path,int size_of_file){
+    #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
+    struct stat stats;
+    if(stat(path,&stats)==1){
+        perror("stat 200 failed");
+        return 1;
+    }
+    if(size_of_file == -1){
+        size_of_file = stats.st_size;
+    }
+    time_t now;
+    char timebuf[128];
+    char timebuf_mtime[128];
+    now = time(NULL);
+    strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&stats.st_mtime));
+    strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
+    char* type = get_mime_type(path);
+    sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
+    return 0;
+}
 int accept_client(void* request,char* buf,int fd){
     char* split_by= " ";
     char* split_request[3];
@@ -190,13 +283,21 @@ int accept_client(void* request,char* buf,int fd){
             if((fopen(new_name,"r")) == NULL){
                 DIR *d;
                 struct dirent *dir;
+                int total_size_folder = 0;
                 d = opendir(absulute_path);
+                char* type = get_mime_type(absulute_path);
+                total_size_folder += strlen("<HTML>\r\n<HEAD><TITLE></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n");
+                total_size_folder += strlen(absulute_path)*2;
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
                         printf("%s\n", dir->d_name);
+                        total_size_folder += return_wrote_size(absulute_path);
                     }
                     closedir(d);
                 }
+                total_size_folder += strlen("\r\n\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
+                create_ok(buf,absulute_path,total_size_folder);
+
             }
             else{
                 stat(new_name,&file_stats);
@@ -213,21 +314,8 @@ int accept_client(void* request,char* buf,int fd){
     }
     /*add a return file value*/
     else{
+        create_ok(buf,absulute_path,-1);
         printf("entered the get file part\n");
-        #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
-        struct stat stats;
-        if(stat(absulute_path,&stats)==1){
-            perror("stat 200 failed");
-            return 1;
-        }
-        time_t now;
-        char timebuf[128];
-        char timebuf_mtime[128];
-        now = time(NULL);
-        strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&stats.st_mtime));
-        strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
-        char* type = get_mime_type(absulute_path);
-        sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,stats.st_size,timebuf_mtime);
         write(fd,buf,strlen(buf));
         printf("after write to the client\n");
         read_and_write_file(fd,absulute_path,file_stats.st_size,buf);
