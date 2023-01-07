@@ -153,12 +153,13 @@ int return_wrote_size(char* path){
     now = time(NULL);
     char in_buf[512];
     int size_of_in_buf = 0;
+    char char_a_size[50];
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
-    char* char_a_size = itoa(file_stats.st_size)
+    sprintf(char_a_size,"%jd",file_stats.st_size);
     if(S_ISREG(file_stats.st_mode)){
         size_of_in_buf += strlen("<tr>\r\n<td><A HREF=><></A></td><td><></td>\r\n<td><></td>\r\n</tr>");
 
-        size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(itoa(file_stats.st_size));
+        size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(char_a_size);
         printf("sigsegev after\n");
 
     }
@@ -177,12 +178,14 @@ int make_folder_file(char* path,char* buf,int fd){
         <td><if entity is a file, add file size, otherwise, leave empty></td>
         </tr>
     */
+
+   //int fd
     #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
 
     struct stat file_stats;
     int size_of_in_buf = 0;
     int counter_in_buf = 0;
-    int counter_buf = 0;
+    int counter_buf = strlen(buf);
     char in_buf[512];
     stat(path,&file_stats);
     time_t now;
@@ -191,16 +194,17 @@ int make_folder_file(char* path,char* buf,int fd){
     now = time(NULL);
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
     if(S_ISREG(file_stats.st_mode)){
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n<td><%dif entity is a file, add file size, otherwise, leave empty></td>\r\n</tr>",path,path,timebuf_mtime,file_stats.st_size);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
         size_of_in_buf = strlen(in_buf);
     }
     else{
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n</tr>",path,path,timebuf_mtime);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n</tr>\r\n",path,path,timebuf_mtime);
         size_of_in_buf = strlen(in_buf);
     }
     while(size_of_in_buf!=counter_in_buf){
         if(strlen(buf)==512){
             write(fd,buf,512);
+            // printf("%s\n",buf);
             bzero(buf,512);
             counter_buf = 0;
         }
@@ -211,6 +215,8 @@ int make_folder_file(char* path,char* buf,int fd){
         }
     }
     write(fd,buf,counter_buf);
+    // printf("%s",buf);
+    bzero(buf,counter_buf);
     return counter_in_buf;
 }
 
@@ -228,9 +234,12 @@ int create_ok(char* buf,char* path,int size_of_file){
     char timebuf[128];
     char timebuf_mtime[128];
     now = time(NULL);
+    char* type;
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&stats.st_mtime));
     strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
-    char* type = get_mime_type(path);
+    if((type = get_mime_type(path))==NULL && size_of_file != -1){
+        type = "text/html";
+    };
     sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
     return 0;
 }
@@ -272,32 +281,60 @@ int accept_client(void* request,char* buf,int fd){
     };
     
     if(S_ISDIR(file_stats.st_mode)){
-        if(split_request[1][strlen(split_request[1])]!='/'){
+        if(split_request[1][strlen(split_request[1])-1]!='/'){
             error_message(302,buf,NULL);
             write(fd,buf,strlen(buf));
             return 1;        
             }
         else{
-            char* new_name = (char*)malloc(strlen(split_request[1]) + strlen("index.html"));
+            char* new_name = (char*)malloc(strlen(absulute_path) + strlen("index.html"));
             sprintf(new_name,"%s%s",absulute_path,"index.html");
             if((fopen(new_name,"r")) == NULL){
                 DIR *d;
                 struct dirent *dir;
                 int total_size_folder = 0;
+                printf("sigsegv\n");
+                char temp_path[PATH_MAX];
                 d = opendir(absulute_path);
+                char buf[512];
                 char* type = get_mime_type(absulute_path);
                 total_size_folder += strlen("<HTML>\r\n<HEAD><TITLE></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n");
-                total_size_folder += strlen(absulute_path)*2;
+                total_size_folder += strlen(split_request[1])*2;
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
-                        printf("%s\n", dir->d_name);
-                        total_size_folder += return_wrote_size(absulute_path);
-                    }
+                        if(dir->d_name[0]!='.'){
+                            // printf("%s\n", dir->d_name);
+                            strcpy(temp_path,absulute_path);
+                            strcat(temp_path,dir->d_name);
+                            total_size_folder += return_wrote_size(temp_path);
+                        }
+                        }
                     closedir(d);
                 }
                 total_size_folder += strlen("\r\n\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
                 create_ok(buf,absulute_path,total_size_folder);
-
+                /*
+            <HTML>\r\n<HEAD><TITLE>Index of <path-of-directory></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of <path-of-directory></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n
+            */
+                sprintf(temp_path,"<HTML>\r\n<HEAD><TITLE>Index of %s</TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of %s</H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n",split_request[1],split_request[1]);
+                strcat(buf,temp_path);
+                
+                d = opendir(absulute_path);
+                
+                if (d) {
+                    while ((dir = readdir(d)) != NULL) {
+                        if(dir->d_name[0]!='.'){
+                            // printf("%s\n", dir->d_name);
+                            strcpy(temp_path,absulute_path);
+                            strcat(temp_path,dir->d_name);        
+                            make_folder_file(temp_path,buf,fd);
+                        }
+                        }
+                    closedir(d);
+                }
+                sprintf(buf,"</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>\r\n\r\n");
+                write(fd,buf,strlen(buf));
+                return 0;
             }
             else{
                 stat(new_name,&file_stats);

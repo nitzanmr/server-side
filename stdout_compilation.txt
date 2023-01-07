@@ -15,20 +15,6 @@ server.c:93:9: warning: unused variable ‘read_val’ [-Wunused-variable]
    93 |     int read_val = 0;
       |         ^~~~~~~~
 server.c: In function ‘return_wrote_size’:
-server.c:161:97: warning: implicit declaration of function ‘itoa’ [-Wimplicit-function-declaration]
-  161 |         size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(itoa(file_stats.st_size));
-      |                                                                                                 ^~~~
-server.c:161:97: warning: passing argument 1 of ‘strlen’ makes pointer from integer without a cast [-Wint-conversion]
-  161 |         size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(itoa(file_stats.st_size));
-      |                                                                                                 ^~~~~~~~~~~~~~~~~~~~~~~~
-      |                                                                                                 |
-      |                                                                                                 int
-In file included from server.c:2,
-                 from main.c:1:
-/usr/include/string.h:385:35: note: expected ‘const char *’ but argument is of type ‘int’
-  385 | extern size_t strlen (const char *__s)
-      |                       ~~~~~~~~~~~~^~~
-In file included from main.c:1:
 server.c:154:10: warning: unused variable ‘in_buf’ [-Wunused-variable]
   154 |     char in_buf[512];
       |          ^~~~~~
@@ -39,28 +25,28 @@ server.c:150:12: warning: variable ‘now’ set but not used [-Wunused-but-set-
   150 |     time_t now;
       |            ^~~
 server.c: In function ‘make_folder_file’:
-server.c:194:84: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
-  194 |         sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n<td><%dif entity is a file, add file size, otherwise, leave empty></td>\r\n</tr>",path,path,timebuf_mtime,file_stats.st_size);
-      |                                                                                   ~^                                                                                                   ~~~~~~~~~~~~~~~~~~
-      |                                                                                    |                                                                                                             |
-      |                                                                                    int                                                                                                           __off_t {aka long int}
+server.c:197:84: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
+  197 |         sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
+      |                                                                                   ~^                                             ~~~~~~~~~~~~~~~~~~
+      |                                                                                    |                                                       |
+      |                                                                                    int                                                     __off_t {aka long int}
       |                                                                                   %ld
-server.c:189:10: warning: unused variable ‘timebuf’ [-Wunused-variable]
-  189 |     char timebuf[128];
+server.c:192:10: warning: unused variable ‘timebuf’ [-Wunused-variable]
+  192 |     char timebuf[128];
       |          ^~~~~~~
-server.c:188:12: warning: variable ‘now’ set but not used [-Wunused-but-set-variable]
-  188 |     time_t now;
+server.c:191:12: warning: variable ‘now’ set but not used [-Wunused-but-set-variable]
+  191 |     time_t now;
       |            ^~~
 server.c: In function ‘accept_client’:
-server.c:288:23: warning: unused variable ‘type’ [-Wunused-variable]
-  288 |                 char* type = get_mime_type(absulute_path);
+server.c:300:23: warning: unused variable ‘type’ [-Wunused-variable]
+  300 |                 char* type = get_mime_type(absulute_path);
       |                       ^~~~
-server.c:238:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-  238 |     char* split_by= " ";
+server.c:247:11: warning: unused variable ‘split_by’ [-Wunused-variable]
+  247 |     char* split_by= " ";
       |           ^~~~~~~~
 server.c: In function ‘client_read’:
-server.c:347:11: warning: passing argument 1 of ‘close’ makes integer from pointer without a cast [-Wint-conversion]
-  347 |     close(fd);
+server.c:384:11: warning: passing argument 1 of ‘close’ makes integer from pointer without a cast [-Wint-conversion]
+  384 |     close(fd);
       |           ^~
       |           |
       |           int *
@@ -71,8 +57,8 @@ In file included from server.c:15,
       |                   ~~~~^~~~
 In file included from main.c:1:
 server.c: In function ‘create_server’:
-server.c:388:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  388 |         connfd = accept(sockfd, (SA*)&cli, &len);
+server.c:425:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  425 |         connfd = accept(sockfd, (SA*)&cli, &len);
       |                                            ^~~~
       |                                            |
       |                                            int *
@@ -85,38 +71,31 @@ In file included from /usr/include/netinet/in.h:23,
       |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
 In file included from main.c:1:
 server.c: In function ‘server’:
-server.c:411:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  411 |     int counter_of_request = 0;
+server.c:448:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  448 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
 main.c: In function ‘main’:
-main.c:35:9: warning: unused variable ‘test’ [-Wunused-variable]
-   35 |     int test = FAILED_TEST;
+main.c:34:9: warning: unused variable ‘test’ [-Wunused-variable]
+   34 |     int test = FAILED_TEST;
       |         ^~~~
-main.c: In function ‘print_content’:
-main.c:118:11: warning: unused variable ‘type’ [-Wunused-variable]
-  118 |     char* type = get_mime_type(absulute_path);
-      |           ^~~~
 main.c: In function ‘job1’:
-main.c:155:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-  155 |     printf("\ntask number: %d\n",number_of_thread);
+main.c:176:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+  176 |     printf("\ntask number: %d\n",number_of_thread);
       |                            ~^    ~~~~~~~~~~~~~~~~
       |                             |    |
       |                             int  void *
       |                            %p
 main.c: In function ‘job2’:
-main.c:159:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-  159 |     printf("\ntask number: %d\n ",number_of_thread);
+main.c:180:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+  180 |     printf("\ntask number: %d\n ",number_of_thread);
       |                            ~^     ~~~~~~~~~~~~~~~~
       |                             |     |
       |                             int   void *
       |                            %p
 main.c: In function ‘check_threadpool’:
-main.c:172:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  172 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
+main.c:193:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  193 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
       |                                                       ^
-main.c:175:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  175 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
+main.c:196:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  196 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
       |                                                       ^
-/usr/bin/ld: /tmp/cce4ZHMh.o: in function `return_wrote_size':
-main.c:(.text+0x763): undefined reference to `itoa'
-collect2: error: ld returned 1 exit status

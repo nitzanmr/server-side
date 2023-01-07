@@ -166,9 +166,9 @@ if __name__ == "__main__":
     # t_zero_tasks = zero_tasks()
     # t_split = split()
     # t_bad_request = bad_request()
-    # t_create_server = create_server()
+    t_create_server = create_server()
     # t_read_client = test_read_client()
-    t_print_content = print_content()
+    # t_print_content = print_content()
     t = PrettyTable(['Test', 'Result'])
     t.align['Test'] = 'l'
     # t.add_row(['Tasks > Threads', t_numthreads_bigger_than_tasks])
@@ -177,10 +177,10 @@ if __name__ == "__main__":
     # t.add_row(['Tasks = 0',t_zero_tasks])
     # t.add_row(['Split ',t_split])
     # t.add_row(['Bad Request',t_bad_request])
-    # t.add_row(['create_s',t_create_server])
+    t.add_row(['create_s',t_create_server])
     # t.add_row(['read_client',t_read_client])
     # t.add_row(['valgrind ',t_valgrind])
-    t.add_row(['content',t_print_content])
+    # t.add_row(['content',t_print_content])
     print(t)
 
 

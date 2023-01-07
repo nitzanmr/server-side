@@ -42,7 +42,7 @@ int main(int argc,char* argv[]){
     if(atoi(argv[1]) == CREATES)create_s();
     // if(atoi(argv[1])==ACCEPT)accept();
     if(atoi(argv[1])==CLIENTR)client_read2();
-    if(atoi(argv[1])==PRINTF)print_content();
+    // if(atoi(argv[1])==PRINTF)print_content();
 }
 int equal(){
     if(check_threadpool(5,5)){
@@ -104,34 +104,56 @@ int create_s(){
     if(server(3,args)==0)return 0;
     else return 1;
 }
-int print_content(){
-    DIR *d;
-    struct dirent *dir;
-    int total_size_folder = 0;
-    char absulute_path[PATH_MAX];
-    getcwd(absulute_path,PATH_MAX);
-    strcat(absulute_path,"/folder/");
-    char temp_path[PATH_MAX];
-    d = opendir(absulute_path);
-    char buf[512];
-    char* type = get_mime_type(absulute_path);
-    total_size_folder += strlen("<HTML>\r\n<HEAD><TITLE></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n");
-    total_size_folder += strlen(absulute_path)*2;
-    if (d) {
-        while ((dir = readdir(d)) != NULL) {
-            printf("%s\n", dir->d_name);
-            strcpy(temp_path,absulute_path);
-            strcat(temp_path,dir->d_name);
-            printf("sigsegv after\n");
-            total_size_folder += return_wrote_size(temp_path);
-        }
-        closedir(d);
-    }
-    total_size_folder += strlen("\r\n\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
-    create_ok(buf,absulute_path,total_size_folder);
-    printf("%s",buf);
-    return 0;
-}
+// int print_content(){
+//     DIR *d;
+//     struct dirent *dir;
+//     int total_size_folder = 0;
+//     char absulute_path[PATH_MAX];
+//     getcwd(absulute_path,PATH_MAX);
+//     strcat(absulute_path,"/folder/");
+//     char temp_path[PATH_MAX];
+//     d = opendir(absulute_path);
+//     char buf[512];
+//     char* type = get_mime_type(absulute_path);
+//     total_size_folder += strlen("<HTML>\r\n<HEAD><TITLE></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n");
+//     total_size_folder += strlen(absulute_path)*2;
+//     if (d) {
+//         while ((dir = readdir(d)) != NULL) {
+//             if(dir->d_name[0]!='.'){
+//                 printf("%s\n", dir->d_name);
+//                 strcpy(temp_path,absulute_path);
+//                 strcat(temp_path,dir->d_name);
+//                 total_size_folder += return_wrote_size(temp_path);
+//             }
+//             }
+//         closedir(d);
+//     }
+//     total_size_folder += strlen("\r\n\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
+//     create_ok(buf,absulute_path,total_size_folder);
+//     /*
+// <HTML>\r\n<HEAD><TITLE>Index of <path-of-directory></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of <path-of-directory></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n
+// */
+    
+//     sprintf(temp_path,"<HTML>\r\n<HEAD><TITLE>Index of %s</TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of %s</H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n",absulute_path,absulute_path);
+//     strcat(buf,temp_path);
+    
+//     d = opendir(absulute_path);
+
+//     if (d) {
+//         while ((dir = readdir(d)) != NULL) {
+//             if(dir->d_name[0]!='.'){
+//                 printf("%s\n", dir->d_name);
+//                 strcpy(temp_path,absulute_path);
+//                 strcat(temp_path,dir->d_name);
+//                 make_folder_file(temp_path,buf);
+//             }
+//             }
+//         closedir(d);
+//     }
+//     sprintf(buf,"</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>\r\n\r\n");
+//     printf("%s",buf);
+//     return 0;
+// }
 // int accept(){
 //     char request[] = "8080 /check_file HTTP/1.0";
 //     char returned_value[512];
