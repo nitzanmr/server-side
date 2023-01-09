@@ -267,11 +267,13 @@ int accept_client(void* request,char* buf,int fd){
         return 1;
     }
    if(stat(absulute_path,&file_stats) < 0){
+    /*checks for permissions to the file we want to acess by the client*/
         if(errno==EACCES){
             error_message(403,buf,NULL);
             write(fd,buf,strlen(buf));
             return 1;
        }
+       /*error of opening the file becuase it doesn't exits.*/
         if(errno==ENOENT){
             error_message(404,buf,NULL);
             write(fd,buf,strlen(buf));
@@ -281,25 +283,31 @@ int accept_client(void* request,char* buf,int fd){
     };
     
     if(S_ISDIR(file_stats.st_mode)){
+        /*check for if the file asked is a folder.*/
         if(split_request[1][strlen(split_request[1])-1]!='/'){
+            /*check for if the file name contain a /
+             at the end if not prints error for it is a dir and not contain a / at the end*/
             error_message(302,buf,NULL);
             write(fd,buf,strlen(buf));
             return 1;        
             }
         else{
+            /*it is a folder and contains a / at the end*/
             char* new_name = (char*)malloc(strlen(absulute_path) + strlen("index.html"));
             sprintf(new_name,"%s%s",absulute_path,"index.html");
             if((fopen(new_name,"r")) == NULL){
+                /*check for if the file index.html doesn't exits inside of the folder
+                if not print the content as an html file*/
                 DIR *d;
                 struct dirent *dir;
                 int total_size_folder = 0;
-                printf("sigsegv\n");
                 char temp_path[PATH_MAX];
                 d = opendir(absulute_path);
                 char buf[512];
                 char* type = get_mime_type(absulute_path);
                 total_size_folder += strlen("<HTML>\r\n<HEAD><TITLE></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n");
                 total_size_folder += strlen(split_request[1])*2;
+                /*a sum of the size of all the files inside the folder*/
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
                         if(dir->d_name[0]!='.'){
@@ -311,16 +319,13 @@ int accept_client(void* request,char* buf,int fd){
                         }
                     closedir(d);
                 }
+                /*insert the headers to the buffer*/
                 total_size_folder += strlen("\r\n\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
                 create_ok(buf,absulute_path,total_size_folder);
-                /*
-                <HTML>\r\n<HEAD><TITLE>Index of <path-of-directory></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of <path-of-directory></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n
-                */
                 sprintf(temp_path,"<HTML>\r\n<HEAD><TITLE>Index of %s</TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of %s</H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n",split_request[1],split_request[1]);
                 strcat(buf,temp_path);
-                
+                /*opens the dir again and prints the values of the files to the client*/
                 d = opendir(absulute_path);
-                
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
                         if(dir->d_name[0]!='.'){
@@ -337,6 +342,7 @@ int accept_client(void* request,char* buf,int fd){
                 return 0;
             }
             else{
+                /*if the file exists it prints it to the client as an html file*/
                 stat(new_name,&file_stats);
                 read_and_write_file(fd,new_name,file_stats.st_size,buf);
                 return 0;
@@ -351,10 +357,10 @@ int accept_client(void* request,char* buf,int fd){
     }
     /*add a return file value*/
     else{
+        /*makes the header*/
         create_ok(buf,absulute_path,-1);
-        printf("entered the get file part\n");
-        write(fd,buf,strlen(buf));
-        printf("after write to the client\n");
+        /*writes to the file the headed */
+        // write(fd,buf,strlen(buf));
         read_and_write_file(fd,absulute_path,file_stats.st_size,buf);
     }
     return 0;
