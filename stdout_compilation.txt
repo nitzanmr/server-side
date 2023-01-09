@@ -44,21 +44,9 @@ server.c:300:23: warning: unused variable ‘type’ [-Wunused-variable]
 server.c:247:11: warning: unused variable ‘split_by’ [-Wunused-variable]
   247 |     char* split_by= " ";
       |           ^~~~~~~~
-server.c: In function ‘client_read’:
-server.c:384:11: warning: passing argument 1 of ‘close’ makes integer from pointer without a cast [-Wint-conversion]
-  384 |     close(fd);
-      |           ^~
-      |           |
-      |           int *
-In file included from server.c:15,
-                 from main.c:1:
-/usr/include/unistd.h:353:23: note: expected ‘int’ but argument is of type ‘int *’
-  353 | extern int close (int __fd);
-      |                   ~~~~^~~~
-In file included from main.c:1:
 server.c: In function ‘create_server’:
-server.c:425:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  425 |         connfd = accept(sockfd, (SA*)&cli, &len);
+server.c:424:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  424 |         connfd = accept(sockfd, (SA*)&cli, &len);
       |                                            ^~~~
       |                                            |
       |                                            int *

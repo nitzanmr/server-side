@@ -3,61 +3,20 @@ import json
 import subprocess
 import os
 import urllib3
+import telnetlib
+import re
 EXECUTABLE = "ex2"
 C_FILES = "client.c "
 
 def send_client_http():
-    # status = subprocess.run(f"./{EXECUTABLE} http://localhost:8080",shell=True)
-    # if status.returncode  != 0:
-    #     print("[-]FAILED! split test")
-    #     return False
-
-    # print("[+] Passed split test")
-    # return True
-    # http = urllib3.PoolManager()
-    # url = 'http://localhost:8080/check_file'
-    # resp = http.request('GET', url)
-    # from http.client import HTTPConnection
-    # HTTPConnection._http_vsn_str = 'HTTP/1.0'
-    x = requests.get("http://127.0.0.1:8070")
-    print(x.json)
-    
-    # status = subprocess.run(f"./{EXECUTABLE} 9",shell=True)
-    # if status.returncode  != 0:
-    #     print("[-]FAILED! test tasks bigger then number of threads")
-    #     return False
-
-    # print("[+] Passed test tasks bigger then number of threads")
-    # return True
-
-# def setup():
-#     if os.path.isfile(EXECUTABLE):
-#         os.remove(EXECUTABLE)
-
-#     with open("stdout_compilation.txt", 'w') as out_file:
-#         c = subprocess.run(
-#             f'gcc -Wall {C_FILES} -o {EXECUTABLE} ',
-#             stderr=out_file,
-#             stdout=out_file,
-#             shell=True,
-#         )
-#     with open("stdout_compilation.txt") as out_file:
-#         res = out_file.read()
-#         return_val = None
-#         if bytes(res, 'utf-8') == b'':
-#             print("Ex. compiled successfully.")
-#             return_val = "Compiled"
-
-#         if "warning: " in res:
-#             print("Warnings during compilation")
-#             return_val = "Warnings"
-
-#         if "error: " in res:
-#             print("\nSomething didn't go right when compiling your C source "
-#                 "please check stdout_compilation.txt\n")
-#             return_val = "Error"
-
-#         return return_val
+    # status = subprocess.run(f"telnet 127.0.0.1 8070","GET /folder/ HTTP/1.1",shell=True)
+    # subprocess.run(f"GET /folder/ HTTP/1.1",shell=True)
+    HOST = "127.0.0.1"
+    PORT = 8070
+    tn = telnetlib.Telnet(HOST,PORT)
+    tn.write(b'GET /folder/ HTTP/1.1')
+    # tn.write("GET /folder/ HTTP/1.1")
+    # tn.write("GET /check_file.txt HTTP/1.1")
 
 if __name__ == "__main__":
     # setup()

@@ -314,8 +314,8 @@ int accept_client(void* request,char* buf,int fd){
                 total_size_folder += strlen("\r\n\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
                 create_ok(buf,absulute_path,total_size_folder);
                 /*
-            <HTML>\r\n<HEAD><TITLE>Index of <path-of-directory></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of <path-of-directory></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n
-            */
+                <HTML>\r\n<HEAD><TITLE>Index of <path-of-directory></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of <path-of-directory></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n
+                */
                 sprintf(temp_path,"<HTML>\r\n<HEAD><TITLE>Index of %s</TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of %s</H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n",split_request[1],split_request[1]);
                 strcat(buf,temp_path);
                 
@@ -378,10 +378,9 @@ int client_read(void* arg){
         counter++;
     }
     printf("\nput on the eof\n");
-
     accept_client(buf,returned_buf,*fd);
     printf("finshed the client\n");
-    close(fd);
+    close(*fd);
     return 0;
 }
 int create_server(int port,int number_of_request,threadpool* new_threadpool){
@@ -433,11 +432,11 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
 
         //write a function that sends the read from the client to the accept_client_func 
         //then send the returned value to the client.
-        client_read((void*)&connfd);
+        // client_read((void*)&connfd);
         dispatch(new_threadpool,(dispatch_fn)client_read,(void*)&connfd);
         counter_of_request++;
     }
-   
+    destroy_threadpool(new_threadpool);    
     // After chatting close the socket
     close(sockfd);
     return 0;
@@ -456,7 +455,7 @@ int server(int argc, char* argv[]){
         exit(1);
     }
     create_server(atoi(argv[0]),atoi(argv[2]),new_threadpool);
-    destroy_threadpool(new_threadpool);    
+    printf("\nfinshed the reading from the clients\n");
     return 0;
 }
 void build_header_m(char* error_message ,char* error_spciefed,int content_length,char* path){
