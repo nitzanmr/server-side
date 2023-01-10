@@ -19,32 +19,32 @@ void build_header_m(char*, char*,int,char* path);
 void error_message(int error_num,char* buf,char* path){
     if(error_num == 400){
         build_header_m(buf,"400 bad request",strlen("<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>\r\n<BODY><H4>400 Bad request</H4>\r\nBad Request.\r\n</BODY></HTML>\0"),path);
-        sprintf(buf,"<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>\r\n<BODY><H4>400 Bad request</H4>\r\nBad Request.\r\n</BODY></HTML>");
+        strcat(buf,"<HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>\r\n<BODY><H4>400 Bad request</H4>\r\nBad Request.\r\n</BODY></HTML>");
         return;
     }
     if(error_num ==501){
         build_header_m(buf,"501 Not supported",strlen("<HTML><HEAD><TITLE>501 Not supported</TITLE></HEAD>\r\n<BODY><H4>501 Not supported</H4>\r\nMethod is not supported.\r\n</BODY></HTML>\0"),path);
-        sprintf(buf,"<HTML><HEAD><TITLE>501 Not supported</TITLE></HEAD>\r\n<BODY><H4>501 Not supported</H4>\r\nMethod is not supported.\r\n</BODY></HTML>");
+        strcat(buf,"<HTML><HEAD><TITLE>501 Not supported</TITLE></HEAD>\r\n<BODY><H4>501 Not supported</H4>\r\nMethod is not supported.\r\n</BODY></HTML>");
         return;
     }
     if(error_num == 500){
         build_header_m(buf,"500 Internal Server Error",strlen("<HTML><HEAD><TITLE>500 Internal Server Error</TITLE></HEAD>\r\n<BODY><H4>500 Internal Server Error</H4>\r\nSome server side error.\r\n</BODY></HTML>\0"),path);
-        sprintf(buf,"<HTML><HEAD><TITLE>500 Internal Server Error</TITLE></HEAD>\r\n<BODY><H4>500 Internal Server Error</H4>\r\nSome server side error.\r\n</BODY></HTML>");
+        strcat(buf,"<HTML><HEAD><TITLE>500 Internal Server Error</TITLE></HEAD>\r\n<BODY><H4>500 Internal Server Error</H4>\r\nSome server side error.\r\n</BODY></HTML>");
         return;
     }
     if(error_num == 404){
         build_header_m(buf,"404 Not Found",strlen("<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>\r\n<BODY><H4>404 Not Found</H4>\r\nFile not found.\r\n</BODY></HTML>\0"),path);
-        sprintf(buf,"<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>\r\n<BODY><H4>404 Not Found</H4>\r\nFile not found.\r\n</BODY></HTML>");
+        strcat(buf,"<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>\r\n<BODY><H4>404 Not Found</H4>\r\nFile not found.\r\n</BODY></HTML>");
         return;
     }
     if(error_num == 403){
         build_header_m(buf,"403 Forbidden",strlen("<HTML><HEAD><TITLE>403 Forbidden</TITLE></HEAD>\r\n<BODY><H4>403 Forbidden</H4>\r\nAccess denied.\r\n</BODY></HTML>\0"),path);
-        sprintf(buf,"<HTML><HEAD><TITLE>403 Forbidden</TITLE></HEAD>\r\n<BODY><H4>403 Forbidden</H4>\r\nAccess denied.\r\n</BODY></HTML>");
+        strcat(buf,"<HTML><HEAD><TITLE>403 Forbidden</TITLE></HEAD>\r\n<BODY><H4>403 Forbidden</H4>\r\nAccess denied.\r\n</BODY></HTML>");
         return;
     }
     if(error_num == 302){
         build_header_m(buf,"302 Found",strlen("<HTML><HEAD><TITLE>302 Found</TITLE></HEAD>\r\n<BODY><H4>302 Found</H4>\r\nDirectories must end with a slash.\r\n</BODY></HTML>\0"),path);
-        sprintf(buf,"<HTML><HEAD><TITLE>302 Found</TITLE></HEAD>\r\n<BODY><H4>302 Found</H4>\r\nDirectories must end with a slash.\r\n</BODY></HTML>");
+        strcat(buf,"<HTML><HEAD><TITLE>302 Found</TITLE></HEAD>\r\n<BODY><H4>302 Found</H4>\r\nDirectories must end with a slash.\r\n</BODY></HTML>");
         return;
     }
 }
@@ -70,12 +70,12 @@ void split_str(char* request,char* split_by,char** split_request){
     int start_of_word = 0;
     int i = 0;
     split_request[0] = request;
-    printf("\n%s\n",split_request[counter]);
+    // printf("\n%s\n",split_request[counter]);
     while(request[i]!='\0'){
         if(request[i]==*split_by){
-            printf("\ni is:%d request[%d] is: /%c/\n",i,i,request[i]);
+            // printf("\ni is:%d request[%d] is: /%c/\n",i,i,request[i]);
             request[i] = '\0';
-            printf("\n%s\n",request);
+            // printf("\n%s\n",request);
             counter++;
             split_request[counter] = request+i+1;
         }
@@ -83,9 +83,9 @@ void split_str(char* request,char* split_by,char** split_request){
     }
     request[i] = '\0';
     for(int j = 0;j<3;j++){
-        printf("\nthe split[%d] is:%s\n",j,split_request[j]);
+        // printf("\nthe split[%d] is:%s\n",j,split_request[j]);
     }
-    printf("\n made it to the end\n");
+    // printf("\n made it to the end\n");
 }
 int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
     FILE* ptr;
@@ -93,14 +93,14 @@ int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
     int read_val = 0;
     int write_val = 0;
     if (NULL == ptr) {
-        printf("file can't be opened \n");
+        // printf("file can't be opened \n");
         return 1;
     }
     char ch;
     int counter = 0;
     do {
         ch = fgetc(ptr);
-        printf("%c", ch);
+        // printf("%c", ch);
         buf[counter] = ch;
         counter++;
         if(counter==512){
@@ -160,7 +160,7 @@ int return_wrote_size(char* path){
         size_of_in_buf += strlen("<tr>\r\n<td><A HREF=><></A></td><td><></td>\r\n<td><></td>\r\n</tr>");
 
         size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(char_a_size);
-        printf("sigsegev after\n");
+        // printf("sigsegev after\n");
 
     }
     else{
@@ -252,8 +252,8 @@ int accept_client(void* request,char* buf,int fd){
     char absulute_path[PATH_MAX];
     getcwd(absulute_path,PATH_MAX);
     strcat(absulute_path,split_request[1]);
-    printf("\n%s\n",absulute_path);
-    printf("made it here\n");
+    // printf("\n%s\n",absulute_path);
+    // printf("made it here\n");
     if(split_request[0] == NULL || split_request[1] == NULL || split_request[2] == NULL){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
         error_message(400,buf,NULL);
@@ -328,12 +328,12 @@ int accept_client(void* request,char* buf,int fd){
                 d = opendir(absulute_path);
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
-                        if(dir->d_name[0]!='.'){
+                        // if(dir->d_name[0]!='.'){
                             // printf("%s\n", dir->d_name);
                             strcpy(temp_path,absulute_path);
                             strcat(temp_path,dir->d_name);        
                             make_folder_file(temp_path,buf,fd);
-                        }
+                        // }
                         }
                     closedir(d);
                 }
@@ -371,21 +371,25 @@ int client_read(void* arg){
     char returned_buf[512];
     int valread = 0;
     int counter = 0;
+
     while(1){
         valread = read(*fd,buf+counter,1);
         // printf("%c",)
-        printf("valread is: %d\n",valread);
+        // printf("valread is: %d\n",valread);
         if(buf[counter]=='\n'){
             buf[counter-1] = '\0';
             break;
         }
-        printf("counter is: %d\n",counter);
-        printf("read[%d]: %c\n",counter,buf[counter]);
+        // printf("counter is: %d\n",counter);
+        // printf("read[%d]: %c\n",counter,buf[counter]);
         counter++;
     }
-    printf("\nput on the eof\n");
+    shutdown(*fd,SHUT_RD);
+    // printf("\nput on the eof\n");
     accept_client(buf,returned_buf,*fd);
-    printf("finshed the client\n");
+
+    // printf("finshed the client\n");
+    shutdown(*fd,SHUT_WR);
     close(*fd);
     return 0;
 }
@@ -499,5 +503,5 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
 
     }
 
-    printf("\n%s\n",error_message);
+    // printf("\n%s\n",error_message);
 }

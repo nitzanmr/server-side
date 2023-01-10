@@ -44,9 +44,13 @@ server.c:307:23: warning: unused variable ‘type’ [-Wunused-variable]
 server.c:247:11: warning: unused variable ‘split_by’ [-Wunused-variable]
   247 |     char* split_by= " ";
       |           ^~~~~~~~
+server.c: In function ‘client_read’:
+server.c:372:9: warning: variable ‘valread’ set but not used [-Wunused-but-set-variable]
+  372 |     int valread = 0;
+      |         ^~~~~~~
 server.c: In function ‘create_server’:
-server.c:430:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  430 |         connfd = accept(sockfd, (SA*)&cli, &len);
+server.c:434:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  434 |         connfd = accept(sockfd, (SA*)&cli, &len);
       |                                            ^~~~
       |                                            |
       |                                            int *
@@ -59,8 +63,8 @@ In file included from /usr/include/netinet/in.h:23,
       |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
 In file included from main.c:1:
 server.c: In function ‘server’:
-server.c:453:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  453 |     int counter_of_request = 0;
+server.c:457:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  457 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
 main.c: In function ‘main’:
 main.c:34:9: warning: unused variable ‘test’ [-Wunused-variable]
