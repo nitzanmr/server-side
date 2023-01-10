@@ -23,19 +23,19 @@ def check_main_folder():
     # tn.write(b"GET /folder/ HTTP/1.1")
     # tn.write(b"GET /check_file.txt HTTP/1.1")
     time.sleep(5)
-    URL = 'http://127.0.0.1:8060/'
+    URL = 'http://127.0.0.1:80/'
     r = requests.get(URL,timeout=1)
     print(r.text)
     
    
 def check_named_folder():
     time.sleep(5)
-    URL = 'http://127.0.0.1:8060/folder/'
+    URL = 'http://127.0.0.1:80/folder/'
     r = requests.get(URL,timeout=1)
     print(r.text)
 def check_file():
     time.sleep(5)
-    URL = 'http://127.0.0.1:8060/check_file'
+    URL = 'http://127.0.0.1:80/check_file'
     r = requests.get(URL, timeout=1)
     print(r.text)
 
