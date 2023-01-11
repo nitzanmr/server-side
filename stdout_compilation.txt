@@ -6,51 +6,33 @@ server.c:62:5: warning: this ‘if’ clause does not guard... [-Wmisleading-ind
 server.c:62:85: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
    62 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
       |                                                                                     ^~
-server.c: In function ‘split_str’:
-server.c:70:9: warning: unused variable ‘start_of_word’ [-Wunused-variable]
-   70 |     int start_of_word = 0;
-      |         ^~~~~~~~~~~~~
-server.c: In function ‘read_and_write_file’:
-server.c:93:9: warning: unused variable ‘read_val’ [-Wunused-variable]
-   93 |     int read_val = 0;
-      |         ^~~~~~~~
-server.c: In function ‘return_wrote_size’:
-server.c:154:10: warning: unused variable ‘in_buf’ [-Wunused-variable]
-  154 |     char in_buf[512];
-      |          ^~~~~~
-server.c:151:10: warning: unused variable ‘timebuf’ [-Wunused-variable]
-  151 |     char timebuf[128];
-      |          ^~~~~~~
-server.c:150:12: warning: variable ‘now’ set but not used [-Wunused-but-set-variable]
-  150 |     time_t now;
-      |            ^~~
 server.c: In function ‘make_folder_file’:
-server.c:197:84: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
-  197 |         sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
-      |                                                                                   ~^                                             ~~~~~~~~~~~~~~~~~~
-      |                                                                                    |                                                       |
-      |                                                                                    int                                                     __off_t {aka long int}
-      |                                                                                   %ld
-server.c:192:10: warning: unused variable ‘timebuf’ [-Wunused-variable]
-  192 |     char timebuf[128];
+server.c:169:92: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
+  169 |         sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
+      |                                                                                           ~^                                             ~~~~~~~~~~~~~~~~~~
+      |                                                                                            |                                                       |
+      |                                                                                            int                                                     __off_t {aka long int}
+      |                                                                                           %ld
+server.c:164:10: warning: unused variable ‘timebuf’ [-Wunused-variable]
+  164 |     char timebuf[128];
       |          ^~~~~~~
-server.c:191:12: warning: variable ‘now’ set but not used [-Wunused-but-set-variable]
-  191 |     time_t now;
+server.c:163:12: warning: variable ‘now’ set but not used [-Wunused-but-set-variable]
+  163 |     time_t now;
       |            ^~~
 server.c: In function ‘accept_client’:
-server.c:307:23: warning: unused variable ‘type’ [-Wunused-variable]
-  307 |                 char* type = get_mime_type(absulute_path);
+server.c:281:23: warning: unused variable ‘type’ [-Wunused-variable]
+  281 |                 char* type = get_mime_type(absulute_path);
       |                       ^~~~
-server.c:247:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-  247 |     char* split_by= " ";
+server.c:220:11: warning: unused variable ‘split_by’ [-Wunused-variable]
+  220 |     char* split_by= " ";
       |           ^~~~~~~~
 server.c: In function ‘client_read’:
-server.c:372:9: warning: variable ‘valread’ set but not used [-Wunused-but-set-variable]
-  372 |     int valread = 0;
+server.c:348:9: warning: variable ‘valread’ set but not used [-Wunused-but-set-variable]
+  348 |     int valread = 0;
       |         ^~~~~~~
 server.c: In function ‘create_server’:
-server.c:434:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  434 |         connfd = accept(sockfd, (SA*)&cli, &len);
+server.c:401:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  401 |         connfd = accept(sockfd, (SA*)&cli, &len);
       |                                            ^~~~
       |                                            |
       |                                            int *
@@ -63,8 +45,8 @@ In file included from /usr/include/netinet/in.h:23,
       |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
 In file included from main.c:1:
 server.c: In function ‘server’:
-server.c:457:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  457 |     int counter_of_request = 0;
+server.c:419:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  419 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
 main.c: In function ‘main’:
 main.c:34:9: warning: unused variable ‘test’ [-Wunused-variable]

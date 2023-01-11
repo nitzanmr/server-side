@@ -63,34 +63,23 @@ char *get_mime_type(char *name) {
     return NULL;
 }
 void split_str(char* request,char* split_by,char** split_request){
-    // printf("\n%s\n",*request);
     int counter = 0;
-    // char* token = strtok(request," ");
-    // printf("\n%s\n",token);
-    int start_of_word = 0;
+    
     int i = 0;
     split_request[0] = request;
-    // printf("\n%s\n",split_request[counter]);
     while(request[i]!='\0'){
         if(request[i]==*split_by){
-            // printf("\ni is:%d request[%d] is: /%c/\n",i,i,request[i]);
             request[i] = '\0';
-            // printf("\n%s\n",request);
             counter++;
             split_request[counter] = request+i+1;
         }
         i++;
     }
     request[i] = '\0';
-    for(int j = 0;j<3;j++){
-        // printf("\nthe split[%d] is:%s\n",j,split_request[j]);
-    }
-    // printf("\n made it to the end\n");
 }
 int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
     FILE* ptr;
     ptr = fopen(path,"r");
-    int read_val = 0;
     int write_val = 0;
     if (NULL == ptr) {
         // printf("file can't be opened \n");
@@ -100,7 +89,6 @@ int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
     int counter = 0;
     do {
         ch = fgetc(ptr);
-        // printf("%c", ch);
         buf[counter] = ch;
         counter++;
         if(counter==512){
@@ -122,50 +110,30 @@ int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
     }
     fclose(ptr);
     return 0 ;
-    // while(fgetc(ptr)!=EOF){
-    //         bzero(buf,512);
-    //         read_val=read(ptr,buf,512);
-            
-    //         if(read_val== -1){
-    //             perror("read file error");
-    //             return 1;
-    //         }
-
-    //         write_val = write(fd_socket,buf,512);
-    //         if(write_val == -1){
-    //             perror("write to server failed\n");
-    //             return 1;
-    //         }
-    //         if(read_val == 0){
-    //             return 0;
-    //         }
-    // }
-
 }
 int return_wrote_size(char* path){
     #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
-
+    #define PATH_MAX        4096
+    char absulute_path[PATH_MAX];
+    getcwd(absulute_path,PATH_MAX);
+    strcat(absulute_path,path);
     struct stat file_stats;
-    stat(path,&file_stats);
-    time_t now;
-    char timebuf[128];
+    stat(absulute_path,&file_stats);
     char timebuf_mtime[128];
-    now = time(NULL);
-    char in_buf[512];
     int size_of_in_buf = 0;
     char char_a_size[50];
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
     sprintf(char_a_size,"%jd",file_stats.st_size);
     if(S_ISREG(file_stats.st_mode)){
-        size_of_in_buf += strlen("<tr>\r\n<td><A HREF=><></A></td><td><></td>\r\n<td><></td>\r\n</tr>");
+        size_of_in_buf += strlen("<tr>\r\n<td><A HREF=\"\"><\"\"></A></td>\"\"<td></td>\r\n<td><></td>\r\n</tr>");
 
         size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(char_a_size);
         // printf("sigsegev after\n");
 
     }
     else{
-        size_of_in_buf+= strlen("<tr>\r\n<td><A HREF=><></A></td><td><></td>\r\n</tr>");
-        size_of_in_buf = strlen(path)+strlen(path)+strlen(timebuf_mtime);
+        size_of_in_buf+= strlen("<tr>\r\n<td><A HREF=\"\">\"\"</A></td><td>\"\"</td>\r\n</tr>");
+        size_of_in_buf = size_of_in_buf +strlen(path)+strlen(path)+strlen(timebuf_mtime);
     }
 
     return size_of_in_buf;
@@ -181,24 +149,28 @@ int make_folder_file(char* path,char* buf,int fd){
 
    //int fd
     #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
-
+    #define PATH_MAX        4096
+    char absulute_path[PATH_MAX];
+    getcwd(absulute_path,PATH_MAX);
+    strcat(absulute_path,path);
     struct stat file_stats;
+    stat(absulute_path,&file_stats);
+
     int size_of_in_buf = 0;
     int counter_in_buf = 0;
     int counter_buf = strlen(buf);
     char in_buf[512];
-    stat(path,&file_stats);
     time_t now;
     char timebuf[128];
     char timebuf_mtime[128];
     now = time(NULL);
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
     if(S_ISREG(file_stats.st_mode)){
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
         size_of_in_buf = strlen(in_buf);
     }
     else{
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=%s><%s></A></td><td><%s></td>\r\n</tr>\r\n",path,path,timebuf_mtime);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n</tr>\r\n",path,path,timebuf_mtime);
         size_of_in_buf = strlen(in_buf);
     }
     while(size_of_in_buf!=counter_in_buf){
@@ -215,6 +187,7 @@ int make_folder_file(char* path,char* buf,int fd){
         }
     }
     write(fd,buf,counter_buf);
+    // printf("path is : %s", path);
     // printf("%s",buf);
     bzero(buf,counter_buf);
     return counter_in_buf;
@@ -250,6 +223,7 @@ int accept_client(void* request,char* buf,int fd){
     split_str((char*)request," ",split_request);
     struct stat file_stats;
     char absulute_path[PATH_MAX];
+    FILE* file_des ;
     getcwd(absulute_path,PATH_MAX);
     strcat(absulute_path,split_request[1]);
     // printf("\n%s\n",absulute_path);
@@ -295,7 +269,7 @@ int accept_client(void* request,char* buf,int fd){
             /*it is a folder and contains a / at the end*/
             char* new_name = (char*)malloc(strlen(absulute_path) + strlen("index.html"));
             sprintf(new_name,"%s%s",absulute_path,"index.html");
-            if((fopen(new_name,"r")) == NULL){
+            if((file_des = fopen(new_name,"r")) == NULL){
                 /*check for if the file index.html doesn't exits inside of the folder
                 if not print the content as an html file*/
                 DIR *d;
@@ -310,12 +284,10 @@ int accept_client(void* request,char* buf,int fd){
                 /*a sum of the size of all the files inside the folder*/
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
-                        if(dir->d_name[0]!='.'){
-                            // printf("%s\n", dir->d_name);
-                            strcpy(temp_path,absulute_path);
-                            strcat(temp_path,dir->d_name);
+                            sprintf(temp_path,"%s%s",split_request[1],dir->d_name);
+                            // strcat(temp_path,dir->d_name);
                             total_size_folder += return_wrote_size(temp_path);
-                        }
+                            // printf("temp path is: %s\n", temp_path);
                         }
                     closedir(d);
                 }
@@ -325,16 +297,20 @@ int accept_client(void* request,char* buf,int fd){
                 sprintf(temp_path,"<HTML>\r\n<HEAD><TITLE>Index of %s</TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of %s</H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n",split_request[1],split_request[1]);
                 strcat(buf,temp_path);
                 /*opens the dir again and prints the values of the files to the client*/
-                d = opendir(absulute_path);
+                char* temp = absulute_path;
+                for(int i = 0 ; i < strlen(absulute_path);i++){
+                    temp[i] = absulute_path[i];
+                }
+                d = opendir(temp);
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
-                        // if(dir->d_name[0]!='.'){
-                            // printf("%s\n", dir->d_name);
-                            strcpy(temp_path,absulute_path);
-                            strcat(temp_path,dir->d_name);        
-                            make_folder_file(temp_path,buf,fd);
-                        // }
-                        }
+                        bzero(temp_path,PATH_MAX);
+                        // printf("absulute path is :%s\n",temp);
+                        sprintf(temp_path,"%s%s",split_request[1],dir->d_name);
+                        // strcat(temp_path,);   
+                        printf("tmp path is: %s\n",temp_path);     
+                        make_folder_file(temp_path,buf,fd);
+                    }
                     closedir(d);
                 }
                 sprintf(buf,"</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>\r\n\r\n");
@@ -342,6 +318,7 @@ int accept_client(void* request,char* buf,int fd){
                 return 0;
             }
             else{
+                fclose(file_des);
                 /*if the file exists it prints it to the client as an html file*/
                 stat(new_name,&file_stats);
                 read_and_write_file(fd,new_name,file_stats.st_size,buf);
@@ -359,8 +336,7 @@ int accept_client(void* request,char* buf,int fd){
     else{
         /*makes the header*/
         create_ok(buf,absulute_path,-1);
-        /*writes to the file the headed */
-        // write(fd,buf,strlen(buf));
+        /*writes from the file to the client */
         read_and_write_file(fd,absulute_path,file_stats.st_size,buf);
     }
     return 0;
@@ -374,21 +350,14 @@ int client_read(void* arg){
 
     while(1){
         valread = read(*fd,buf+counter,1);
-        // printf("%c",)
-        // printf("valread is: %d\n",valread);
         if(buf[counter]=='\n'){
             buf[counter-1] = '\0';
             break;
         }
-        // printf("counter is: %d\n",counter);
-        // printf("read[%d]: %c\n",counter,buf[counter]);
         counter++;
     }
     shutdown(*fd,SHUT_RD);
-    // printf("\nput on the eof\n");
     accept_client(buf,returned_buf,*fd);
-
-    // printf("finshed the client\n");
     shutdown(*fd,SHUT_WR);
     close(*fd);
     return 0;
@@ -400,11 +369,9 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     // socket create and verification
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
-        printf("socket creation failed...\n");
+        perror("socket creation failed...\n");
         exit(0);
     }
-    else
-        printf("Socket successfully created..\n");
     bzero(&servaddr, sizeof(servaddr));
    
     // assign IP, PORT
@@ -412,7 +379,7 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servaddr.sin_port = htons(port);
    
-    // Binding newly created socket to given IP and verification
+    // Binding the socket created above.
     if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) {
         printf("socket bind failed...\n");
         exit(0);
@@ -420,7 +387,7 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     else
         printf("Socket successfully binded..\n");
    
-    // Now server is ready to listen and verification
+    // setting the welcome socket to the server
     if ((listen(sockfd, 5)) != 0) {
         printf("Listen failed...\n");
         exit(0);
@@ -428,21 +395,16 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     else
         printf("Server listening..\n");
     len = sizeof(cli);
-   
+    
     // Accept the data packet from client and verification
     while(counter_of_request < number_of_request){    
         connfd = accept(sockfd, (SA*)&cli, &len);
         if (connfd < 0) {
-            printf("server accept failed...\n");
+            perror("server accept failed...\n");
             exit(0);
         }
         else
             printf("server accept the client...\n");
-        // Function for chatting between client and server
-
-        //write a function that sends the read from the client to the accept_client_func 
-        //then send the returned value to the client.
-        // client_read((void*)&connfd);
         dispatch(new_threadpool,(dispatch_fn)client_read,(void*)&connfd);
         counter_of_request++;
     }
@@ -487,11 +449,7 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
     char timebuf[128];
     now = time(NULL);
     strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
-    //  sprintf(gmt_date, asctime(gmtime(epoch)));
-   
-    // printf("%jd seconds since the epoch began\n", (intmax_t)epoch);
-    // printf("%s", asctime(gmtime(&epoch)));
-    //  printf("\nsigsegv here\n");
+    
     if(path!=NULL){
         char location[50];
         sprintf(location,"Location: %s\r\n",path);
