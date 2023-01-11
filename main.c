@@ -100,7 +100,7 @@ int bad_request(){
 
 }
 int create_s(){
-    char* args[] = {"8070","3","5"};
+    char* args[] = {"8080","3","5"};
     if(server(3,args)==0)return 0;
     else return 1;
 }

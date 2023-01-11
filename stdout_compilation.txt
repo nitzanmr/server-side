@@ -20,19 +20,22 @@ server.c:163:12: warning: variable ‘now’ set but not used [-Wunused-but-set-
   163 |     time_t now;
       |            ^~~
 server.c: In function ‘accept_client’:
-server.c:281:23: warning: unused variable ‘type’ [-Wunused-variable]
-  281 |                 char* type = get_mime_type(absulute_path);
+server.c:268:17: warning: unused variable ‘len_absulute’ [-Wunused-variable]
+  268 |             int len_absulute = strlen(new_split);
+      |                 ^~~~~~~~~~~~
+server.c:291:23: warning: unused variable ‘type’ [-Wunused-variable]
+  291 |                 char* type = get_mime_type(absulute_path);
       |                       ^~~~
 server.c:220:11: warning: unused variable ‘split_by’ [-Wunused-variable]
   220 |     char* split_by= " ";
       |           ^~~~~~~~
 server.c: In function ‘client_read’:
-server.c:348:9: warning: variable ‘valread’ set but not used [-Wunused-but-set-variable]
-  348 |     int valread = 0;
+server.c:358:9: warning: variable ‘valread’ set but not used [-Wunused-but-set-variable]
+  358 |     int valread = 0;
       |         ^~~~~~~
 server.c: In function ‘create_server’:
-server.c:401:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  401 |         connfd = accept(sockfd, (SA*)&cli, &len);
+server.c:411:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
+  411 |         connfd = accept(sockfd, (SA*)&cli, &len);
       |                                            ^~~~
       |                                            |
       |                                            int *
@@ -45,8 +48,8 @@ In file included from /usr/include/netinet/in.h:23,
       |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
 In file included from main.c:1:
 server.c: In function ‘server’:
-server.c:419:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  419 |     int counter_of_request = 0;
+server.c:429:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  429 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
 main.c: In function ‘main’:
 main.c:34:9: warning: unused variable ‘test’ [-Wunused-variable]

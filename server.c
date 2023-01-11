@@ -261,9 +261,19 @@ int accept_client(void* request,char* buf,int fd){
         if(split_request[1][strlen(split_request[1])-1]!='/'){
             /*check for if the file name contain a /
              at the end if not prints error for it is a dir and not contain a / at the end*/
-            error_message(302,buf,NULL);
-            write(fd,buf,strlen(buf));
-            return 1;        
+            // error_message(302,buf,NULL);
+            // write(fd,buf,strlen(buf));
+            char* new_request = (char*)malloc(strlen(request) +1);
+            char* new_split = (char*) malloc (strlen(split_request[1])+1);
+            int len_absulute = strlen(new_split);
+            sprintf(new_split,"%s/",split_request[1]);
+            printf("%s\n",new_split);
+            // split_request[1][len_absulute+1] = '\0';
+            sprintf(new_request,"GET %s HTTP/1.1\r\n",new_split);
+            bzero(buf,512);
+            printf("%s\n",new_request);
+            accept_client(new_request,buf,fd);
+            return 0;        
             }
         else{
             /*it is a folder and contains a / at the end*/
