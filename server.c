@@ -77,9 +77,10 @@ void split_str(char* request,char* split_by,char** split_request){
     }
     request[i] = '\0';
 }
-int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
+int read_and_write_file(int fd_socket,char* path,off_t file_size,char* buf){
     FILE* ptr;
     ptr = fopen(path,"r");
+    int total_counter = 0;
     int write_val = 0;
     if (NULL == ptr) {
         // printf("file can't be opened \n");
@@ -91,6 +92,7 @@ int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
         ch = fgetc(ptr);
         buf[counter] = ch;
         counter++;
+        total_counter++;
         if(counter==512){
             write_val = write(fd_socket,buf,512);
             if(write_val == -1){
@@ -102,7 +104,7 @@ int read_and_write_file(int fd_socket,char* path,int file_size,char* buf){
         }
         // Checking if character is not EOF.
         // If it is EOF stop reading.
-    } while (ch != EOF);
+    } while (total_counter != file_size);
     write_val = write(fd_socket,buf,counter);
     if(write_val == -1){
         perror("write to server failed\n");
@@ -210,7 +212,8 @@ int create_ok(char* buf,char* path,int size_of_file){
     if((type = get_mime_type(path))==NULL && size_of_file != -1){
         type = "text/html";
     };
-    sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
+    sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %ld\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
+    printf("%ld",stats.st_size);
     return 0;
 }
 int accept_client(void* request,char* buf,int fd){
@@ -366,6 +369,7 @@ int client_read(void* arg){
     shutdown(*fd,SHUT_RD);
     accept_client(buf,returned_buf,*fd);
     shutdown(*fd,SHUT_WR);
+    // sleep(2);
     close(*fd);
     return 0;
 }

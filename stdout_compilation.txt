@@ -5,11 +5,18 @@ server.c:62:5: warning: this ‘if’ clause does not guard... [-Wmisleading-ind
 server.c:62:85: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
    62 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
       |                                                                                     ^~
+server.c: In function ‘create_ok’:
+server.c:215:106: warning: format ‘%ld’ expects argument of type ‘long int’, but argument 6 has type ‘int’ [-Wformat=]
+  215 |     sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %ld\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
+      |                                                                                                        ~~^                                                                          ~~~~~~~~~~~~
+      |                                                                                                          |                                                                          |
+      |                                                                                                          long int                                                                   int
+      |                                                                                                        %d
 server.c: In function ‘accept_client’:
-server.c:288:23: warning: unused variable ‘type’ [-Wunused-variable]
-  288 |                 char* type = get_mime_type(absulute_path);
+server.c:291:23: warning: unused variable ‘type’ [-Wunused-variable]
+  291 |                 char* type = get_mime_type(absulute_path);
       |                       ^~~~
 server.c: In function ‘main’:
-server.c:428:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  428 |     int counter_of_request = 0;
+server.c:432:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  432 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
