@@ -5,7 +5,6 @@
 int number_of_threads_asked = 0;
 void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     /*this function initialize the threadpool to it defult values*/
-   
     number_of_threads_asked = max_number_of_threads;
     new_threadpool->num_threads = 0;
     new_threadpool->qsize = 0;
@@ -22,6 +21,7 @@ void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
             perror("create failed");
             exit(1);
         }
+        pthread_detach(new_threadpool->threads[i]);
         printf("pthread number:%d created\n",i);
     }
 }
@@ -159,8 +159,7 @@ void destroy_threadpool(threadpool* destroyme){
     pthread_cond_broadcast(&destroyme->q_not_empty);
     for (int i = 0; i < number_of_threads_asked; i++)
     {
-        // pthread_cond_signal(&destroyme->q_not_empty);
-        printf("pthread joined\n");
+        // printf("pthread joined\n");
         pthread_join(destroyme->threads[i],NULL);
     }
     free(destroyme->threads);

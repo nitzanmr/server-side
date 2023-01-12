@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <fcntl.h>
 #define _OPEN_SYS_ITOA_EXT
 #define SA struct sockaddr 
 void build_header_m(char*, char*,int,char* path);
@@ -78,39 +79,58 @@ void split_str(char* request,char* split_by,char** split_request){
     request[i] = '\0';
 }
 int read_and_write_file(int fd_socket,char* path,off_t file_size,char* buf){
-    FILE* ptr;
-    ptr = fopen(path,"r");
+    int ptr;
+    ptr = open(path,O_RDONLY); 
     int total_counter = 0;
     int write_val = 0;
-    if (NULL == ptr) {
-        // printf("file can't be opened \n");
+    if (ptr == 0) {
+        printf("Usage: open \n");
         return 1;
     }
     char ch;
-    int counter = 0;
-    do {
-        ch = fgetc(ptr);
-        buf[counter] = ch;
-        counter++;
-        total_counter++;
-        if(counter==512){
+    int check_read = 0;
+    int start_length = strlen(buf);
+    int counter =start_length ;
+    while(total_counter!=file_size) {
+        check_read = read(ptr,buf+start_length,512-start_length);
+        if(check_read ==0){
+            break;
+        }
+        if(check_read == -1){
+            printf("Usage: read");
+            return 1;
+        }
+        
+      
+        counter+=check_read;
+        if(check_read+start_length == 512){
             write_val = write(fd_socket,buf,512);
-            if(write_val == -1){
-                perror("write to server failed\n");
+            if(write_val == 0){
+                printf("Usage: write");
                 return 1;
             }
             bzero(buf,512);
             counter = 0;
+            total_counter+=(512 - start_length);
+            if(start_length!= 0){
+                start_length = 0;
+            }
         }
+        
         // Checking if character is not EOF.
         // If it is EOF stop reading.
-    } while (total_counter != file_size);
-    write_val = write(fd_socket,buf,counter);
-    if(write_val == -1){
-        perror("write to server failed\n");
+    }
+    if(counter != 0){
+        write_val = write(fd_socket,buf,counter);
+        bzero(buf,counter);
+        if(write_val == -1){
+        perror("Usage: write\n");
         return 1;
     }
-    fclose(ptr);
+    }
+  
+   
+    close(ptr);
     return 0 ;
 }
 int return_wrote_size(char* path){
@@ -128,10 +148,7 @@ int return_wrote_size(char* path){
     sprintf(char_a_size,"%jd",file_stats.st_size);
     if(S_ISREG(file_stats.st_mode)){
         size_of_in_buf += strlen("<tr>\r\n<td><A HREF=\"\"><\"\"></A></td>\"\"<td></td>\r\n<td><></td>\r\n</tr>");
-
         size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(char_a_size);
-        // printf("sigsegev after\n");
-
     }
     else{
         size_of_in_buf+= strlen("<tr>\r\n<td><A HREF=\"\">\"\"</A></td><td>\"\"</td>\r\n</tr>");
@@ -169,13 +186,12 @@ int make_folder_file(char* path,char* buf,int fd){
         size_of_in_buf = strlen(in_buf);
     }
     else{
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n</tr>\r\n",path,path,timebuf_mtime);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s/\'>\'%s/\'</A></td><td>\'%s\'</td>\r\n</tr>\r\n",path,path,timebuf_mtime);
         size_of_in_buf = strlen(in_buf);
     }
     while(size_of_in_buf!=counter_in_buf){
         if(counter_buf==512){
             write(fd,buf,512);
-            // printf("%s\n",buf);
             bzero(buf,512);
             counter_buf = 0;
         }
@@ -186,8 +202,6 @@ int make_folder_file(char* path,char* buf,int fd){
         }
     }
     write(fd,buf,counter_buf);
-    // printf("path is : %s", path);
-    // printf("%s",buf);
     bzero(buf,counter_buf);
     return counter_in_buf;
 }
@@ -196,7 +210,7 @@ int create_ok(char* buf,char* path,int size_of_file){
     #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
     struct stat stats;
     if(stat(path,&stats)==1){
-        perror("stat 200 failed");
+        perror("Usage: Stat");
         return 1;
     }
     if(size_of_file == -1){
@@ -212,8 +226,7 @@ int create_ok(char* buf,char* path,int size_of_file){
     if((type = get_mime_type(path))==NULL && size_of_file != -1){
         type = "text/html";
     };
-    sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %ld\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
-    printf("%ld",stats.st_size);
+    sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
     return 0;
 }
 int accept_client(void* request,char* buf,int fd){
@@ -225,8 +238,6 @@ int accept_client(void* request,char* buf,int fd){
     FILE* file_des ;
     getcwd(absulute_path,PATH_MAX);
     strcat(absulute_path,split_request[1]);
-    // printf("\n%s\n",absulute_path);
-    // printf("made it here\n");
     if(split_request[0] == NULL || split_request[1] == NULL || split_request[2] == NULL){
         /*check the number of values inserted to the server function if it is less then needed print bad request*/
         error_message(400,buf,NULL);
@@ -262,6 +273,7 @@ int accept_client(void* request,char* buf,int fd){
              at the end if not prints error for it is a dir and not contain a / at the end*/
             error_message(302,buf,NULL);
             write(fd,buf,strlen(buf));
+            /*this is commented becuase it is not askeed in this progect from college to do so.*/
             // char* new_request = (char*)malloc(strlen(request) +1);
             // char* new_split = (char*) malloc (strlen(split_request[1])+1);
             // sprintf(new_split,"%s/",split_request[1]);
@@ -339,6 +351,7 @@ int accept_client(void* request,char* buf,int fd){
         }
     }
     if((!(file_stats.st_mode & S_IROTH))){
+        /*check if the client has the premissions to see the file.*/
         error_message(403,buf,NULL);
         write(fd,buf,strlen(buf));
         return 1;
@@ -369,11 +382,12 @@ int client_read(void* arg){
     shutdown(*fd,SHUT_RD);
     accept_client(buf,returned_buf,*fd);
     shutdown(*fd,SHUT_WR);
-    // sleep(2);
+    sleep(2);
     close(*fd);
     return 0;
 }
 int create_server(int port,int number_of_request,threadpool* new_threadpool){
+    /*creates the server and listens for clients.*/
     int sockfd, connfd;
     socklen_t len;
     struct sockaddr_in servaddr, cli;
@@ -381,8 +395,8 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     // socket create and verification
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
-        perror("socket creation failed...\n");
-        exit(0);
+        printf("Usage: socket creation failed...\n");
+        return 0;
     }
     bzero(&servaddr, sizeof(servaddr));
    
@@ -393,30 +407,25 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
    
     // Binding the socket created above.
     if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) {
-        printf("socket bind failed...\n");
-        exit(0);
+        printf("Usgage: socket bind failed\n");
+        return 1;
     }
-    else
-        printf("Socket successfully binded..\n");
    
     // setting the welcome socket to the server
     if ((listen(sockfd, 5)) != 0) {
-        printf("Listen failed...\n");
-        exit(0);
+        printf("Usage: Listen failed\n");
+        return 1;
     }
-    else
-        printf("Server listening..\n");
+
     len = sizeof(cli);
     
     // Accept the data packet from client and verification
     while(counter_of_request < number_of_request){    
         connfd = accept(sockfd, (SA*)&cli, &len);
         if (connfd < 0) {
-            perror("server accept failed...\n");
-            exit(0);
+            printf("Usage: server connection failed\n");
+            return 1;
         }
-        else
-            printf("server accept the client...\n");
         dispatch(new_threadpool,(dispatch_fn)client_read,(void*)&connfd);
         counter_of_request++;
     }
@@ -430,20 +439,24 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
 int main(int argc, char* argv[]){
     /*argv == [port,pool_size,max number of requests]*/
     int counter_of_request = 0;
-    printf("\n%s %d %s\n",argv[1],atoi(argv[2]),argv[3]);
-    // if(argc<4){
-    //     perror("too little arguments entered to the server\n");
-    //     return 1;
-    // }
-    threadpool* new_threadpool = create_threadpool(atoi(argv[2]));
-    if(new_threadpool==NULL){
-        perror("threadpool didnt create it self");
+    int create_respone = 0;
+    // printf("\n%s %d %s\n",argv[1],atoi(argv[2]),argv[3]);
+    if(argc!=4){
+        perror("Usage: too little/much arguments entered to the server\n");
         return 1;
     }
-    create_server(atoi(argv[1]),atoi(argv[3]),new_threadpool);
-    // destroy_threadpool(new_threadpool);
-    // free(new_threadpool);
-    printf("\nfinshed the reading from the clients\n");
+    threadpool* new_threadpool = create_threadpool(atoi(argv[2]));
+    if(new_threadpool==NULL){
+        perror("Usage: threadpool create");
+        return 1;
+    }
+    create_respone = create_server(atoi(argv[1]),atoi(argv[3]),new_threadpool);
+    if(create_respone == 1){
+        destroy_threadpool(new_threadpool);
+        free(new_threadpool);
+        return 1;
+    }
+    // printf("\nfinshed the reading from the clients\n");
     return 0;
 }
 void build_header_m(char* error_message ,char* error_spciefed,int content_length,char* path){
@@ -477,5 +490,4 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
 
     }
 
-    // printf("\n%s\n",error_message);
 }

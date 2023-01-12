@@ -36,7 +36,7 @@ def valgrind_test():
         try:
             valgrind = subprocess.run(
                 "valgrind --leak-check=full --tool=memcheck --show-leak-kinds=all --track-origins=yes --verbose "
-                f"--error-exitcode=1 -v --log-file=valgrind-out.txt ./{EXECUTABLE} 8060 5 2",
+                f"--error-exitcode=1 -v --log-file=valgrind-out.txt ./{EXECUTABLE} 8070 5 2",
                 stdout=out_file, text=True, shell=True, timeout=60)
 
         except subprocess.TimeoutExpired:
@@ -112,7 +112,7 @@ def create_server():
     # PORT = 8027
   
     
-    status = subprocess.run(f"./{EXECUTABLE} 8080 5 10",shell=True)
+    status = subprocess.run(f"./{EXECUTABLE} 8050 5 3",shell=True)
     if status.returncode  != 0:
         print("[-]FAILED! create_server test")
         return False
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     # t_zero_tasks = zero_tasks()
     # t_split = split()
     # t_bad_request = bad_request()
-    t_create_server = create_server()
+    t_create_server = valgrind_test()
     # t_read_client = test_read_client()
     # t_print_content = print_content()
     t = PrettyTable(['Test', 'Result'])
