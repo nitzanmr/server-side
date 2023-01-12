@@ -160,13 +160,10 @@ int make_folder_file(char* path,char* buf,int fd){
     int counter_in_buf = 0;
     int counter_buf = strlen(buf);
     char in_buf[512];
-    time_t now;
-    char timebuf[128];
     char timebuf_mtime[128];
-    now = time(NULL);
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
     if(S_ISREG(file_stats.st_mode)){
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n<td><%ld></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
         size_of_in_buf = strlen(in_buf);
     }
     else{
@@ -174,7 +171,7 @@ int make_folder_file(char* path,char* buf,int fd){
         size_of_in_buf = strlen(in_buf);
     }
     while(size_of_in_buf!=counter_in_buf){
-        if(strlen(buf)==512){
+        if(counter_buf==512){
             write(fd,buf,512);
             // printf("%s\n",buf);
             bzero(buf,512);
@@ -217,7 +214,6 @@ int create_ok(char* buf,char* path,int size_of_file){
     return 0;
 }
 int accept_client(void* request,char* buf,int fd){
-    char* split_by= " ";
     char* split_request[3];
     #define PATH_MAX        4096
     split_str((char*)request," ",split_request);
@@ -261,31 +257,32 @@ int accept_client(void* request,char* buf,int fd){
         if(split_request[1][strlen(split_request[1])-1]!='/'){
             /*check for if the file name contain a /
              at the end if not prints error for it is a dir and not contain a / at the end*/
-            // error_message(302,buf,NULL);
-            // write(fd,buf,strlen(buf));
-            char* new_request = (char*)malloc(strlen(request) +1);
-            char* new_split = (char*) malloc (strlen(split_request[1])+1);
-            int len_absulute = strlen(new_split);
-            sprintf(new_split,"%s/",split_request[1]);
-            printf("%s\n",new_split);
-            // split_request[1][len_absulute+1] = '\0';
-            sprintf(new_request,"GET %s HTTP/1.1\r\n",new_split);
-            bzero(buf,512);
-            printf("%s\n",new_request);
-            accept_client(new_request,buf,fd);
+            error_message(302,buf,NULL);
+            write(fd,buf,strlen(buf));
+            // char* new_request = (char*)malloc(strlen(request) +1);
+            // char* new_split = (char*) malloc (strlen(split_request[1])+1);
+            // sprintf(new_split,"%s/",split_request[1]);
+            // printf("%s\n",new_split);
+            // // split_request[1][len_absulute+1] = '\0';
+            // sprintf(new_request,"GET %s HTTP/1.1\r\n",new_split);
+            // bzero(buf,512);
+            // printf("%s\n",new_request);
+            // accept_client(new_request,buf,fd);
             return 0;        
             }
         else{
             /*it is a folder and contains a / at the end*/
-            char* new_name = (char*)malloc(strlen(absulute_path) + strlen("index.html"));
+            char* new_name = (char*)malloc(strlen(absulute_path) + strlen("index.html")+1);
             sprintf(new_name,"%s%s",absulute_path,"index.html");
             if((file_des = fopen(new_name,"r")) == NULL){
                 /*check for if the file index.html doesn't exits inside of the folder
                 if not print the content as an html file*/
+                free(new_name);
                 DIR *d;
                 struct dirent *dir;
                 int total_size_folder = 0;
                 char temp_path[PATH_MAX];
+                bzero(temp_path,PATH_MAX);
                 d = opendir(absulute_path);
                 char buf[512];
                 char* type = get_mime_type(absulute_path);
@@ -332,6 +329,7 @@ int accept_client(void* request,char* buf,int fd){
                 /*if the file exists it prints it to the client as an html file*/
                 stat(new_name,&file_stats);
                 read_and_write_file(fd,new_name,file_stats.st_size,buf);
+                free(new_name);
                 return 0;
             }
            
@@ -355,11 +353,10 @@ int client_read(void* arg){
     int* fd = (int*)arg;
     char buf[512];
     char returned_buf[512];
-    int valread = 0;
     int counter = 0;
 
     while(1){
-        valread = read(*fd,buf+counter,1);
+        read(*fd,buf+counter,1);
         if(buf[counter]=='\n'){
             buf[counter-1] = '\0';
             break;
@@ -373,7 +370,8 @@ int client_read(void* arg){
     return 0;
 }
 int create_server(int port,int number_of_request,threadpool* new_threadpool){
-    int sockfd, connfd, len;
+    int sockfd, connfd;
+    socklen_t len;
     struct sockaddr_in servaddr, cli;
     int counter_of_request = 0;
     // socket create and verification
@@ -418,25 +416,29 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
         dispatch(new_threadpool,(dispatch_fn)client_read,(void*)&connfd);
         counter_of_request++;
     }
-    destroy_threadpool(new_threadpool);    
+    destroy_threadpool(new_threadpool);  
+    free(new_threadpool);  
     // After chatting close the socket
     close(sockfd);
     return 0;
 }
 
-int server(int argc, char* argv[]){
+int main(int argc, char* argv[]){
     /*argv == [port,pool_size,max number of requests]*/
     int counter_of_request = 0;
-    if(argc<3){
-        perror("too little arguments entered to the server\n");
-        return 1;
-    }
-    threadpool* new_threadpool = create_threadpool(atoi(argv[1]));
+    printf("\n%s %d %s\n",argv[1],atoi(argv[2]),argv[3]);
+    // if(argc<4){
+    //     perror("too little arguments entered to the server\n");
+    //     return 1;
+    // }
+    threadpool* new_threadpool = create_threadpool(atoi(argv[2]));
     if(new_threadpool==NULL){
         perror("threadpool didnt create it self");
-        exit(1);
+        return 1;
     }
-    create_server(atoi(argv[0]),atoi(argv[2]),new_threadpool);
+    create_server(atoi(argv[1]),atoi(argv[3]),new_threadpool);
+    // destroy_threadpool(new_threadpool);
+    // free(new_threadpool);
     printf("\nfinshed the reading from the clients\n");
     return 0;
 }

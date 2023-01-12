@@ -155,14 +155,15 @@ void destroy_threadpool(threadpool* destroyme){
     pthread_cond_wait(&destroyme->q_empty,&destroyme->qlock);
     destroyme->shutdown = 1;
     pthread_mutex_unlock(&destroyme->qlock);
-
-    // pthread_cond_broadcast(&destroyme->q_not_empty);
+    printf("number of thread: %d\n",number_of_threads_asked);
+    pthread_cond_broadcast(&destroyme->q_not_empty);
     for (int i = 0; i < number_of_threads_asked; i++)
     {
-        pthread_cond_signal(&destroyme->q_not_empty);
+        // pthread_cond_signal(&destroyme->q_not_empty);
         printf("pthread joined\n");
         pthread_join(destroyme->threads[i],NULL);
     }
+    free(destroyme->threads);
     return;
 };
 

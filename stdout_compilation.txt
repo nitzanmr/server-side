@@ -1,4 +1,3 @@
-In file included from main.c:1:
 server.c: In function ‘get_mime_type’:
 server.c:62:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
    62 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
@@ -6,73 +5,11 @@ server.c:62:5: warning: this ‘if’ clause does not guard... [-Wmisleading-ind
 server.c:62:85: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
    62 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
       |                                                                                     ^~
-server.c: In function ‘make_folder_file’:
-server.c:169:92: warning: format ‘%d’ expects argument of type ‘int’, but argument 6 has type ‘__off_t’ {aka ‘long int’} [-Wformat=]
-  169 |         sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n<td><%d></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
-      |                                                                                           ~^                                             ~~~~~~~~~~~~~~~~~~
-      |                                                                                            |                                                       |
-      |                                                                                            int                                                     __off_t {aka long int}
-      |                                                                                           %ld
-server.c:164:10: warning: unused variable ‘timebuf’ [-Wunused-variable]
-  164 |     char timebuf[128];
-      |          ^~~~~~~
-server.c:163:12: warning: variable ‘now’ set but not used [-Wunused-but-set-variable]
-  163 |     time_t now;
-      |            ^~~
 server.c: In function ‘accept_client’:
-server.c:268:17: warning: unused variable ‘len_absulute’ [-Wunused-variable]
-  268 |             int len_absulute = strlen(new_split);
-      |                 ^~~~~~~~~~~~
-server.c:291:23: warning: unused variable ‘type’ [-Wunused-variable]
-  291 |                 char* type = get_mime_type(absulute_path);
+server.c:288:23: warning: unused variable ‘type’ [-Wunused-variable]
+  288 |                 char* type = get_mime_type(absulute_path);
       |                       ^~~~
-server.c:220:11: warning: unused variable ‘split_by’ [-Wunused-variable]
-  220 |     char* split_by= " ";
-      |           ^~~~~~~~
-server.c: In function ‘client_read’:
-server.c:358:9: warning: variable ‘valread’ set but not used [-Wunused-but-set-variable]
-  358 |     int valread = 0;
-      |         ^~~~~~~
-server.c: In function ‘create_server’:
-server.c:411:44: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness [-Wpointer-sign]
-  411 |         connfd = accept(sockfd, (SA*)&cli, &len);
-      |                                            ^~~~
-      |                                            |
-      |                                            int *
-In file included from /usr/include/netinet/in.h:23,
-                 from /usr/include/netdb.h:27,
-                 from server.c:12,
-                 from main.c:1:
-/usr/include/x86_64-linux-gnu/sys/socket.h:233:28: note: expected ‘socklen_t * restrict’ {aka ‘unsigned int * restrict’} but argument is of type ‘int *’
-  233 |      socklen_t *__restrict __addr_len);
-      |      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
-In file included from main.c:1:
-server.c: In function ‘server’:
-server.c:429:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  429 |     int counter_of_request = 0;
+server.c: In function ‘main’:
+server.c:428:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
+  428 |     int counter_of_request = 0;
       |         ^~~~~~~~~~~~~~~~~~
-main.c: In function ‘main’:
-main.c:34:9: warning: unused variable ‘test’ [-Wunused-variable]
-   34 |     int test = FAILED_TEST;
-      |         ^~~~
-main.c: In function ‘job1’:
-main.c:176:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-  176 |     printf("\ntask number: %d\n",number_of_thread);
-      |                            ~^    ~~~~~~~~~~~~~~~~
-      |                             |    |
-      |                             int  void *
-      |                            %p
-main.c: In function ‘job2’:
-main.c:180:29: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
-  180 |     printf("\ntask number: %d\n ",number_of_thread);
-      |                            ~^     ~~~~~~~~~~~~~~~~
-      |                             |     |
-      |                             int   void *
-      |                            %p
-main.c: In function ‘check_threadpool’:
-main.c:193:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  193 |             dispatch(new_threadpool,(dispatch_fn)job2,(void*)i);
-      |                                                       ^
-main.c:196:55: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-  196 |             dispatch(new_threadpool,(dispatch_fn)job1,(void*)i);
-      |                                                       ^
