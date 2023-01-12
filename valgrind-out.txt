@@ -1,9 +1,3 @@
-pthread number:0 created
-pthread number:1 created
-pthread number:2 created
-pthread number:3 created
-pthread number:4 created
-the queue size is: 0
 tmp path is: /server.c
 tmp path is: /ex3
 tmp path is: /check_file.txt
@@ -27,1095 +21,624 @@ tmp path is: /main.c
 tmp path is: /.git
 tmp path is: /..
 tmp path is: /threadpool.c
-after the routine
-the queue size is: 0
-after the routine
-0
-pthread exits
 number of thread: 5
-
-pthread exits
-
-pthread exits
-
-pthread exits
-
-pthread exits
-md64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
---30069-- Page sizes: currently 4096, max supported 4096
---30069-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
---30069-- TT/TC: VG_(init_tt_tc) (startup of code management)
---30069-- TT/TC: cache: ignoring --avg-transtab-entry-size=0, using tool provided default 640
---30069-- TT/TC: cache: 32 sectors of 27,597,024 bytes each = 883,104,768 total TC
---30069-- TT/TC: table: 32 tables[42588] of C 4,769,856 + H 1,362,816 bytes each = 196,245,504 total TT
---30069-- TT/TC: table: 42588 tt entries each = 1,362,816 total tt entries
---30069-- TT/TC: table: 32 htt[65521] of 131,042 bytes each = 4,193,344 total HTT (htt[65521] 65% max occup)
-==30069== Adding active redirection:
---30069--     new: 0xffffffffff600000 (???                 ) R-> (0000.0) 0x580c9cc4 ???
-==30069== Adding active redirection:
---30069--     new: 0xffffffffff600400 (???                 ) R-> (0000.0) 0x580c9cce ???
-==30069== Adding active redirection:
---30069--     new: 0xffffffffff600800 (???                 ) R-> (0000.0) 0x580c9cd8 ???
---30069-- Reading syms from /workspaces/server-side/ex3
---30069--    svma 0x0000002660, avma 0x000010a660
---30069-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
---30069--    svma 0x0000001100, avma 0x0004001100
---30069--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
---30069--   .. build-id is valid
---30069-- summarise_context(loc_start = 0x14): cannot summarise(why=1):   
+-- Contents of /proc/version:
+--6840--   Linux version 5.4.0-1098-azure (buildd@lcy02-amd64-100) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #104~18.04.2-Ubuntu SMP Tue Nov 29 12:13:35 UTC 2022
+--6840-- 
+--6840-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--6840-- Page sizes: currently 4096, max supported 4096
+--6840-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--6840-- TT/TC: VG_(init_tt_tc) (startup of code management)
+--6840-- TT/TC: cache: ignoring --avg-transtab-entry-size=0, using tool provided default 640
+--6840-- TT/TC: cache: 32 sectors of 27,597,024 bytes each = 883,104,768 total TC
+--6840-- TT/TC: table: 32 tables[42588] of C 4,769,856 + H 1,362,816 bytes each = 196,245,504 total TT
+--6840-- TT/TC: table: 42588 tt entries each = 1,362,816 total tt entries
+--6840-- TT/TC: table: 32 htt[65521] of 131,042 bytes each = 4,193,344 total HTT (htt[65521] 65% max occup)
+==6840== Adding active redirection:
+--6840--     new: 0xffffffffff600000 (???                 ) R-> (0000.0) 0x580c9cc4 ???
+==6840== Adding active redirection:
+--6840--     new: 0xffffffffff600400 (???                 ) R-> (0000.0) 0x580c9cce ???
+==6840== Adding active redirection:
+--6840--     new: 0xffffffffff600800 (???                 ) R-> (0000.0) 0x580c9cd8 ???
+--6840-- Reading syms from /workspaces/server-side/ex3
+--6840--    svma 0x0000002640, avma 0x000010a640
+--6840-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--6840--    svma 0x0000001100, avma 0x0004001100
+--6840--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
+--6840--   .. build-id is valid
+--6840-- summarise_context(loc_start = 0x14): cannot summarise(why=1):   
 0x35f: [0]={ 56(r3) { u  u  u  c-56 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x367): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x367): cannot summarise(why=1):   
 0x471: [0]={ 56(r3) { u  u  u  c-56 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x14): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x14): cannot summarise(why=1):   
 0x36f: [0]={ 56(r3) { u  u  u  c-56 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x377): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x377): cannot summarise(why=1):   
 0x473: [0]={ 56(r3) { u  u  u  c-56 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x14): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x14): cannot summarise(why=1):   
 0x14b: [0]={ 56(r3) { u  u  u  c-56 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x153): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x153): cannot summarise(why=1):   
 0x1f7: [0]={ 56(r3) { u  u  u  c-56 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x8): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x8): cannot summarise(why=1):   
 0x74: [0]={ 32(r3) { u  u  u  c-32 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x8): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x8): cannot summarise(why=1):   
 0xc2: [0]={ 32(r3) { u  u  u  c-32 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x8): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x8): cannot summarise(why=1):   
 0xb2: [0]={ 32(r3) { u  u  u  c-32 u  u  u  u  u  u  u  u  u  u  u  u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x60): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x60): cannot summarise(why=1):   
 0x7e: [0]={ 0(r5) { u  u  u  c0 u  u  dwReg9 dwReg8 u  u  u  u  c16 c24 c32 c40 dwReg1 u  u  u  }
-==30069== Adding active redirection:
---30069--     new: 0x04022bf0 (index               ) R-> (0000.0) 0x580c9cfc ???
-==30069== Adding active redirection:
---30069--     new: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
---30069-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
---30069--    svma 0x0058001000, avma 0x0058001000
---30069--    object doesn't have a symbol table
---30069--    object doesn't have a dynamic symbol table
---30069-- Scheduler: using generic scheduler lock implementation.
---30069-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
-==30069== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-30069-by-codespace-on-codespaces-d3d9fd
-==30069== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-30069-by-codespace-on-codespaces-d3d9fd
-==30069== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-30069-by-codespace-on-codespaces-d3d9fd
-==30069== 
-==30069== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==30069== don't want to do, unless you know exactly what you're doing,
-==30069== or are doing some strange experiment):
-==30069==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=30069 ...command...
-==30069== 
-==30069== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==30069==   /path/to/gdb ./ex3
-==30069== and then give GDB the following command
-==30069==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=30069
-==30069== --pid is optional if only one valgrind process is running
-==30069== 
---30069-- TT/TC: initialise sector 0
---30069-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
---30069-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
---30069-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
---30069--    svma 0x0000001070, avma 0x0004831070
---30069--    object doesn't have a symbol table
---30069-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
---30069--    svma 0x00000040c0, avma 0x000483b0c0
---30069--    object doesn't have a symbol table
-==30069== Adding active redirection:
---30069--     new: 0x0401f600 (strcmp              ) R-> (2016.0) 0x0483ffd0 strcmp
-==30069== WARNING: new redirection conflicts with existing -- ignoring it
---30069--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
---30069--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
-==30069== Adding active redirection:
---30069--     new: 0x040231e0 (stpcpy              ) R-> (2020.0) 0x04842710 stpcpy
-==30069== Adding active redirection:
---30069--     new: 0x04023380 (mempcpy             ) R-> (2029.0) 0x04843a20 mempcpy
---30069-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
---30069-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
---30069-- Reading syms from /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
---30069--    svma 0x0000006ae0, avma 0x000485aae0
---30069--   Considering /usr/lib/debug/.build-id/7b/4536f41cdaa5888408e82d0836e33dcf436466.debug ..
---30069--   .. build-id is valid
---30069-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
---30069--    svma 0x0000022630, avma 0x0004899630
---30069--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
---30069--   .. build-id is valid
---30069-- summarise_context(loc_start = 0x72): cannot summarise(why=1):   
+==6840== Adding active redirection:
+--6840--     new: 0x04022bf0 (index               ) R-> (0000.0) 0x580c9cfc ???
+==6840== Adding active redirection:
+--6840--     new: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--6840-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--6840--    svma 0x0058001000, avma 0x0058001000
+--6840--    object doesn't have a symbol table
+--6840--    object doesn't have a dynamic symbol table
+--6840-- Scheduler: using generic scheduler lock implementation.
+--6840-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==6840== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-6840-by-codespace-on-codespaces-d3d9fd
+==6840== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-6840-by-codespace-on-codespaces-d3d9fd
+==6840== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-6840-by-codespace-on-codespaces-d3d9fd
+==6840== 
+==6840== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==6840== don't want to do, unless you know exactly what you're doing,
+==6840== or are doing some strange experiment):
+==6840==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=6840 ...command...
+==6840== 
+==6840== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==6840==   /path/to/gdb ./ex3
+==6840== and then give GDB the following command
+==6840==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=6840
+==6840== --pid is optional if only one valgrind process is running
+==6840== 
+--6840-- TT/TC: initialise sector 0
+--6840-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--6840-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--6840-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--6840--    svma 0x0000001070, avma 0x0004831070
+--6840--    object doesn't have a symbol table
+--6840-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--6840--    svma 0x00000040c0, avma 0x000483b0c0
+--6840--    object doesn't have a symbol table
+==6840== Adding active redirection:
+--6840--     new: 0x0401f600 (strcmp              ) R-> (2016.0) 0x0483ffd0 strcmp
+==6840== WARNING: new redirection conflicts with existing -- ignoring it
+--6840--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--6840--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+==6840== Adding active redirection:
+--6840--     new: 0x040231e0 (stpcpy              ) R-> (2020.0) 0x04842710 stpcpy
+==6840== Adding active redirection:
+--6840--     new: 0x04023380 (mempcpy             ) R-> (2029.0) 0x04843a20 mempcpy
+--6840-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--6840-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--6840-- Reading syms from /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+--6840--    svma 0x0000006ae0, avma 0x000485aae0
+--6840--   Considering /usr/lib/debug/.build-id/7b/4536f41cdaa5888408e82d0836e33dcf436466.debug ..
+--6840--   .. build-id is valid
+--6840-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--6840--    svma 0x0000022630, avma 0x0004899630
+--6840--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
+--6840--   .. build-id is valid
+--6840-- summarise_context(loc_start = 0x72): cannot summarise(why=1):   
 0x90: [0]={ 0(r5) { u  u  u  c0 u  u  dwReg9 dwReg8 u  u  u  u  c16 c24 c32 c40 dwReg1 u  u  u  }
---30069-- summarise_context(loc_start = 0x38): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x38): cannot summarise(why=1):   
 0x56: [0]={ 0(r5) { u  u  u  c0 u  u  dwReg9 dwReg8 u  u  u  u  c16 c24 c32 c40 dwReg1 u  u  u  }
---30069-- summarise_context(loc_start = 0x3d): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x3d): cannot summarise(why=1):   
 0x14c: [0]={ 0(r1) { u  u  u  c128 u  u  c120 c160 u  u  u  u  c72 c80 c88 c96 c168 u  u  u  }
---30069-- summarise_context(loc_start = 0x10): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x10): cannot summarise(why=1):   
 0x21: [0]={ 32816(r11) { u  u  u  c-48 u  u  c-40 u  u  u  u  u  c-32 c-24 c-16 u  c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x5): cannot summarise(why=2):   
+--6840-- summarise_context(loc_start = 0x5): cannot summarise(why=2):   
 0x2c: [0]={ 0(r7) { u  u  u  u  u  u  u  u  u  u  u  u  u  u  u  u  dwReg5 u  u  u  }
---30069-- summarise_context(loc_start = 0x2c): cannot summarise(why=2):   
+--6840-- summarise_context(loc_start = 0x2c): cannot summarise(why=2):   
 0x3f: [0]={ 8(r7) { u  u  u  u  u  u  u  u  u  u  u  u  u  u  u  u  dwReg5 u  u  u  }
---30069-- summarise_context(loc_start = 0xc2): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0xc2): cannot summarise(why=1):   
 0xe0: [0]={ 0(r5) { u  u  u  c0 u  u  dwReg9 dwReg8 u  u  u  u  c16 c24 c32 c40 dwReg1 u  u  u  }
-==30069== Adding active redirection:
---30069--     new: 0x048bcf90 (putenv              ) W-> (0000.0) 0x04844320 putenv
-==30069== Adding active redirection:
---30069--     new: 0x048bd4f0 (setenv              ) W-> (0000.0) 0x04844480 setenv
-==30069== Adding active redirection:
---30069--     new: 0x048bd550 (unsetenv            ) W-> (0000.0) 0x048443d0 unsetenv
-==30069== Adding active redirection:
---30069--     new: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b780 malloc
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b780 malloc
---30069--     new: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b6b0 malloc
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b780 malloc
---30069--     new: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b6b0 malloc
-==30069== Adding active redirection:
---30069--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
---30069--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483c920 free
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
---30069--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483cbe0 cfree
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
---30069--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483cb30 cfree
-==30069== Adding active redirection:
---30069--     new: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483df30 realloc
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483df30 realloc
---30069--     new: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483de10 realloc
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483df30 realloc
---30069--     new: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483de10 realloc
-==30069== Adding active redirection:
---30069--     new: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e2a0 memalign
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e2a0 memalign
---30069--     new: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e050 memalign
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e2a0 memalign
---30069--     new: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e050 memalign
-==30069== Adding active redirection:
---30069--     new: 0x04912510 (valloc              ) R-> (1012.0) 0x0483e1a0 valloc
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04912510 (valloc              ) R-> (1012.0) 0x0483e1a0 valloc
---30069--     new: 0x04912510 (valloc              ) R-> (1012.0) 0x0483e160 valloc
-==30069== Adding active redirection:
---30069--     new: 0x049127f0 (pvalloc             ) R-> (1018.0) 0x0483b560 pvalloc
-==30069== Adding active redirection:
---30069--     new: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dce0 calloc
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dce0 calloc
---30069--     new: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dbb0 calloc
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dce0 calloc
---30069--     new: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dbb0 calloc
-==30069== Adding active redirection:
---30069--     new: 0x04912eb0 (malloc_trim         ) R-> (1015.0) 0x0483b540 malloc_trim
-==30069== Adding active redirection:
---30069--     new: 0x049131b0 (malloc_usable_size  ) R-> (1017.0) 0x0483e3b0 malloc_usable_size
-==30069== Adding active redirection:
---30069--     new: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e810 mallinfo
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e810 mallinfo
---30069--     new: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e730 mallinfo
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e810 mallinfo
---30069--     new: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e730 mallinfo
-==30069== Adding active redirection:
---30069--     new: 0x049133d0 (malloc_stats        ) R-> (1019.0) 0x0483b5c0 malloc_stats
-==30069== Adding active redirection:
---30069--     new: 0x04913610 (mallopt             ) R-> (1014.0) 0x0483b520 mallopt
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04913610 (mallopt             ) R-> (1014.0) 0x0483b520 mallopt
---30069--     new: 0x04913610 (mallopt             ) R-> (1014.0) 0x0483b500 mallopt
-==30069== Adding active redirection:
---30069--     new: 0x04913830 (posix_memalign      ) R-> (1016.0) 0x0483e1e0 posix_memalign
-==30069== Adding active redirection:
---30069--     new: 0x049160a0 (strcat              ) R-> (2003.0) 0x0483ec20 strcat
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049160a0 (strcat              ) R-> (2003.0) 0x0483ec20 strcat
---30069--     new: 0x049160a0 (strcat              ) R-> (2003.0) 0x0483ed00 __GI_strcat
-==30069== Adding active redirection:
---30069--     new: 0x04916100 (index               ) R-> (2002.0) 0x0483ebf0 index
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916100 (index               ) R-> (2002.0) 0x0483ebf0 index
---30069--     new: 0x04916100 (index               ) R-> (2002.0) 0x0483eb30 strchr
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916100 (index               ) R-> (2002.0) 0x0483ebf0 index
---30069--     new: 0x04916100 (index               ) R-> (2002.0) 0x0483eb60 __GI_strchr
-==30069== Adding active redirection:
---30069--     new: 0x04916150 (strcmp              ) R-> (2016.0) 0x0483fed0 strcmp
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916150 (strcmp              ) R-> (2016.0) 0x0483fed0 strcmp
---30069--     new: 0x04916150 (strcmp              ) R-> (2016.0) 0x0483ff10 __GI_strcmp
-==30069== Adding active redirection:
---30069--     new: 0x049161d0 (strcpy              ) R-> (2008.0) 0x0483f090 strcpy
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049161d0 (strcpy              ) R-> (2008.0) 0x0483f090 strcpy
---30069--     new: 0x049161d0 (strcpy              ) R-> (2008.0) 0x0483f160 __GI_strcpy
-==30069== Adding active redirection:
---30069--     new: 0x04916230 (strcspn             ) R-> (2033.0) 0x04843e10 strcspn
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916230 (strcspn             ) R-> (2033.0) 0x04843e10 strcspn
---30069--     new: 0x04916230 (strcspn             ) R-> (2033.0) 0x04843e80 __GI_strcspn
-==30069== Adding active redirection:
---30069--     new: 0x04916630 (strlen              ) R-> (2007.0) 0x0483ef40 strlen
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916630 (strlen              ) R-> (2007.0) 0x0483ef40 strlen
---30069--     new: 0x04916630 (strlen              ) R-> (2007.0) 0x0483ef70 __GI_strlen
-==30069== Adding active redirection:
---30069--     new: 0x04916670 (strnlen             ) R-> (2006.0) 0x0483eee0 strnlen
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916670 (strnlen             ) R-> (2006.0) 0x0483eee0 strnlen
---30069--     new: 0x04916670 (strnlen             ) R-> (2006.0) 0x0483ef10 __GI_strnlen
-==30069== Adding active redirection:
---30069--     new: 0x049166b0 (strncat             ) R-> (2004.0) 0x0483ede0 strncat
-==30069== Adding active redirection:
---30069--     new: 0x04916710 (strncmp             ) R-> (2011.0) 0x0483f670 strncmp
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916710 (strncmp             ) R-> (2011.0) 0x0483f670 strncmp
---30069--     new: 0x04916710 (strncmp             ) R-> (2011.0) 0x0483f6e0 __GI_strncmp
-==30069== Adding active redirection:
---30069--     new: 0x04916780 (strncpy             ) R-> (2009.0) 0x0483f230 strncpy
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04916780 (strncpy             ) R-> (2009.0) 0x0483f230 strncpy
---30069--     new: 0x04916780 (strncpy             ) R-> (2009.0) 0x0483f340 __GI_strncpy
-==30069== Adding active redirection:
---30069--     new: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea10 rindex
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea10 rindex
---30069--     new: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483e9e0 strrchr
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea10 rindex
---30069--     new: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea40 __GI_strrchr
-==30069== Adding active redirection:
---30069--     new: 0x04916820 (strpbrk             ) R-> (2032.0) 0x04843da0 strpbrk
-==30069== Adding active redirection:
---30069--     new: 0x04916ae0 (strspn              ) R-> (2034.0) 0x04843ef0 strspn
-==30069== Adding active redirection:
---30069--     new: 0x04916fa0 (__GI_strstr         ) R-> (2031.0) 0x04843ca0 __strstr_sse2
-==30069== Adding active redirection:
---30069--     new: 0x049172f0 (strstr              ) R-> (2031.0) 0x04843c20 strstr
-==30069== Adding active redirection:
---30069--     new: 0x049173d0 (memchr              ) R-> (2017.0) 0x04840050 memchr
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049173d0 (memchr              ) R-> (2017.0) 0x04840050 memchr
---30069--     new: 0x049173d0 (memchr              ) R-> (2017.0) 0x04840090 __GI_memchr
-==30069== Adding active redirection:
---30069--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
---30069--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x04841fa0 memcmp
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
---30069--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x04841fa0 memcmp
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
---30069--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x04842030 __GI_memcmp
-==30069== Adding active redirection:
---30069--     new: 0x04917480 (memmove             ) R-> (2018.1) 0x048429f0 memmove
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917480 (memmove             ) R-> (2018.1) 0x048429f0 memmove
---30069--     new: 0x04917480 (memmove             ) R-> (2018.1) 0x04842d70 __GI_memmove
-==30069== Adding active redirection:
---30069--     new: 0x04917540 (memset              ) R-> (2021.0) 0x048428e0 memset
-==30069== Adding active redirection:
---30069--     new: 0x049175e0 (mempcpy             ) R-> (2029.0) 0x04843660 mempcpy
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049175e0 (mempcpy             ) R-> (2029.0) 0x04843660 mempcpy
---30069--     new: 0x049175e0 (mempcpy             ) R-> (2029.0) 0x04843750 __GI_mempcpy
-==30069== Adding active redirection:
---30069--     new: 0x049176a0 (bcopy               ) R-> (2023.0) 0x04843470 bcopy
-==30069== Adding active redirection:
---30069--     new: 0x049176f0 (stpcpy              ) R-> (2020.0) 0x04842300 stpcpy
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049176f0 (stpcpy              ) R-> (2020.0) 0x04842300 stpcpy
---30069--     new: 0x049176f0 (stpcpy              ) R-> (2020.0) 0x048423d0 __GI_stpcpy
-==30069== Adding active redirection:
---30069--     new: 0x04917750 (stpncpy             ) R-> (2042.0) 0x048427e0 stpncpy
-==30069== Adding active redirection:
---30069--     new: 0x049177b0 (strcasecmp          ) R-> (2012.0) 0x0483f830 strcasecmp
-==30069== Adding active redirection:
---30069--     new: 0x04917800 (strncasecmp         ) R-> (2013.0) 0x0483f910 strncasecmp
-==30069== Adding active redirection:
---30069--     new: 0x04917850 (strcasecmp_l        ) R-> (2014.0) 0x0483fab0 strcasecmp_l
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917850 (strcasecmp_l        ) R-> (2014.0) 0x0483fab0 strcasecmp_l
---30069--     new: 0x04917850 (strcasecmp_l        ) R-> (2014.0) 0x0483fb90 __GI___strcasecmp_l
-==30069== Adding active redirection:
---30069--     new: 0x049178a0 (strncasecmp_l       ) R-> (2015.0) 0x0483fc00 strncasecmp_l
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x049178a0 (strncasecmp_l       ) R-> (2015.0) 0x0483fc00 strncasecmp_l
---30069--     new: 0x049178a0 (strncasecmp_l       ) R-> (2015.0) 0x0483fde0 __GI___strncasecmp_l
-==30069== Adding active redirection:
---30069--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
---30069--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840860 memcpy
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
---30069--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840c40 __GI_memcpy
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
---30069--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840860 memcpy
-==30069== Adding active redirection:
---30069--     new: 0x04917fc0 (strcasestr          ) R-> (2035.0) 0x04843f80 strcasestr
-==30069== Adding active redirection:
---30069--     new: 0x04918c50 (rawmemchr           ) R-> (2026.0) 0x04843580 rawmemchr
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04918c50 (rawmemchr           ) R-> (2026.0) 0x04843580 rawmemchr
---30069--     new: 0x04918c50 (rawmemchr           ) R-> (2026.0) 0x048435a0 __GI___rawmemchr
-==30069== Adding active redirection:
---30069--     new: 0x04918c90 (strchrnul           ) R-> (2025.0) 0x04843540 strchrnul
-==30069== Adding active redirection:
---30069--     new: 0x0491fbb0 (memrchr             ) R-> (2036.0) 0x048400d0 memrchr
-==30069== Adding active redirection:
---30069--     new: 0x0491ff00 (__strncpy_sse2      ) R-> (2009.0) 0x0483f450 __strncpy_sse2
-==30069== Adding active redirection:
---30069--     new: 0x0491ff60 (__strcmp_sse2       ) R-> (2016.0) 0x0483ff50 __strcmp_sse2
-==30069== Adding active redirection:
---30069--     new: 0x04921660 (__strncmp_sse2      ) R-> (2011.0) 0x0483f750 __strncmp_sse2
-==30069== Adding active redirection:
---30069--     new: 0x049237d0 (__memcmp_sse2       ) R-> (2019.0) 0x048420c0 __memcmp_sse2
-==30069== Adding active redirection:
---30069--     new: 0x04928480 (__strchr_sse2       ) R-> (2002.0) 0x0483eb90 __strchr_sse2
-==30069== Adding active redirection:
---30069--     new: 0x049288c0 (__strrchr_sse2      ) R-> (2001.0) 0x0483ea70 __strrchr_sse2
-==30069== Adding active redirection:
---30069--     new: 0x04928bc0 (__strlen_sse2       ) R-> (2007.0) 0x0483efa0 __strlen_sse2
-==30069== Adding active redirection:
---30069--     new: 0x0492da10 (__stpcpy_sse2       ) R-> (2020.0) 0x048424a0 __stpcpy_sse2
-==30069== Adding active redirection:
---30069--     new: 0x0492e130 (__strncpy_sse2_unali) R-> (2009.0) 0x0483f560 __strncpy_sse2_unaligned
-==30069== Adding active redirection:
---30069--     new: 0x0492f140 (__stpcpy_sse2_unalig) R-> (2020.0) 0x04842570 __stpcpy_sse2_unaligned
-==30069== Adding active redirection:
---30069--     new: 0x04932ad0 (memcpy@GLIBC_2.2.5  ) R-> (2018.1) 0x04840100 memcpy@GLIBC_2.2.5
-==30069== Ignoring lower priority redirection:
---30069--     old: 0x04932ad0 (memcpy@GLIBC_2.2.5  ) R-> (2018.1) 0x04840100 memcpy@GLIBC_2.2.5
---30069--     new: 0x04932ad0 (memcpy@GLIBC_2.2.5  ) R-> (2018.0) 0x04840860 memcpy
-==30069== Adding active redirection:
---30069--     new: 0x049337e0 (wcschr              ) R-> (2040.0) 0x04844260 wcschr
-==30069== Adding active redirection:
---30069--     new: 0x04933820 (wcscmp              ) R-> (2038.0) 0x048440e0 wcscmp
-==30069== Adding active redirection:
---30069--     new: 0x04933860 (wcscpy              ) R-> (2039.0) 0x04844190 wcscpy
-==30069== Adding active redirection:
---30069--     new: 0x04933930 (wcslen              ) R-> (2037.0) 0x04844050 wcslen
-==30069== Adding active redirection:
---30069--     new: 0x049339d0 (wcsncmp             ) R-> (2045.0) 0x04844120 wcsncmp
-==30069== Adding active redirection:
---30069--     new: 0x04933ac0 (wcsrchr             ) R-> (2041.0) 0x04844290 wcsrchr
-==30069== Adding active redirection:
---30069--     new: 0x04933ce0 (wmemchr             ) R-> (2043.0) 0x048442c0 wmemchr
-==30069== Ignoring duplicate redirection:
---30069--     old: 0x04933ce0 (wmemchr             ) R-> (2043.0) 0x048442c0 wmemchr
---30069--     new: 0x04933ce0 (wmemchr             ) R-> (2043.0) 0x048442f0 __GI_wmemchr
-==30069== Adding active redirection:
---30069--     new: 0x04934f50 (wcsnlen             ) R-> (2044.0) 0x04844080 wcsnlen
-==30069== Adding active redirection:
---30069--     new: 0x049a4850 (__memcpy_chk        ) R-> (2030.0) 0x04843b10 __memcpy_chk
-==30069== Adding active redirection:
---30069--     new: 0x049a4910 (__memmove_chk       ) R-> (2024.0) 0x048434d0 __memmove_chk
-==30069== Adding active redirection:
---30069--     new: 0x049a4b30 (__stpcpy_chk        ) R-> (2028.0) 0x04843610 __stpcpy_chk
-==30069== Adding active redirection:
---30069--     new: 0x049a4c00 (__strcpy_chk        ) R-> (2027.0) 0x048435c0 __strcpy_chk
-==30069== Adding active redirection:
---30069--     new: 0x049d7cc0 (malloc_get_state@GLI) R-> (1018.0) 0x0483b580 malloc_get_state
-==30069== Adding active redirection:
---30069--     new: 0x049d7ce0 (malloc_set_state@GLI) R-> (1018.0) 0x0483b5a0 malloc_set_state
-==30069== Adding active redirection:
---30069--     new: 0x049f4f10 (__strcmp_sse42      ) R-> (2016.0) 0x0483ff90 __strcmp_sse42
-==30069== Adding active redirection:
---30069--     new: 0x049f5cc0 (__strncmp_sse42     ) R-> (2011.0) 0x0483f7c0 __strncmp_sse42
-==30069== Adding active redirection:
---30069--     new: 0x04a04550 (__memcmp_sse4_1     ) R-> (2019.0) 0x04842150 __memcmp_sse4_1
-==30069== Adding active redirection:
---30069--     new: 0x04a07b50 (__strchr_sse2_no_bsf) R-> (2002.0) 0x0483ebc0 __strchr_sse2_no_bsf
---30069-- REDIR: 0x4917480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.1) 0x048429f0 memmove
---30069-- REDIR: 0x4916780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a00fa0 (__strncpy_avx2      ) R-> (2009.0) 0x0483f230 strncpy
---30069-- REDIR: 0x49177b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fc0a0 (__strcasecmp_avx    ) R-> (2012.0) 0x0483f830 strcasecmp
---30069-- REDIR: 0x49160a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049ffb90 (__strcat_avx2       ) R-> (2003.0) 0x0483ec20 strcat
---30069-- REDIR: 0x49167e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049ff500 (__strrchr_avx2      ) R-> (2001.0) 0x0483ea10 rindex
---30069-- REDIR: 0x4918c50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fb800 (__rawmemchr_avx2    ) R-> (2026.0) 0x04843580 rawmemchr
---30069-- REDIR: 0x4933ce0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a02fe0 (__wmemchr_avx2      ) R-> (2043.0) 0x048442c0 wmemchr
---30069-- REDIR: 0x4933820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a032b0 (__wcscmp_avx2       ) R-> (2038.0) 0x048440e0 wcscmp
---30069-- REDIR: 0x49175e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a026c0 (__mempcpy_avx_unalig) R-> (2029.0) 0x04843660 mempcpy
---30069-- REDIR: 0x4917410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fbcc0 (__memcmp_avx2_movbe ) R-> (2019.0) 0x048421e0 bcmp
---30069-- REDIR: 0x4916710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fb010 (__strncmp_avx2      ) R-> (2011.0) 0x0483f670 strncmp
---30069-- REDIR: 0x4916150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fabd0 (__strcmp_avx2       ) R-> (2016.0) 0x0483fed0 strcmp
---30069-- REDIR: 0x4917540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a02b60 (__memset_avx2_unalig) R-> (2021.0) 0x048428e0 memset
---30069-- REDIR: 0x49337e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a03c20 (__wcschr_avx2       ) R-> (2040.0) 0x04844260 wcschr
---30069-- REDIR: 0x4916670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049ff870 (__strnlen_avx2      ) R-> (2006.0) 0x0483eee0 strnlen
---30069-- REDIR: 0x4916230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fa820 (__strcspn_sse42     ) R-> (2033.0) 0x04843e10 strcspn
---30069-- REDIR: 0x4917800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fd720 (__strncasecmp_avx   ) R-> (2013.0) 0x0483f910 strncasecmp
---30069-- REDIR: 0x49161d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a00c10 (__strcpy_avx2       ) R-> (2008.0) 0x0483f090 strcpy
---30069-- REDIR: 0x4917950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Ignoring lower priority redirection:
---30069--     old: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.1) 0x048429f0 memmove
---30069--     new: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
---30069-- REDIR: 0x4934f50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a04200 (__wcsnlen_avx2      ) R-> (2044.0) 0x04844080 wcsnlen
---30069-- REDIR: 0x4933860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049f4890 (__wcscpy_ssse3      ) R-> (2039.0) 0x04844190 wcscpy
---30069-- REDIR: 0x4916820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fa960 (__strpbrk_sse42     ) R-> (2032.0) 0x04843da0 strpbrk
---30069-- REDIR: 0x4916100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049ff0e0 (__strchr_avx2       ) R-> (2002.0) 0x0483ebf0 index
---30069-- REDIR: 0x4916630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049ff6d0 (__strlen_avx2       ) R-> (2007.0) 0x0483ef40 strlen
---30069-- REDIR: 0x491fbb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fb950 (__memrchr_avx2      ) R-> (2036.0) 0x048400d0 memrchr
---30069-- REDIR: 0x4917850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fc0b4 (__strcasecmp_l_avx  ) R-> (2014.0) 0x0483fab0 strcasecmp_l
---30069-- REDIR: 0x49173d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fb530 (__memchr_avx2       ) R-> (2017.0) 0x04840050 memchr
---30069-- REDIR: 0x4933930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a04040 (__wcslen_avx2       ) R-> (2037.0) 0x04844050 wcslen
---30069-- REDIR: 0x4916ae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049faaa0 (__strspn_sse42      ) R-> (2034.0) 0x04843ef0 strspn
---30069-- REDIR: 0x4917750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a01cb0 (__stpncpy_avx2      ) R-> (2042.0) 0x048427e0 stpncpy
---30069-- REDIR: 0x49176f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x04a01900 (__stpcpy_avx2       ) R-> (2020.0) 0x04842300 stpcpy
---30069-- REDIR: 0x4918c90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049ff310 (__strchrnul_avx2    ) R-> (2025.0) 0x04843540 strchrnul
---30069-- REDIR: 0x49178a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049fd734 (__strncasecmp_l_avx ) R-> (2015.0) 0x0483fc00 strncasecmp_l
---30069-- REDIR: 0x49172f0 (libc.so.6:strstr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
-==30069== Adding active redirection:
---30069--     new: 0x049323f0 (__strstr_sse2_unalig) R-> (2031.0) 0x04843c20 strstr
---30069-- REDIR: 0x49ff500 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
---30069-- REDIR: 0x49110e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
---30069-- REDIR: 0x4912b10 (libc.so.6:calloc) redirected to 0x483dce0 (calloc)
---30069-- REDIR: 0x49ff310 (libc.so.6:__strchrnul_avx2) redirected to 0x4843540 (strchrnul)
---30069-- REDIR: 0x4a026c0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4843660 (mempcpy)
---30069-- REDIR: 0x49ffb90 (libc.so.6:__strcat_avx2) redirected to 0x483ec20 (strcat)
---30069-- REDIR: 0x49323f0 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4843c20 (strstr)
---30069-- REDIR: 0x49ff6d0 (libc.so.6:__strlen_avx2) redirected to 0x483ef40 (strlen)
---30069-- REDIR: 0x49116d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
---30069-- REDIR: 0x4a026e0 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x48429f0 (memmove)
---30069-- REDIR: 0x4916fa0 (libc.so.6:__GI_strstr) redirected to 0x4843ca0 (__strstr_sse2)
---30069-- REDIR: 0x49fbcc0 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x48421e0 (bcmp)
---30069-- REDIR: 0x4a02b60 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x48428e0 (memset)
-==30069== Thread 2:
-==30069== Invalid read of size 4
-==30069==    at 0x486339E: __condvar_dec_grefs (pthread_cond_wait.c:153)
-==30069==    by 0x486339E: __pthread_cond_wait_common (pthread_cond_wait.c:541)
-==30069==    by 0x486339E: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c09c is 92 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 8
-==30069==    at 0x486322D: __condvar_load_g1_start_relaxed (pthread_cond_common.c:49)
-==30069==    by 0x486322D: __pthread_cond_wait_common (pthread_cond_wait.c:559)
-==30069==    by 0x486322D: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c090 is 80 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x4863246: __condvar_confirm_wakeup (pthread_cond_wait.c:54)
-==30069==    by 0x4863246: __pthread_cond_wait_common (pthread_cond_wait.c:632)
-==30069==    by 0x4863246: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c0ac is 108 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x4860FE4: __pthread_mutex_cond_lock (pthread_mutex_lock.c:67)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c070 is 48 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x4861003: __pthread_mutex_cond_lock (pthread_mutex_lock.c:80)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c060 is 32 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x4861009: __pthread_mutex_cond_lock (pthread_mutex_lock.c:81)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c068 is 40 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid write of size 4
-==30069==    at 0x486101C: __pthread_mutex_cond_lock (pthread_mutex_lock.c:159)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c068 is 40 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x10C8BE: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c0e8 is 168 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x48607B4: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
-==30069==    by 0x48607B4: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c070 is 48 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x48607CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==30069==    by 0x48607CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c06c is 44 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid write of size 4
-==30069==    at 0x48607D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
-==30069==    by 0x48607D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c068 is 40 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x48607D8: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
-==30069==    by 0x48607D8: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c070 is 48 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Invalid read of size 4
-==30069==    at 0x48607DB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
-==30069==    by 0x48607DB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c060 is 32 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== Syscall param futex(futex) points to unaddressable byte(s)
-==30069==    at 0x4860839: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
-==30069==    by 0x4860839: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c060 is 32 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
---30069-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
---30069--    svma 0x00000035e0, avma 0x00076745e0
---30069--    object doesn't have a symbol table
---30069-- summarise_context(loc_start = 0x385): cannot summarise(why=1):   
+==6840== Adding active redirection:
+--6840--     new: 0x048bcf90 (putenv              ) W-> (0000.0) 0x04844320 putenv
+==6840== Adding active redirection:
+--6840--     new: 0x048bd4f0 (setenv              ) W-> (0000.0) 0x04844480 setenv
+==6840== Adding active redirection:
+--6840--     new: 0x048bd550 (unsetenv            ) W-> (0000.0) 0x048443d0 unsetenv
+==6840== Adding active redirection:
+--6840--     new: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b780 malloc
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b780 malloc
+--6840--     new: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b6b0 malloc
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b780 malloc
+--6840--     new: 0x049110e0 (malloc              ) R-> (1001.0) 0x0483b6b0 malloc
+==6840== Adding active redirection:
+--6840--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
+--6840--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483c920 free
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
+--6840--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483cbe0 cfree
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049116d0 (free                ) R-> (1005.0) 0x0483c9d0 free
+--6840--     new: 0x049116d0 (free                ) R-> (1005.0) 0x0483cb30 cfree
+==6840== Adding active redirection:
+--6840--     new: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483df30 realloc
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483df30 realloc
+--6840--     new: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483de10 realloc
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483df30 realloc
+--6840--     new: 0x04911e80 (realloc             ) R-> (1009.0) 0x0483de10 realloc
+==6840== Adding active redirection:
+--6840--     new: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e2a0 memalign
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e2a0 memalign
+--6840--     new: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e050 memalign
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e2a0 memalign
+--6840--     new: 0x04912250 (memalign            ) R-> (1011.0) 0x0483e050 memalign
+==6840== Adding active redirection:
+--6840--     new: 0x04912510 (valloc              ) R-> (1012.0) 0x0483e1a0 valloc
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04912510 (valloc              ) R-> (1012.0) 0x0483e1a0 valloc
+--6840--     new: 0x04912510 (valloc              ) R-> (1012.0) 0x0483e160 valloc
+==6840== Adding active redirection:
+--6840--     new: 0x049127f0 (pvalloc             ) R-> (1018.0) 0x0483b560 pvalloc
+==6840== Adding active redirection:
+--6840--     new: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dce0 calloc
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dce0 calloc
+--6840--     new: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dbb0 calloc
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dce0 calloc
+--6840--     new: 0x04912b10 (calloc              ) R-> (1007.0) 0x0483dbb0 calloc
+==6840== Adding active redirection:
+--6840--     new: 0x04912eb0 (malloc_trim         ) R-> (1015.0) 0x0483b540 malloc_trim
+==6840== Adding active redirection:
+--6840--     new: 0x049131b0 (malloc_usable_size  ) R-> (1017.0) 0x0483e3b0 malloc_usable_size
+==6840== Adding active redirection:
+--6840--     new: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e810 mallinfo
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e810 mallinfo
+--6840--     new: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e730 mallinfo
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e810 mallinfo
+--6840--     new: 0x04913290 (mallinfo            ) R-> (1020.0) 0x0483e730 mallinfo
+==6840== Adding active redirection:
+--6840--     new: 0x049133d0 (malloc_stats        ) R-> (1019.0) 0x0483b5c0 malloc_stats
+==6840== Adding active redirection:
+--6840--     new: 0x04913610 (mallopt             ) R-> (1014.0) 0x0483b520 mallopt
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04913610 (mallopt             ) R-> (1014.0) 0x0483b520 mallopt
+--6840--     new: 0x04913610 (mallopt             ) R-> (1014.0) 0x0483b500 mallopt
+==6840== Adding active redirection:
+--6840--     new: 0x04913830 (posix_memalign      ) R-> (1016.0) 0x0483e1e0 posix_memalign
+==6840== Adding active redirection:
+--6840--     new: 0x049160a0 (strcat              ) R-> (2003.0) 0x0483ec20 strcat
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049160a0 (strcat              ) R-> (2003.0) 0x0483ec20 strcat
+--6840--     new: 0x049160a0 (strcat              ) R-> (2003.0) 0x0483ed00 __GI_strcat
+==6840== Adding active redirection:
+--6840--     new: 0x04916100 (index               ) R-> (2002.0) 0x0483ebf0 index
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916100 (index               ) R-> (2002.0) 0x0483ebf0 index
+--6840--     new: 0x04916100 (index               ) R-> (2002.0) 0x0483eb30 strchr
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916100 (index               ) R-> (2002.0) 0x0483ebf0 index
+--6840--     new: 0x04916100 (index               ) R-> (2002.0) 0x0483eb60 __GI_strchr
+==6840== Adding active redirection:
+--6840--     new: 0x04916150 (strcmp              ) R-> (2016.0) 0x0483fed0 strcmp
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916150 (strcmp              ) R-> (2016.0) 0x0483fed0 strcmp
+--6840--     new: 0x04916150 (strcmp              ) R-> (2016.0) 0x0483ff10 __GI_strcmp
+==6840== Adding active redirection:
+--6840--     new: 0x049161d0 (strcpy              ) R-> (2008.0) 0x0483f090 strcpy
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049161d0 (strcpy              ) R-> (2008.0) 0x0483f090 strcpy
+--6840--     new: 0x049161d0 (strcpy              ) R-> (2008.0) 0x0483f160 __GI_strcpy
+==6840== Adding active redirection:
+--6840--     new: 0x04916230 (strcspn             ) R-> (2033.0) 0x04843e10 strcspn
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916230 (strcspn             ) R-> (2033.0) 0x04843e10 strcspn
+--6840--     new: 0x04916230 (strcspn             ) R-> (2033.0) 0x04843e80 __GI_strcspn
+==6840== Adding active redirection:
+--6840--     new: 0x04916630 (strlen              ) R-> (2007.0) 0x0483ef40 strlen
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916630 (strlen              ) R-> (2007.0) 0x0483ef40 strlen
+--6840--     new: 0x04916630 (strlen              ) R-> (2007.0) 0x0483ef70 __GI_strlen
+==6840== Adding active redirection:
+--6840--     new: 0x04916670 (strnlen             ) R-> (2006.0) 0x0483eee0 strnlen
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916670 (strnlen             ) R-> (2006.0) 0x0483eee0 strnlen
+--6840--     new: 0x04916670 (strnlen             ) R-> (2006.0) 0x0483ef10 __GI_strnlen
+==6840== Adding active redirection:
+--6840--     new: 0x049166b0 (strncat             ) R-> (2004.0) 0x0483ede0 strncat
+==6840== Adding active redirection:
+--6840--     new: 0x04916710 (strncmp             ) R-> (2011.0) 0x0483f670 strncmp
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916710 (strncmp             ) R-> (2011.0) 0x0483f670 strncmp
+--6840--     new: 0x04916710 (strncmp             ) R-> (2011.0) 0x0483f6e0 __GI_strncmp
+==6840== Adding active redirection:
+--6840--     new: 0x04916780 (strncpy             ) R-> (2009.0) 0x0483f230 strncpy
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04916780 (strncpy             ) R-> (2009.0) 0x0483f230 strncpy
+--6840--     new: 0x04916780 (strncpy             ) R-> (2009.0) 0x0483f340 __GI_strncpy
+==6840== Adding active redirection:
+--6840--     new: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea10 rindex
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea10 rindex
+--6840--     new: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483e9e0 strrchr
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea10 rindex
+--6840--     new: 0x049167e0 (rindex              ) R-> (2001.0) 0x0483ea40 __GI_strrchr
+==6840== Adding active redirection:
+--6840--     new: 0x04916820 (strpbrk             ) R-> (2032.0) 0x04843da0 strpbrk
+==6840== Adding active redirection:
+--6840--     new: 0x04916ae0 (strspn              ) R-> (2034.0) 0x04843ef0 strspn
+==6840== Adding active redirection:
+--6840--     new: 0x04916fa0 (__GI_strstr         ) R-> (2031.0) 0x04843ca0 __strstr_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x049172f0 (strstr              ) R-> (2031.0) 0x04843c20 strstr
+==6840== Adding active redirection:
+--6840--     new: 0x049173d0 (memchr              ) R-> (2017.0) 0x04840050 memchr
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049173d0 (memchr              ) R-> (2017.0) 0x04840050 memchr
+--6840--     new: 0x049173d0 (memchr              ) R-> (2017.0) 0x04840090 __GI_memchr
+==6840== Adding active redirection:
+--6840--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
+--6840--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x04841fa0 memcmp
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
+--6840--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x04841fa0 memcmp
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917410 (bcmp                ) R-> (2019.0) 0x048421e0 bcmp
+--6840--     new: 0x04917410 (bcmp                ) R-> (2019.0) 0x04842030 __GI_memcmp
+==6840== Adding active redirection:
+--6840--     new: 0x04917480 (memmove             ) R-> (2018.1) 0x048429f0 memmove
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917480 (memmove             ) R-> (2018.1) 0x048429f0 memmove
+--6840--     new: 0x04917480 (memmove             ) R-> (2018.1) 0x04842d70 __GI_memmove
+==6840== Adding active redirection:
+--6840--     new: 0x04917540 (memset              ) R-> (2021.0) 0x048428e0 memset
+==6840== Adding active redirection:
+--6840--     new: 0x049175e0 (mempcpy             ) R-> (2029.0) 0x04843660 mempcpy
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049175e0 (mempcpy             ) R-> (2029.0) 0x04843660 mempcpy
+--6840--     new: 0x049175e0 (mempcpy             ) R-> (2029.0) 0x04843750 __GI_mempcpy
+==6840== Adding active redirection:
+--6840--     new: 0x049176a0 (bcopy               ) R-> (2023.0) 0x04843470 bcopy
+==6840== Adding active redirection:
+--6840--     new: 0x049176f0 (stpcpy              ) R-> (2020.0) 0x04842300 stpcpy
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049176f0 (stpcpy              ) R-> (2020.0) 0x04842300 stpcpy
+--6840--     new: 0x049176f0 (stpcpy              ) R-> (2020.0) 0x048423d0 __GI_stpcpy
+==6840== Adding active redirection:
+--6840--     new: 0x04917750 (stpncpy             ) R-> (2042.0) 0x048427e0 stpncpy
+==6840== Adding active redirection:
+--6840--     new: 0x049177b0 (strcasecmp          ) R-> (2012.0) 0x0483f830 strcasecmp
+==6840== Adding active redirection:
+--6840--     new: 0x04917800 (strncasecmp         ) R-> (2013.0) 0x0483f910 strncasecmp
+==6840== Adding active redirection:
+--6840--     new: 0x04917850 (strcasecmp_l        ) R-> (2014.0) 0x0483fab0 strcasecmp_l
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917850 (strcasecmp_l        ) R-> (2014.0) 0x0483fab0 strcasecmp_l
+--6840--     new: 0x04917850 (strcasecmp_l        ) R-> (2014.0) 0x0483fb90 __GI___strcasecmp_l
+==6840== Adding active redirection:
+--6840--     new: 0x049178a0 (strncasecmp_l       ) R-> (2015.0) 0x0483fc00 strncasecmp_l
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x049178a0 (strncasecmp_l       ) R-> (2015.0) 0x0483fc00 strncasecmp_l
+--6840--     new: 0x049178a0 (strncasecmp_l       ) R-> (2015.0) 0x0483fde0 __GI___strncasecmp_l
+==6840== Adding active redirection:
+--6840--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
+--6840--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840860 memcpy
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
+--6840--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840c40 __GI_memcpy
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
+--6840--     new: 0x04917950 (memcpy@@GLIBC_2.14  ) R-> (2018.0) 0x04840860 memcpy
+==6840== Adding active redirection:
+--6840--     new: 0x04917fc0 (strcasestr          ) R-> (2035.0) 0x04843f80 strcasestr
+==6840== Adding active redirection:
+--6840--     new: 0x04918c50 (rawmemchr           ) R-> (2026.0) 0x04843580 rawmemchr
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04918c50 (rawmemchr           ) R-> (2026.0) 0x04843580 rawmemchr
+--6840--     new: 0x04918c50 (rawmemchr           ) R-> (2026.0) 0x048435a0 __GI___rawmemchr
+==6840== Adding active redirection:
+--6840--     new: 0x04918c90 (strchrnul           ) R-> (2025.0) 0x04843540 strchrnul
+==6840== Adding active redirection:
+--6840--     new: 0x0491fbb0 (memrchr             ) R-> (2036.0) 0x048400d0 memrchr
+==6840== Adding active redirection:
+--6840--     new: 0x0491ff00 (__strncpy_sse2      ) R-> (2009.0) 0x0483f450 __strncpy_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x0491ff60 (__strcmp_sse2       ) R-> (2016.0) 0x0483ff50 __strcmp_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x04921660 (__strncmp_sse2      ) R-> (2011.0) 0x0483f750 __strncmp_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x049237d0 (__memcmp_sse2       ) R-> (2019.0) 0x048420c0 __memcmp_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x04928480 (__strchr_sse2       ) R-> (2002.0) 0x0483eb90 __strchr_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x049288c0 (__strrchr_sse2      ) R-> (2001.0) 0x0483ea70 __strrchr_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x04928bc0 (__strlen_sse2       ) R-> (2007.0) 0x0483efa0 __strlen_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x0492da10 (__stpcpy_sse2       ) R-> (2020.0) 0x048424a0 __stpcpy_sse2
+==6840== Adding active redirection:
+--6840--     new: 0x0492e130 (__strncpy_sse2_unali) R-> (2009.0) 0x0483f560 __strncpy_sse2_unaligned
+==6840== Adding active redirection:
+--6840--     new: 0x0492f140 (__stpcpy_sse2_unalig) R-> (2020.0) 0x04842570 __stpcpy_sse2_unaligned
+==6840== Adding active redirection:
+--6840--     new: 0x04932ad0 (memcpy@GLIBC_2.2.5  ) R-> (2018.1) 0x04840100 memcpy@GLIBC_2.2.5
+==6840== Ignoring lower priority redirection:
+--6840--     old: 0x04932ad0 (memcpy@GLIBC_2.2.5  ) R-> (2018.1) 0x04840100 memcpy@GLIBC_2.2.5
+--6840--     new: 0x04932ad0 (memcpy@GLIBC_2.2.5  ) R-> (2018.0) 0x04840860 memcpy
+==6840== Adding active redirection:
+--6840--     new: 0x049337e0 (wcschr              ) R-> (2040.0) 0x04844260 wcschr
+==6840== Adding active redirection:
+--6840--     new: 0x04933820 (wcscmp              ) R-> (2038.0) 0x048440e0 wcscmp
+==6840== Adding active redirection:
+--6840--     new: 0x04933860 (wcscpy              ) R-> (2039.0) 0x04844190 wcscpy
+==6840== Adding active redirection:
+--6840--     new: 0x04933930 (wcslen              ) R-> (2037.0) 0x04844050 wcslen
+==6840== Adding active redirection:
+--6840--     new: 0x049339d0 (wcsncmp             ) R-> (2045.0) 0x04844120 wcsncmp
+==6840== Adding active redirection:
+--6840--     new: 0x04933ac0 (wcsrchr             ) R-> (2041.0) 0x04844290 wcsrchr
+==6840== Adding active redirection:
+--6840--     new: 0x04933ce0 (wmemchr             ) R-> (2043.0) 0x048442c0 wmemchr
+==6840== Ignoring duplicate redirection:
+--6840--     old: 0x04933ce0 (wmemchr             ) R-> (2043.0) 0x048442c0 wmemchr
+--6840--     new: 0x04933ce0 (wmemchr             ) R-> (2043.0) 0x048442f0 __GI_wmemchr
+==6840== Adding active redirection:
+--6840--     new: 0x04934f50 (wcsnlen             ) R-> (2044.0) 0x04844080 wcsnlen
+==6840== Adding active redirection:
+--6840--     new: 0x049a4850 (__memcpy_chk        ) R-> (2030.0) 0x04843b10 __memcpy_chk
+==6840== Adding active redirection:
+--6840--     new: 0x049a4910 (__memmove_chk       ) R-> (2024.0) 0x048434d0 __memmove_chk
+==6840== Adding active redirection:
+--6840--     new: 0x049a4b30 (__stpcpy_chk        ) R-> (2028.0) 0x04843610 __stpcpy_chk
+==6840== Adding active redirection:
+--6840--     new: 0x049a4c00 (__strcpy_chk        ) R-> (2027.0) 0x048435c0 __strcpy_chk
+==6840== Adding active redirection:
+--6840--     new: 0x049d7cc0 (malloc_get_state@GLI) R-> (1018.0) 0x0483b580 malloc_get_state
+==6840== Adding active redirection:
+--6840--     new: 0x049d7ce0 (malloc_set_state@GLI) R-> (1018.0) 0x0483b5a0 malloc_set_state
+==6840== Adding active redirection:
+--6840--     new: 0x049f4f10 (__strcmp_sse42      ) R-> (2016.0) 0x0483ff90 __strcmp_sse42
+==6840== Adding active redirection:
+--6840--     new: 0x049f5cc0 (__strncmp_sse42     ) R-> (2011.0) 0x0483f7c0 __strncmp_sse42
+==6840== Adding active redirection:
+--6840--     new: 0x04a04550 (__memcmp_sse4_1     ) R-> (2019.0) 0x04842150 __memcmp_sse4_1
+==6840== Adding active redirection:
+--6840--     new: 0x04a07b50 (__strchr_sse2_no_bsf) R-> (2002.0) 0x0483ebc0 __strchr_sse2_no_bsf
+--6840-- REDIR: 0x4917480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.1) 0x048429f0 memmove
+--6840-- REDIR: 0x4916780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a00fa0 (__strncpy_avx2      ) R-> (2009.0) 0x0483f230 strncpy
+--6840-- REDIR: 0x49177b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fc0a0 (__strcasecmp_avx    ) R-> (2012.0) 0x0483f830 strcasecmp
+--6840-- REDIR: 0x49160a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049ffb90 (__strcat_avx2       ) R-> (2003.0) 0x0483ec20 strcat
+--6840-- REDIR: 0x49167e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049ff500 (__strrchr_avx2      ) R-> (2001.0) 0x0483ea10 rindex
+--6840-- REDIR: 0x4918c50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fb800 (__rawmemchr_avx2    ) R-> (2026.0) 0x04843580 rawmemchr
+--6840-- REDIR: 0x4933ce0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a02fe0 (__wmemchr_avx2      ) R-> (2043.0) 0x048442c0 wmemchr
+--6840-- REDIR: 0x4933820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a032b0 (__wcscmp_avx2       ) R-> (2038.0) 0x048440e0 wcscmp
+--6840-- REDIR: 0x49175e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a026c0 (__mempcpy_avx_unalig) R-> (2029.0) 0x04843660 mempcpy
+--6840-- REDIR: 0x4917410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fbcc0 (__memcmp_avx2_movbe ) R-> (2019.0) 0x048421e0 bcmp
+--6840-- REDIR: 0x4916710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fb010 (__strncmp_avx2      ) R-> (2011.0) 0x0483f670 strncmp
+--6840-- REDIR: 0x4916150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fabd0 (__strcmp_avx2       ) R-> (2016.0) 0x0483fed0 strcmp
+--6840-- REDIR: 0x4917540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a02b60 (__memset_avx2_unalig) R-> (2021.0) 0x048428e0 memset
+--6840-- REDIR: 0x49337e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a03c20 (__wcschr_avx2       ) R-> (2040.0) 0x04844260 wcschr
+--6840-- REDIR: 0x4916670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049ff870 (__strnlen_avx2      ) R-> (2006.0) 0x0483eee0 strnlen
+--6840-- REDIR: 0x4916230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fa820 (__strcspn_sse42     ) R-> (2033.0) 0x04843e10 strcspn
+--6840-- REDIR: 0x4917800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fd720 (__strncasecmp_avx   ) R-> (2013.0) 0x0483f910 strncasecmp
+--6840-- REDIR: 0x49161d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a00c10 (__strcpy_avx2       ) R-> (2008.0) 0x0483f090 strcpy
+--6840-- REDIR: 0x4917950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Ignoring lower priority redirection:
+--6840--     old: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.1) 0x048429f0 memmove
+--6840--     new: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
+--6840-- REDIR: 0x4934f50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a04200 (__wcsnlen_avx2      ) R-> (2044.0) 0x04844080 wcsnlen
+--6840-- REDIR: 0x4933860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049f4890 (__wcscpy_ssse3      ) R-> (2039.0) 0x04844190 wcscpy
+--6840-- REDIR: 0x4916820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fa960 (__strpbrk_sse42     ) R-> (2032.0) 0x04843da0 strpbrk
+--6840-- REDIR: 0x4916100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049ff0e0 (__strchr_avx2       ) R-> (2002.0) 0x0483ebf0 index
+--6840-- REDIR: 0x4916630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049ff6d0 (__strlen_avx2       ) R-> (2007.0) 0x0483ef40 strlen
+--6840-- REDIR: 0x491fbb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fb950 (__memrchr_avx2      ) R-> (2036.0) 0x048400d0 memrchr
+--6840-- REDIR: 0x4917850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fc0b4 (__strcasecmp_l_avx  ) R-> (2014.0) 0x0483fab0 strcasecmp_l
+--6840-- REDIR: 0x49173d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fb530 (__memchr_avx2       ) R-> (2017.0) 0x04840050 memchr
+--6840-- REDIR: 0x4933930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a04040 (__wcslen_avx2       ) R-> (2037.0) 0x04844050 wcslen
+--6840-- REDIR: 0x4916ae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049faaa0 (__strspn_sse42      ) R-> (2034.0) 0x04843ef0 strspn
+--6840-- REDIR: 0x4917750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a01cb0 (__stpncpy_avx2      ) R-> (2042.0) 0x048427e0 stpncpy
+--6840-- REDIR: 0x49176f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x04a01900 (__stpcpy_avx2       ) R-> (2020.0) 0x04842300 stpcpy
+--6840-- REDIR: 0x4918c90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049ff310 (__strchrnul_avx2    ) R-> (2025.0) 0x04843540 strchrnul
+--6840-- REDIR: 0x49178a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049fd734 (__strncasecmp_l_avx ) R-> (2015.0) 0x0483fc00 strncasecmp_l
+--6840-- REDIR: 0x49172f0 (libc.so.6:strstr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+==6840== Adding active redirection:
+--6840--     new: 0x049323f0 (__strstr_sse2_unalig) R-> (2031.0) 0x04843c20 strstr
+--6840-- REDIR: 0x49ff500 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
+--6840-- REDIR: 0x49110e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+--6840-- REDIR: 0x4912b10 (libc.so.6:calloc) redirected to 0x483dce0 (calloc)
+--6840-- REDIR: 0x49ffb90 (libc.so.6:__strcat_avx2) redirected to 0x483ec20 (strcat)
+--6840-- REDIR: 0x49323f0 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4843c20 (strstr)
+--6840-- REDIR: 0x49ff6d0 (libc.so.6:__strlen_avx2) redirected to 0x483ef40 (strlen)
+--6840-- REDIR: 0x49ff310 (libc.so.6:__strchrnul_avx2) redirected to 0x4843540 (strchrnul)
+--6840-- REDIR: 0x4a026c0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4843660 (mempcpy)
+--6840-- REDIR: 0x49116d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
+--6840-- REDIR: 0x4a026e0 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x48429f0 (memmove)
+--6840-- REDIR: 0x4916fa0 (libc.so.6:__GI_strstr) redirected to 0x4843ca0 (__strstr_sse2)
+--6840-- REDIR: 0x49fbcc0 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x48421e0 (bcmp)
+--6840-- REDIR: 0x4a02b60 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x48428e0 (memset)
+--6840-- REDIR: 0x49fabd0 (libc.so.6:__strcmp_avx2) redirected to 0x483fed0 (strcmp)
+--6840-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+--6840--    svma 0x00000035e0, avma 0x00076745e0
+--6840--    object doesn't have a symbol table
+--6840-- summarise_context(loc_start = 0x385): cannot summarise(why=1):   
 0x388: [0]={ 8(r2) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x389): cannot summarise(why=2):   
+--6840-- summarise_context(loc_start = 0x389): cannot summarise(why=2):   
 0x38b: [0]={ 0(r7) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 dwReg2 u  u  u  }
---30069-- summarise_context(loc_start = 0x198): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x198): cannot summarise(why=1):   
 0x19b: [0]={ 8(r2) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x19c): cannot summarise(why=2):   
+--6840-- summarise_context(loc_start = 0x19c): cannot summarise(why=2):   
 0x19e: [0]={ 0(r7) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 dwReg2 u  u  u  }
---30069-- summarise_context(loc_start = 0x181): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0x181): cannot summarise(why=1):   
 0x184: [0]={ 16(r6) { c-72 c-64 u  c-56 u  u  c-16 u  u  u  u  u  c-48 c-40 c-32 c-24 c-8 u  u  u  } [1]={ 8(r2) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0x185): cannot summarise(why=2):   
+--6840-- summarise_context(loc_start = 0x185): cannot summarise(why=2):   
 0x190: [0]={ 16(r6) { c-72 c-64 u  c-56 u  u  c-16 u  u  u  u  u  c-48 c-40 c-32 c-24 c-8 u  u  u  } [1]={ 0(r7) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 dwReg2 u  u  u  }
---30069-- summarise_context(loc_start = 0xd4): cannot summarise(why=1):   
+--6840-- summarise_context(loc_start = 0xd4): cannot summarise(why=1):   
 0xd7: [0]={ 8(r2) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 c-8 u  u  u  }
---30069-- summarise_context(loc_start = 0xd8): cannot summarise(why=2):   
+--6840-- summarise_context(loc_start = 0xd8): cannot summarise(why=2):   
 0xda: [0]={ 0(r7) { c-72 c-64 u  c-56 u  u  u  u  u  u  u  u  c-48 c-40 c-32 c-24 dwReg2 u  u  u  }
-==30069== Ignoring lower priority redirection:
---30069--     old: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.1) 0x048429f0 memmove
---30069--     new: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
---30069-- Caught __NR_exit; running __gnu_cxx::__freeres and __libc_freeres() wrapper
-==30069== 
-==30069== HEAP SUMMARY:
-==30069==     in use at exit: 1,654 bytes in 4 blocks
-==30069==   total heap usage: 24 allocs, 20 frees, 78,189 bytes allocated
-==30069== 
-==30069== Searching for pointers to 4 not-freed blocks
---30069--   Scanning root segment: 0x10f000..0x10ffff (4096)
---30069--   Scanning root segment: 0x402e000..0x402efff (4096)
---30069--   Scanning root segment: 0x402f000..0x402ffff (4096)
---30069--   Scanning root segment: 0x4030000..0x4030fff (4096)
---30069--   Scanning root segment: 0x4834000..0x4834fff (4096)
---30069--   Scanning root segment: 0x4835000..0x4836fff (8192)
---30069--   Scanning root segment: 0x4849000..0x4849fff (4096)
---30069--   Scanning root segment: 0x4872000..0x4872fff (4096)
---30069--   Scanning root segment: 0x4873000..0x4876fff (16384)
---30069--   Scanning root segment: 0x4a63000..0x4a64fff (8192)
---30069--   Scanning root segment: 0x4a65000..0x4a6bfff (28672)
---30069--   Scanning root segment: 0x768b000..0x768bfff (4096)
---30069--   Scanning root segment: 0x1ffeffd000..0x1fff000fff (16384)
-==30069== Checked 99,984 bytes
-==30069== 
-==30069== Thread 1:
-==30069== 36 bytes in 1 blocks are still reachable in loss record 1 of 4
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x401F5DE: strdup (strdup.c:42)
-==30069==    by 0x4019A91: _dl_load_cache_lookup (dl-cache.c:338)
-==30069==    by 0x400A989: _dl_map_object (dl-load.c:2102)
-==30069==    by 0x4015D46: dl_open_worker (dl-open.c:513)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x4015609: _dl_open (dl-open.c:837)
-==30069==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
-==30069==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
-==30069==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
-==30069==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
-==30069== 
-==30069== 36 bytes in 1 blocks are still reachable in loss record 2 of 4
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x400D5B7: _dl_new_object (dl-object.c:196)
-==30069==    by 0x4006E96: _dl_map_object_from_fd (dl-load.c:997)
-==30069==    by 0x400A61A: _dl_map_object (dl-load.c:2236)
-==30069==    by 0x4015D46: dl_open_worker (dl-open.c:513)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x4015609: _dl_open (dl-open.c:837)
-==30069==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
-==30069==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
-==30069==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
-==30069==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
-==30069== 
-==30069== 384 bytes in 1 blocks are still reachable in loss record 3 of 4
-==30069==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x401331C: _dl_check_map_versions (dl-version.c:274)
-==30069==    by 0x40160FC: dl_open_worker (dl-open.c:577)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x4015609: _dl_open (dl-open.c:837)
-==30069==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
-==30069==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
-==30069==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
-==30069==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
-==30069==    by 0x4868C13: _Unwind_ForcedUnwind (unwind-forcedunwind.c:127)
-==30069==    by 0x4866F65: __pthread_unwind (unwind.c:121)
-==30069== 
-==30069== 1,198 bytes in 1 blocks are still reachable in loss record 4 of 4
-==30069==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x400D283: _dl_new_object (dl-object.c:89)
-==30069==    by 0x4006E96: _dl_map_object_from_fd (dl-load.c:997)
-==30069==    by 0x400A61A: _dl_map_object (dl-load.c:2236)
-==30069==    by 0x4015D46: dl_open_worker (dl-open.c:513)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x4015609: _dl_open (dl-open.c:837)
-==30069==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
-==30069==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
-==30069==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
-==30069==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
-==30069==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
-==30069==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
-==30069== 
-==30069== LEAK SUMMARY:
-==30069==    definitely lost: 0 bytes in 0 blocks
-==30069==    indirectly lost: 0 bytes in 0 blocks
-==30069==      possibly lost: 0 bytes in 0 blocks
-==30069==    still reachable: 1,654 bytes in 4 blocks
-==30069==         suppressed: 0 bytes in 0 blocks
-==30069== 
-==30069== ERROR SUMMARY: 23 errors from 14 contexts (suppressed: 0 from 0)
-==30069== 
-==30069== 1 errors in context 1 of 14:
-==30069== Thread 2:
-==30069== Syscall param futex(futex) points to unaddressable byte(s)
-==30069==    at 0x4860839: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
-==30069==    by 0x4860839: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c060 is 32 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 2 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x48607D8: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
-==30069==    by 0x48607D8: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c070 is 48 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 3 of 14:
-==30069== Invalid write of size 4
-==30069==    at 0x48607D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
-==30069==    by 0x48607D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c068 is 40 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 4 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x48607B4: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:41)
-==30069==    by 0x48607B4: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c070 is 48 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 5 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x10C8BE: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c0e8 is 168 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 6 of 14:
-==30069== Invalid write of size 4
-==30069==    at 0x486101C: __pthread_mutex_cond_lock (pthread_mutex_lock.c:159)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c068 is 40 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 7 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x4861009: __pthread_mutex_cond_lock (pthread_mutex_lock.c:81)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c068 is 40 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 8 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x4860FE4: __pthread_mutex_cond_lock (pthread_mutex_lock.c:67)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c070 is 48 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 1 errors in context 9 of 14:
-==30069== Invalid read of size 8
-==30069==    at 0x486322D: __condvar_load_g1_start_relaxed (pthread_cond_common.c:49)
-==30069==    by 0x486322D: __pthread_cond_wait_common (pthread_cond_wait.c:559)
-==30069==    by 0x486322D: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c090 is 80 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 2 errors in context 10 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x48607CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==30069==    by 0x48607CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c06c is 44 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 3 errors in context 11 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x48607DB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
-==30069==    by 0x48607DB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==30069==    by 0x10C8D8: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c060 is 32 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 3 errors in context 12 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x4861003: __pthread_mutex_cond_lock (pthread_mutex_lock.c:80)
-==30069==    by 0x486325F: __pthread_cond_wait_common (pthread_cond_wait.c:636)
-==30069==    by 0x486325F: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c060 is 32 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 3 errors in context 13 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x4863246: __condvar_confirm_wakeup (pthread_cond_wait.c:54)
-==30069==    by 0x4863246: __pthread_cond_wait_common (pthread_cond_wait.c:632)
-==30069==    by 0x4863246: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c0ac is 108 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== 
-==30069== 3 errors in context 14 of 14:
-==30069== Invalid read of size 4
-==30069==    at 0x486339E: __condvar_dec_grefs (pthread_cond_wait.c:153)
-==30069==    by 0x486339E: __pthread_cond_wait_common (pthread_cond_wait.c:541)
-==30069==    by 0x486339E: pthread_cond_wait@@GLIBC_2.3.2 (pthread_cond_wait.c:647)
-==30069==    by 0x10C8B9: do_work (in /workspaces/server-side/ex3)
-==30069==    by 0x485C608: start_thread (pthread_create.c:477)
-==30069==    by 0x4996132: clone (clone.S:95)
-==30069==  Address 0x4a6c09c is 92 bytes inside a block of size 176 free'd
-==30069==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C2F4: create_server (in /workspaces/server-side/ex3)
-==30069==    by 0x10C3C9: main (in /workspaces/server-side/ex3)
-==30069==  Block was alloc'd at
-==30069==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==30069==    by 0x10C6C3: create_threadpool (in /workspaces/server-side/ex3)
-==30069==    by 0x10C371: main (in /workspaces/server-side/ex3)
-==30069== 
-==30069== ERROR SUMMARY: 23 errors from 14 contexts (suppressed: 0 from 0)
+==6840== Ignoring lower priority redirection:
+--6840--     old: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.1) 0x048429f0 memmove
+--6840--     new: 0x04a026e0 (__memcpy_avx_unalign) R-> (2018.0) 0x04840480 memcpy@@GLIBC_2.14
+--6840-- Caught __NR_exit; running __gnu_cxx::__freeres and __libc_freeres() wrapper
+==6840== 
+==6840== HEAP SUMMARY:
+==6840==     in use at exit: 1,654 bytes in 4 blocks
+==6840==   total heap usage: 24 allocs, 20 frees, 78,189 bytes allocated
+==6840== 
+==6840== Searching for pointers to 4 not-freed blocks
+--6840--   Scanning root segment: 0x10f000..0x10ffff (4096)
+--6840--   Scanning root segment: 0x402e000..0x402efff (4096)
+--6840--   Scanning root segment: 0x402f000..0x402ffff (4096)
+--6840--   Scanning root segment: 0x4030000..0x4030fff (4096)
+--6840--   Scanning root segment: 0x4834000..0x4834fff (4096)
+--6840--   Scanning root segment: 0x4835000..0x4836fff (8192)
+--6840--   Scanning root segment: 0x4849000..0x4849fff (4096)
+--6840--   Scanning root segment: 0x4872000..0x4872fff (4096)
+--6840--   Scanning root segment: 0x4873000..0x4876fff (16384)
+--6840--   Scanning root segment: 0x4a63000..0x4a64fff (8192)
+--6840--   Scanning root segment: 0x4a65000..0x4a6bfff (28672)
+--6840--   Scanning root segment: 0x768b000..0x768bfff (4096)
+--6840--   Scanning root segment: 0x1ffeffd000..0x1fff000fff (16384)
+==6840== Checked 99,984 bytes
+==6840== 
+==6840== 36 bytes in 1 blocks are still reachable in loss record 1 of 4
+==6840==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6840==    by 0x401F5DE: strdup (strdup.c:42)
+==6840==    by 0x4019A91: _dl_load_cache_lookup (dl-cache.c:338)
+==6840==    by 0x400A989: _dl_map_object (dl-load.c:2102)
+==6840==    by 0x4015D46: dl_open_worker (dl-open.c:513)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x4015609: _dl_open (dl-open.c:837)
+==6840==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
+==6840==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
+==6840==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
+==6840==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
+==6840== 
+==6840== 36 bytes in 1 blocks are still reachable in loss record 2 of 4
+==6840==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6840==    by 0x400D5B7: _dl_new_object (dl-object.c:196)
+==6840==    by 0x4006E96: _dl_map_object_from_fd (dl-load.c:997)
+==6840==    by 0x400A61A: _dl_map_object (dl-load.c:2236)
+==6840==    by 0x4015D46: dl_open_worker (dl-open.c:513)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x4015609: _dl_open (dl-open.c:837)
+==6840==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
+==6840==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
+==6840==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
+==6840==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
+==6840== 
+==6840== 384 bytes in 1 blocks are still reachable in loss record 3 of 4
+==6840==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6840==    by 0x401331C: _dl_check_map_versions (dl-version.c:274)
+==6840==    by 0x40160FC: dl_open_worker (dl-open.c:577)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x4015609: _dl_open (dl-open.c:837)
+==6840==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
+==6840==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
+==6840==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
+==6840==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
+==6840==    by 0x4868C13: _Unwind_ForcedUnwind (unwind-forcedunwind.c:127)
+==6840==    by 0x4866F65: __pthread_unwind (unwind.c:121)
+==6840== 
+==6840== 1,198 bytes in 1 blocks are still reachable in loss record 4 of 4
+==6840==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6840==    by 0x400D283: _dl_new_object (dl-object.c:89)
+==6840==    by 0x4006E96: _dl_map_object_from_fd (dl-load.c:997)
+==6840==    by 0x400A61A: _dl_map_object (dl-load.c:2236)
+==6840==    by 0x4015D46: dl_open_worker (dl-open.c:513)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x4015609: _dl_open (dl-open.c:837)
+==6840==    by 0x49D68C0: do_dlopen (dl-libc.c:96)
+==6840==    by 0x49D7927: _dl_catch_exception (dl-error-skeleton.c:208)
+==6840==    by 0x49D79F2: _dl_catch_error (dl-error-skeleton.c:227)
+==6840==    by 0x49D69F4: dlerror_run (dl-libc.c:46)
+==6840==    by 0x49D69F4: __libc_dlopen_mode (dl-libc.c:195)
+==6840==    by 0x48689FA: pthread_cancel_init (unwind-forcedunwind.c:53)
+==6840== 
+==6840== LEAK SUMMARY:
+==6840==    definitely lost: 0 bytes in 0 blocks
+==6840==    indirectly lost: 0 bytes in 0 blocks
+==6840==      possibly lost: 0 bytes in 0 blocks
+==6840==    still reachable: 1,654 bytes in 4 blocks
+==6840==         suppressed: 0 bytes in 0 blocks
+==6840== 
+==6840== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -18,11 +18,11 @@ void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     new_threadpool->qtail = NULL;
     for(int i =0;i<max_number_of_threads;i++){
         if(pthread_create(&(new_threadpool->threads[i]),NULL,do_work,new_threadpool)){
-            perror("create failed");
+            printf("Usage: create failed");
             exit(1);
         }
-        pthread_detach(new_threadpool->threads[i]);
-        printf("pthread number:%d created\n",i);
+        // pthread_detach(new_threadpool->threads[i]);
+        // printf("pthread number:%d created\n",i);
     }
 }
 /**
@@ -107,8 +107,8 @@ void* do_work(void* p){
         if(((threadpool*)p)->qsize==0){
             if(((threadpool*)p)->qsize==0&& ((threadpool*)p)->dont_accept == 1&&((threadpool*)p)->num_threads==0){
                 pthread_cond_signal(&((threadpool*)p)->q_empty);
-                printf("%d",((threadpool*)p)->shutdown);
-                printf("\npthread exits\n");
+                // printf("%d",((threadpool*)p)->shutdown);
+                // printf("\npthread exits\n");
                 pthread_mutex_unlock(&((threadpool*)p)->qlock);
                 pthread_exit(NULL);
             }
@@ -119,7 +119,7 @@ void* do_work(void* p){
         if(((threadpool*)p)->shutdown==1){
             pthread_mutex_unlock(&((threadpool*)p)->qlock);
             // pthread_cond_signal(&)
-            printf("\npthread exits\n");
+            // printf("\npthread exits\n");
             pthread_exit(NULL);
         }
         ((threadpool*)p)->num_threads++;
@@ -129,17 +129,17 @@ void* do_work(void* p){
        
         
         pthread_mutex_unlock(&((threadpool*)p)->qlock);
-        printf("the queue size is: %d\n",((threadpool*)p)->qsize);
+        // printf("the queue size is: %d\n",((threadpool*)p)->qsize);
 
         temp_work->routine(temp_work->arg);
-        printf("after the routine\n");
+        // printf("after the routine\n");
         free(temp_work);
         ((threadpool*)p)->num_threads--;
         
     }
     // pthread_mutex_unlock(&((threadpool*)p)->qlock);
     // pthread_cond_signal(&)
-    printf("\npthread exits\n");
+    // printf("\npthread exits\n");
     pthread_exit(NULL);
 };
 
