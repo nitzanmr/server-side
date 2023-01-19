@@ -2,6 +2,7 @@
 #include "malloc.h"
 #include "stdlib.h"
 #include "threadpool.h"
+/*finshed prudact*/
 int number_of_threads_asked = 0;
 void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     /*this function initialize the threadpool to it defult values*/

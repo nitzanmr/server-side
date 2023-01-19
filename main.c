@@ -3,6 +3,7 @@
 #include "malloc.h"
 #include "stdlib.h"
 // #include "server.c"
+/*part of the tester*/
 int job1(void*);
 int job2(void*);
 int check_threadpool(int,int);

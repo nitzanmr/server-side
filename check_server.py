@@ -11,7 +11,7 @@ import multiprocessing
 import time
 EXECUTABLE = "ex2"
 C_FILES = "client.c "
-
+#makes a few instances of telnet and sending requests
 def check_main_folder():
     # status = subprocess.run(f"telnet 127.0.0.1 8070","GET /folder/ HTTP/1.1",shell=True)
     # subprocess.run(f"GET /folder/ HTTP/1.1",shell=True)

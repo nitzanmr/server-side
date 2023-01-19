@@ -5,6 +5,7 @@ from prettytable import PrettyTable
 import requests
 import json
 import sys
+#writen be nitzan
 EXECUTABLE = "ex3"
 C_FILES = "server.c threadpool.c "
 H_FILES = "threadpool.h"   
