@@ -1,19 +1,12 @@
-server.c: In function ‘get_mime_type’:
-server.c:63:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
-   63 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
-      |     ^~
-server.c:63:85: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
-   63 |     if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
-      |                                                                                     ^~
 server.c: In function ‘read_and_write_file’:
-server.c:90:10: warning: unused variable ‘ch’ [-Wunused-variable]
-   90 |     char ch;
+server.c:91:10: warning: unused variable ‘ch’ [-Wunused-variable]
+   91 |     char ch;
       |          ^~
 server.c: In function ‘accept_client’:
-server.c:303:23: warning: unused variable ‘type’ [-Wunused-variable]
-  303 |                 char* type = get_mime_type(absulute_path);
+server.c:304:23: warning: unused variable ‘type’ [-Wunused-variable]
+  304 |                 char* type = get_mime_type(absulute_path);
       |                       ^~~~
-server.c: In function ‘main’:
-server.c:441:9: warning: unused variable ‘counter_of_request’ [-Wunused-variable]
-  441 |     int counter_of_request = 0;
-      |         ^~~~~~~~~~~~~~~~~~
+server.c: In function ‘create_server’:
+server.c:429:12: warning: ‘connfd’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+  429 |         if (connfd < 0) {
+      |            ^

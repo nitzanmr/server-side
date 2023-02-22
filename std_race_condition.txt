@@ -1,0 +1,115 @@
+http/1.1 200 ok
+server: webserver/1.0
+date: wed, 22 feb 2023 17:08:14 gmt
+content-type: text/html
+content-length: 223
+last-modified: sun, 12 feb 2023 12:37:42 gmt
+connection: close
+
+<!doctype html>
+<html>
+<head>
+<title>our funky html page</title>
+<meta name="description" content="our first page">
+<meta name="keywords" content="html tutorial template">
+</head>
+<body>
+content goes here.
+</body>
+</html>
+
+
+http/1.1 302 found
+server: webserver/1.0
+date: wed, 22 feb 2023 17:08:14 gmt
+location: /randpath/abc/def/mno/found/
+content-type: text/html
+content-length: 123
+connection: close
+
+<html><head><title>302 found</title></head>
+<body><h4>302 found</h4>
+directories must end with a slash.
+</body></html>
+http/1.1 200 ok
+server: webserver/1.0
+date: wed, 22 feb 2023 17:08:14 gmt
+content-type: text/html
+content-length: 1278
+last-modified: sun, 12 feb 2023 12:38:09 gmt
+connection: close
+
+<html>
+<head><title>index of /randpath/abc/def/jkl/pq/uv/z/</title></head>
+
+<body>
+<h4>index of /randpath/abc/def/jkl/pq/uv/z/</h4>
+
+<table cellspacing=8>
+<tr><th>name</th><th>last modified</th><th>size</th></tr>
+<tr>
+<td><a href="9">9</a></td><td>sun, 12 feb 2023 12:38:06 gmt</td>
+</tr>
+<tr>
+<td><a href="4">4</a></td><td>sun, 12 feb 2023 12:38:08 gmt</td>
+</tr>
+<tr>
+<td><a href="2">2</a></td><td>sun, 12 feb 2023 12:38:09 gmt</td>
+</tr>
+<tr>
+<td><a href=".">.</a></td><td>sun, 12 feb 2023 12:38:09 gmt</td>
+</tr>
+<tr>
+<td><a href="not_empty.txt">not_empty.txt</a></td><td>sun, 12 feb 2023 12:38:05 gmt</td>
+<td>10</td>
+</tr>
+<tr>
+<td><a href="3">3</a></td><td>sun, 12 feb 2023 12:38:08 gmt</td>
+</tr>
+<tr>
+<td><a href="7">7</a></td><td>sun, 12 feb 2023 12:38:06 gmt</td>
+</tr>
+<tr>
+<td><a href="8">8</a></td><td>sun, 12 feb 2023 12:38:07 gmt</td>
+</tr>
+<tr>
+<td><a href="5">5</a></td><td>sun, 12 feb 2023 12:38:09 gmt</td>
+</tr>
+<tr>
+<td><a href="1">1</a></td><td>sun, 12 feb 2023 12:38:07 gmt</td>
+</tr>
+<tr>
+<td><a href="..">..</a></td><td>sun, 12 feb 2023 12:38:09 gmt</td>
+</tr>
+<tr>
+<td><a href="6">6</a></td><td>sun, 12 feb 2023 12:38:07 gmt</td>
+</tr>
+</table>
+
+<hr>
+
+<address>webserver/1.0</address>
+
+</body></html>
+http/1.1 400 bad request
+server: webserver/1.0
+date: wed, 22 feb 2023 17:08:14 gmt
+content-type: text/html
+content-length: 111
+connection: close
+
+<html><head><title>400 bad request</title></head>
+<body><h4>400 bad request</h4>
+bad request.
+</body></html>
+http/1.1 404 not found
+server: webserver/1.0
+date: wed, 22 feb 2023 17:08:14 gmt
+content-type: text/html
+content-length: 110
+connection: close
+
+<html><head><title>404 not found</title></head>
+<body><h4>404 not found</h4>
+file not found.
+</body></html>

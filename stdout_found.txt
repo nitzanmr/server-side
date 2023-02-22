@@ -1,0 +1,12 @@
+http/1.1 302 found
+server: webserver/1.0
+date: wed, 22 feb 2023 17:08:02 gmt
+location: /randpath/abc/def/mno/found/
+content-type: text/html
+content-length: 123
+connection: close
+
+<html><head><title>302 found</title></head>
+<body><h4>302 found</h4>
+directories must end with a slash.
+</body></html>

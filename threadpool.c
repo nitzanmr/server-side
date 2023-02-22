@@ -9,7 +9,7 @@ void init_threadpool(int max_number_of_threads,threadpool* new_threadpool){
     number_of_threads_asked = max_number_of_threads;
     new_threadpool->num_threads = 0;
     new_threadpool->qsize = 0;
-    new_threadpool->threads = (pthread_t*)malloc(max_number_of_threads*sizeof(pthread_t));
+    new_threadpool->threads = (pthread_t*)malloc((max_number_of_threads)*sizeof(pthread_t));
     new_threadpool->dont_accept=0;
     new_threadpool->shutdown = 0;
     pthread_cond_init(&new_threadpool->q_not_empty,NULL);
@@ -106,7 +106,7 @@ void* do_work(void* p){
     {
         pthread_mutex_lock(&((threadpool*)p)->qlock);
         if(((threadpool*)p)->qsize==0){
-            if(((threadpool*)p)->qsize==0&& ((threadpool*)p)->dont_accept == 1&&((threadpool*)p)->num_threads==0){
+            if(((threadpool*)p)->qsize==0&& ((threadpool*)p)->dont_accept == 1){
                 pthread_cond_signal(&((threadpool*)p)->q_empty);
                 // printf("%d",((threadpool*)p)->shutdown);
                 // printf("\npthread exits\n");
@@ -161,7 +161,10 @@ void destroy_threadpool(threadpool* destroyme){
     for (int i = 0; i < number_of_threads_asked; i++)
     {
         // printf("pthread joined\n");
+        // printf("\njoined\n");
         pthread_join(destroyme->threads[i],NULL);
+        // printf("joined\n");
+        // free(destroyme->threads[i]);
     }
     free(destroyme->threads);
     return;

@@ -1,0 +1,11 @@
+http/1.1 403 forbidden
+server: webserver/1.0
+date: wed, 22 feb 2023 17:08:08 gmt
+content-type: text/html
+content-length: 109
+connection: close
+
+<html><head><title>403 forbidden</title></head>
+<body><h4>403 forbidden</h4>
+access denied.
+</body></html>

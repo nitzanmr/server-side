@@ -44,7 +44,7 @@ void error_message(int error_num,char* buf,char* path){
         return;
     }
     if(error_num == 302){
-        build_header_m(buf,"302 Found",strlen("<HTML><HEAD><TITLE>302 Found</TITLE></HEAD>\r\n<BODY><H4>302 Found</H4>\r\nDirectories must end with a slash.\r\n</BODY></HTML>\0"),path);
+        build_header_m(buf,"302 Found",123,path);
         strcat(buf,"<HTML><HEAD><TITLE>302 Found</TITLE></HEAD>\r\n<BODY><H4>302 Found</H4>\r\nDirectories must end with a slash.\r\n</BODY></HTML>");
         return;
     }
@@ -60,7 +60,8 @@ char *get_mime_type(char *name) {
     if (strcmp(ext, ".au") == 0) return "audio/basic";
     if (strcmp(ext, ".wav") == 0) return "audio/wav";
     if (strcmp(ext, ".avi") == 0) return "video/x-msvideo";
-    if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg"; if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
+    if (strcmp(ext, ".mpeg") == 0 || strcmp(ext, ".mpg") == 0) return "video/mpeg";
+    if (strcmp(ext, ".mp3") == 0) return "audio/mpeg";
     return NULL;
 }
 void split_str(char* request,char* split_by,char** split_request){
@@ -133,12 +134,12 @@ int read_and_write_file(int fd_socket,char* path,off_t file_size,char* buf){
     close(ptr);
     return 0 ;
 }
-int return_wrote_size(char* path){
+int return_wrote_size(char* path,char* bigger_path){
     #define RFC1123FMT "%a, %d %b %Y %H:%M:%S GMT" 
     #define PATH_MAX        4096
     char absulute_path[PATH_MAX];
     getcwd(absulute_path,PATH_MAX);
-    strcat(absulute_path,path);
+    strcat(absulute_path,bigger_path);
     struct stat file_stats;
     stat(absulute_path,&file_stats);
     char timebuf_mtime[128];
@@ -147,17 +148,17 @@ int return_wrote_size(char* path){
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
     sprintf(char_a_size,"%jd",file_stats.st_size);
     if(S_ISREG(file_stats.st_mode)){
-        size_of_in_buf += strlen("<tr>\r\n<td><A HREF=\"\"><\"\"></A></td>\"\"<td></td>\r\n<td><></td>\r\n</tr>");
+        size_of_in_buf += strlen("<tr>\r\n<td><A HREF=\"\"></A></td><td></td>\r\n<td></td>\r\n</tr>\r\n");
         size_of_in_buf = size_of_in_buf+ strlen(path)+strlen(path)+strlen(timebuf_mtime)+strlen(char_a_size);
     }
     else{
-        size_of_in_buf+= strlen("<tr>\r\n<td><A HREF=\"\">\"\"</A></td><td>\"\"</td>\r\n</tr>");
+        size_of_in_buf+= strlen("<tr>\r\n<td><A HREF=\"\"></A></td><td></td>\r\n</tr>\r\n");
         size_of_in_buf = size_of_in_buf +strlen(path)+strlen(path)+strlen(timebuf_mtime);
     }
 
     return size_of_in_buf;
 }
-int make_folder_file(char* path,char* buf,int fd){
+int make_folder_file(char* path,char* buf,int fd ,char* bigger_path){
     /*gets the absulute path and makes the entry for it*/
     /*
         <tr>
@@ -171,7 +172,7 @@ int make_folder_file(char* path,char* buf,int fd){
     #define PATH_MAX        4096
     char absulute_path[PATH_MAX];
     getcwd(absulute_path,PATH_MAX);
-    strcat(absulute_path,path);
+    strcat(absulute_path,bigger_path);
     struct stat file_stats;
     stat(absulute_path,&file_stats);
 
@@ -182,11 +183,11 @@ int make_folder_file(char* path,char* buf,int fd){
     char timebuf_mtime[128];
     strftime(timebuf_mtime,sizeof(timebuf_mtime),RFC1123FMT,gmtime(&file_stats.st_mtime));
     if(S_ISREG(file_stats.st_mode)){
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s\'>\'%s\'</A></td><td>\'%s\'</td>\r\n<td><%ld></td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=\"%s\">%s</A></td><td>%s</td>\r\n<td>%ld</td>\r\n</tr>\r\n",path,path,timebuf_mtime,file_stats.st_size);
         size_of_in_buf = strlen(in_buf);
     }
     else{
-        sprintf(in_buf,"<tr>\r\n<td><A HREF=\'%s/\'>\'%s/\'</A></td><td>\'%s\'</td>\r\n</tr>\r\n",path,path,timebuf_mtime);
+        sprintf(in_buf,"<tr>\r\n<td><A HREF=\"%s\">%s</A></td><td>%s</td>\r\n</tr>\r\n",path,path,timebuf_mtime);
         size_of_in_buf = strlen(in_buf);
     }
     while(size_of_in_buf!=counter_in_buf){
@@ -226,7 +227,7 @@ int create_ok(char* buf,char* path,int size_of_file){
     if((type = get_mime_type(path))==NULL && size_of_file != -1){
         type = "text/html";
     };
-    sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: closed\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
+    sprintf(buf,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: %s\r\nContent-Length: %d\r\nLast-Modified: %s\nConnection: close\r\n\r\n", "200 OK",timebuf,type,size_of_file,timebuf_mtime);
     return 0;
 }
 int accept_client(void* request,char* buf,int fd){
@@ -271,7 +272,7 @@ int accept_client(void* request,char* buf,int fd){
         if(split_request[1][strlen(split_request[1])-1]!='/'){
             /*check for if the file name contain a /
              at the end if not prints error for it is a dir and not contain a / at the end*/
-            error_message(302,buf,NULL);
+            error_message(302,buf,split_request[1]);
             write(fd,buf,strlen(buf));
             /*this is commented becuase it is not askeed in this progect from college to do so.*/
             // char* new_request = (char*)malloc(strlen(request) +1);
@@ -301,22 +302,23 @@ int accept_client(void* request,char* buf,int fd){
                 d = opendir(absulute_path);
                 char buf[512];
                 char* type = get_mime_type(absulute_path);
-                total_size_folder += strlen("<HTML>\r\n<HEAD><TITLE></TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4></H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n");
+                total_size_folder += strlen("<HTML>\r\n<HEAD><TITLE>index of</TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>index of</H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n");
                 total_size_folder += strlen(split_request[1])*2;
                 /*a sum of the size of all the files inside the folder*/
                 if (d) {
                     while ((dir = readdir(d)) != NULL) {
                             sprintf(temp_path,"%s%s",split_request[1],dir->d_name);
                             // strcat(temp_path,dir->d_name);
-                            total_size_folder += return_wrote_size(temp_path);
+                            total_size_folder += return_wrote_size(dir->d_name,temp_path);
                             // printf("temp path is: %s\n", temp_path);
                         }
                     closedir(d);
                 }
                 /*insert the headers to the buffer*/
-                total_size_folder += strlen("\r\n\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
+                total_size_folder += strlen("\r\n</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
                 create_ok(buf,absulute_path,total_size_folder);
                 sprintf(temp_path,"<HTML>\r\n<HEAD><TITLE>Index of %s</TITLE></HEAD>\r\n\r\n<BODY>\r\n<H4>Index of %s</H4>\r\n\r\n<table CELLSPACING=8>\r\n<tr><th>Name</th><th>Last Modified</th><th>Size</th></tr>\r\n",split_request[1],split_request[1]);
+                
                 strcat(buf,temp_path);
                 /*opens the dir again and prints the values of the files to the client*/
                 char* temp = absulute_path;
@@ -330,12 +332,12 @@ int accept_client(void* request,char* buf,int fd){
                         // printf("absulute path is :%s\n",temp);
                         sprintf(temp_path,"%s%s",split_request[1],dir->d_name);
                         // strcat(temp_path,);   
-                        printf("tmp path is: %s\n",temp_path);     
-                        make_folder_file(temp_path,buf,fd);
+                        // printf("tmp path is: %s\n",temp_path);     
+                        make_folder_file(dir->d_name,buf,fd,temp_path);
                     }
                     closedir(d);
                 }
-                sprintf(buf,"</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>\r\n\r\n");
+                sprintf(buf,"</table>\r\n\r\n<HR>\r\n\r\n<ADDRESS>webserver/1.0</ADDRESS>\r\n\r\n</BODY></HTML>");
                 write(fd,buf,strlen(buf));
                 return 0;
             }
@@ -343,6 +345,7 @@ int accept_client(void* request,char* buf,int fd){
                 fclose(file_des);
                 /*if the file exists it prints it to the client as an html file*/
                 stat(new_name,&file_stats);
+                create_ok(buf,new_name,file_stats.st_size);
                 read_and_write_file(fd,new_name,file_stats.st_size,buf);
                 free(new_name);
                 return 0;
@@ -379,10 +382,10 @@ int client_read(void* arg){
         }
         counter++;
     }
-    shutdown(*fd,SHUT_RD);
+    
     accept_client(buf,returned_buf,*fd);
-    shutdown(*fd,SHUT_WR);
-    sleep(2);
+    // shutdown(*fd,SHUT_RD);
+    // shutdown(*fd,SHUT_WR);
     close(*fd);
     return 0;
 }
@@ -392,6 +395,7 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     socklen_t len;
     struct sockaddr_in servaddr, cli;
     int counter_of_request = 0;
+    int conns[number_of_request];
     // socket create and verification
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
@@ -421,14 +425,15 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
     
     // Accept the data packet from client and verification
     while(counter_of_request < number_of_request){    
-        connfd = accept(sockfd, (SA*)&cli, &len);
+        conns[counter_of_request] = accept(sockfd, (SA*)&cli, &len);
         if (connfd < 0) {
             printf("Usage: server connection failed\n");
             return 1;
         }
-        dispatch(new_threadpool,(dispatch_fn)client_read,(void*)&connfd);
+        dispatch(new_threadpool,(dispatch_fn)client_read,(void*)&conns[counter_of_request]);
         counter_of_request++;
     }
+    printf("after accepts\n");
     destroy_threadpool(new_threadpool);  
     free(new_threadpool);  
     // After chatting close the socket
@@ -438,16 +443,15 @@ int create_server(int port,int number_of_request,threadpool* new_threadpool){
 
 int main(int argc, char* argv[]){
     /*argv == [port,pool_size,max number of requests]*/
-    int counter_of_request = 0;
     int create_respone = 0;
     // printf("\n%s %d %s\n",argv[1],atoi(argv[2]),argv[3]);
-    if(argc!=4){
-        perror("Usage: too little/much arguments entered to the server\n");
-        return 1;
+    if(argc!=4||atoi(argv[1])<=0){
+        printf("Usage: server <port> <pool-size> <number of requests>\n");
+        return 0;
     }
     threadpool* new_threadpool = create_threadpool(atoi(argv[2]));
     if(new_threadpool==NULL){
-        perror("Usage: threadpool create");
+        printf("Usage: threadpool create");
         return 1;
     }
     create_respone = create_server(atoi(argv[1]),atoi(argv[3]),new_threadpool);
@@ -467,7 +471,6 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
     Content-Type: text/html
     Content-Length: 113
     Connection: close
-
     <HTML><HEAD><TITLE>400 Bad Request</TITLE></HEAD>
     <BODY><H4>400 Bad request</H4>
     Bad Request.
@@ -478,15 +481,13 @@ void build_header_m(char* error_message ,char* error_spciefed,int content_length
     char timebuf[128];
     now = time(NULL);
     strftime(timebuf, sizeof(timebuf), RFC1123FMT, gmtime(&now));
-    
     if(path!=NULL){
         char location[50];
-        sprintf(location,"Location: %s\r\n",path);
-        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\n%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,location,content_length);
-
+        sprintf(location,"Location: %s/\r\n",path);
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\n%sContent-Type: text/html\r\nContent-Length: %d\r\nConnection: close\r\n\r\n", error_spciefed,timebuf,location,content_length);
     }
     else{
-        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: text/html\r\nContent-Length: %d\r\nConnection: closed\r\n\r\n", error_spciefed,timebuf,content_length);
+        sprintf(error_message,"HTTP/1.1 %s\r\nServer: webserver/1.0\r\nDate: %s\nContent-Type: text/html\r\nContent-Length: %d\r\nConnection: close\r\n\r\n", error_spciefed,timebuf,content_length);
 
     }
 

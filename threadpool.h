@@ -1,5 +1,5 @@
-#include "pthread.h"
-/*given and cannot be changed. */
+#include <pthread.h>
+
 /**
  * threadpool.h
  *
@@ -91,4 +91,5 @@ void* do_work(void* p);
  * frees all the memory associated with the threadpool.
  */
 void destroy_threadpool(threadpool* destroyme);
+
 
